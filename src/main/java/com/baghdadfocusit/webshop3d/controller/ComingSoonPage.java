@@ -17,7 +17,6 @@ public class ComingSoonPage {
 
     @GetMapping("/message")
     public String getMessage() {
-//        return messageService.getMessage();
-        return "Hello Ahmed TEST";
+        return messageService.getMessage();
     }
 }
