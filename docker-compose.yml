@@ -1,0 +1,40 @@
+version: "3.7"
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_HOST: "db"
+      POSTGRES_DB: webshop3d
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker3d
+    volumes:
+      - ./pg-data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: .
+    image: webshop3dapp
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker3d
+    expose:
+      - 8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "db"
+    command: ["./opt/wait-for-postgres.sh", "db"]
+
+  frontend:
+    build: ./client
+    image: fr_webshop3dapp
+    volumes:
+      - ./client/src:/usr/src/app/src
+      - ./client/public:/usr/src/app/public
+    ports:
+      - "3000:3000"
+    links:
+      - backend

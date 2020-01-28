@@ -9,5 +9,4 @@ class Webshop3dApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
