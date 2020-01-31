@@ -11,7 +11,7 @@ import {
   NavLink,
   UncontrolledDropdown
 } from "reactstrap";
-import logo from '../assets/3d.webp';
+import logo from '../../assets/3d.webp';
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,7 +60,7 @@ export const Header = () => {
                 </DropdownMenu>
               </UncontrolledDropdown>
               <NavItem>
-                <NavLink href="/logout">logout</NavLink>
+                <NavLink href="/login">login</NavLink>
               </NavItem>
             </Nav>
           </Collapse>

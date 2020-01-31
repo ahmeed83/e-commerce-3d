@@ -1,14 +1,5 @@
 import React from 'react'
-import {
-  Button,
-  Col,
-  Container,
-  FormGroup,
-  Input,
-  Label,
-  Row,
-  Table
-} from 'reactstrap'
+import {Button, Col, Container, FormGroup, Input, Row, Table} from 'reactstrap'
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTrash} from "@fortawesome/free-solid-svg-icons";

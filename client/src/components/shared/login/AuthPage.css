@@ -1,0 +1,94 @@
+/* Made with love by Mutiullah Samim*/
+
+@import url('https://fonts.googleapis.com/css?family=Numans');
+
+html, body .authPage {
+  background-image: url('http://getwallpapers.com/wallpaper/full/0/a/6/877756-new-wallpaper-laptops-1920x1200-macbook.jpg#.XjRv7Z6cVs0.link');
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+  font-family: 'Numans', sans-serif;
+}
+
+.authPage .container {
+  height: 100%;
+  align-content: center;
+}
+
+.authPage .card {
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 500px;
+  background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.authPage .card .signin {
+  height: 470px;
+}
+
+.authPage .card .signup {
+  height: 370px;
+}
+
+.authPage .social_icon span {
+  font-size: 40px;
+  margin-left: 10px;
+  color: #1fef60;
+}
+
+.authPage .social_icon span:hover {
+  color: white;
+  cursor: pointer;
+}
+
+.authPage .card-header h3 {
+  color: white;
+}
+
+.authPage .social_icon  {
+  position: absolute;
+  right: 20px;
+  top: -45px;
+}
+
+.authPage .input-group-prepend span {
+  width: 50px;
+  background-color: #1fef60;
+  color: black;
+  border: 0 !important;
+}
+
+.authPage input:focus {
+  outline: 0 0 0 0 !important;
+  box-shadow: 0 0 0 0 !important;
+}
+
+.authPage .remember {
+  color: white;
+}
+
+.authPage .remember input {
+  width: 20px;
+  height: 20px;
+  margin-left: 15px;
+  margin-right: 5px;
+}
+
+.authPage .login_btn {
+  color: black;
+  background-color: #1fef60;
+  width: 100px;
+}
+
+.authPage .login_btn:hover {
+  color: black;
+  background-color: white;
+}
+
+.authPage .links {
+  color: white;
+}
+
+.authPage .links a {
+  margin-left: 4px;
+}

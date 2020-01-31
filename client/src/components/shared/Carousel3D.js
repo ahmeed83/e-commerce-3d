@@ -7,9 +7,9 @@ import {
   CarouselCaption
 } from 'reactstrap';
 
-import picBlue from "../assets/3d-blue-head-pic.jpg";
-import picColors from "../assets/3d-colors-head-pic.jpg.jpg";
-import picLogo from "../assets/3d-logo-head-pic.jpg";
+import picBlue from "../../assets/3d-blue-head-pic.jpg";
+import picColors from "../../assets/3d-colors-head-pic.jpg.jpg";
+import picLogo from "../../assets/3d-logo-head-pic.jpg";
 
 const items = [
   {

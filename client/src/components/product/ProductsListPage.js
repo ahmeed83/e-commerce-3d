@@ -18,7 +18,7 @@ import {
 
 import pic from "../../assets/laptop-pic.jpg";
 import { Link } from "react-router-dom";
-import { Carousel3D } from "../Carousel3D";
+import { Carousel3D } from "../shared/Carousel3D";
 
 export const ProductListPage = () => {
   const products = [1, 2, 3, 4, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 3, 4, 1, 1, 1];
