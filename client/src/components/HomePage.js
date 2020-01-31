@@ -4,18 +4,18 @@ import axios from "axios";
 
 export const HomePage = () => {
   const [data, setData] = useState("");
-  const [showLoading, setShowLoading] = useState(true);
+  const [showLoading, setShowLoading] = useState(false);
   const apiUrl = "/api/message";
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(apiUrl);
-      setData(result.data);
-      setShowLoading(false);
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const result = await axios(apiUrl);
+  //     setData(result.data);
+  //     setShowLoading(false);
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
   return (
       <div>
@@ -28,7 +28,7 @@ export const HomePage = () => {
               <Container>
                 <div className="App">
                   <h1 className="display-1">3D Electronics</h1>
-                  <h3 className="display-4 pb-5">{data}!</h3>
+                  <h3 className="display-4 pb-5">Coming soon!</h3>
                   <a
                       className="lead App-link"
                       href="https://www.facebook.com/3delctronics"
