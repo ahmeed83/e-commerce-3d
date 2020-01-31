@@ -1,3 +1,13 @@
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+
+.footer-icon{
+  margin-right: 5px;
+  font-size: 25px;
+  -webkit-transition: 0.5s all ease;
+  -moz-transition: 0.5s all ease;
+  transition: 0.5s all ease;
+}
+
 .App {
   text-align: center;
 }
@@ -6,7 +16,7 @@
   color: #61dafb;
 }
 
-.spinner{
+.spinner {
   position: absolute;
   height: 100px;
   width: 100px;
@@ -22,18 +32,18 @@
   min-height: 100vh;
 }
 
-.footer {
-  width: 100%;
-  height: 2.5rem;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
-  background-color: #efefef;
-  text-align: center;
+.carousel-inner {
+  height: 40vh;
 }
 
-footer a {
-  color: #f8f9fa!important
+.carousel img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  height: 40vh;
+  max-width: 100%;
+  object-fit: cover;
+  object-position: center;
 }
+
