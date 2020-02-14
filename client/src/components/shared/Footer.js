@@ -4,7 +4,7 @@ export const Footer = () => {
   return (
     <div style={{ background: "black" }} className="py-3">
       <Row>
-        <Col xs-12 sm-12 md-12 text-center text-white>
+        <Col>
           <ul className="footer-icon list-unstyled text-center">
             <li className="list-inline-item pr-3">
               <a href="/">
@@ -35,7 +35,7 @@ export const Footer = () => {
         </Col>
       </Row>
       <Row>
-        <Col xs-12 sm-12 md-12 text-center text-white>
+        <Col>
           <ul className="text-center list-unstyled">
             <li className="list-style-type: none">
               <a href="/">
