@@ -2,9 +2,10 @@ package com.baghdadfocusit.webshop3d;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
 
+/**
+ * SpringBootApplication main class.
+ */
 @SpringBootApplication
 public class Webshop3dApplication {
 

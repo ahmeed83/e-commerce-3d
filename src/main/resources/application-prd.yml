@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+app:
+  datasource:
+    jdbc-url: jdbc:postgresql://db/webshop3d
+    username: postgres
+    password: docker3d
+    pool-size: 30
