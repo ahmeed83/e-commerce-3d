@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Repository;
 /**
  * Repository for User Principal interface Impl.
  */
-@Profile({"dev", "prd"})
 @Repository
 public class ApplicationUserPrincipalRepositoryImpl implements ApplicationUserPrincipalRepository {
 

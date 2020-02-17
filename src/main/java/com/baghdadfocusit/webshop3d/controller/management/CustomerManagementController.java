@@ -3,6 +3,7 @@ package com.baghdadfocusit.webshop3d.controller.management;
 import com.baghdadfocusit.webshop3d.model.Customer;
 import com.baghdadfocusit.webshop3d.service.CustomerService;
 import java.time.LocalDate;
+import javax.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -36,16 +37,16 @@ public class CustomerManagementController {
 
   @PutMapping("{customerId}")
   @PreAuthorize(HAS_ROLE_ADMIN_AND_EMPLOYEE)
-  public Customer updateCustomer(@RequestBody Customer updatedCustomer, @PathVariable String customerId) {
-    return customerService.findCustomer(customerId)
-        .map(customer -> {
-          customer.setName(updatedCustomer.getName());
-          customer.setEmail(updatedCustomer.getEmail());
-          customer.setPhone(updatedCustomer.getPhone());
-          customer.setAddress(updatedCustomer.getAddress());
-          customer.setUpdatedAt(LocalDate.now());
-          return customerService.saveCustomer(customer);
-        }).orElseThrow(() -> new IllegalArgumentException("No Customer found!"));
+  public Customer updateCustomer(@RequestBody @Valid Customer updatedCustomer,
+                                 @PathVariable String customerId) {
+    return customerService.findCustomer(customerId).map(customer -> {
+      customer.setName(updatedCustomer.getName());
+      customer.setEmail(updatedCustomer.getEmail());
+      customer.setPhone(updatedCustomer.getPhone());
+      customer.setAddress(updatedCustomer.getAddress());
+      customer.setUpdatedAt(LocalDate.now());
+      return customerService.createNewCustomer(customer);
+    }).orElseThrow(() -> new IllegalArgumentException("No Customer found!"));
   }
 
   @DeleteMapping("{customerId}")

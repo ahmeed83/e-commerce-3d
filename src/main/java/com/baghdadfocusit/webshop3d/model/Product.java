@@ -2,11 +2,18 @@ package com.baghdadfocusit.webshop3d.model;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Entity
-@Data
+@SuperBuilder
+@Getter
+@Setter
+@NoArgsConstructor
 public class Product extends BaseModel {
+
   @NotNull
   private String name;
   @NotNull

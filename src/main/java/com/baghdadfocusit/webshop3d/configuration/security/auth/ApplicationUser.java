@@ -9,7 +9,9 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Application User class. This class will store the user data in the database.
@@ -17,6 +19,8 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
+@SuperBuilder
+@NoArgsConstructor
 public class ApplicationUser extends BaseModel {
 
   @NotBlank(message = "Username is required")

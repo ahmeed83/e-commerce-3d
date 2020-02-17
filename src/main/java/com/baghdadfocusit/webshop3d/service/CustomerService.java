@@ -24,7 +24,7 @@ public class CustomerService {
     return customerRepository.findById(UUID.fromString(customerId));
   }
 
-  public Customer saveCustomer(Customer customer) {
+  public Customer createNewCustomer(Customer customer) {
     customer.setCreatedAt(LocalDate.now());
     return customerRepository.save(customer);
   }
