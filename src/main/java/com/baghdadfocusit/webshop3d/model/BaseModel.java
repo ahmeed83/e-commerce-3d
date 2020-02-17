@@ -27,7 +27,6 @@ public class BaseModel {
   @Id
   @GeneratedValue
   private UUID id;
-  @NotNull
   @JsonDeserialize(using = LocalDateDeserializer.class)
   @JsonSerialize(using = LocalDateSerializer.class)
   private LocalDate createdAt;
