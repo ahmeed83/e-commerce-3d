@@ -32,4 +32,8 @@ public class ProductService {
     product.setCreatedAt(LocalDate.now());
     return productRepository.save(product);
   }
+
+  public Optional<Product> getProductDetails(String productId) {
+    return productRepository.findById(UUID.fromString(productId));
+  }
 }
