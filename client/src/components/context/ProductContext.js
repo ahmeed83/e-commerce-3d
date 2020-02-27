@@ -4,7 +4,7 @@ import { getProducts } from '../../client';
 export const ProductContext = createContext();
 
 const ProductContextProvider = props => {
-  const [products, setProducts] = useState([]);
+  const [productsProvided, setProductsProvided] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ const ProductContextProvider = props => {
       setLoading(true);
       getProducts().then(res =>
         res.json().then(products => {
-          setProducts(products);
+          setProductsProvided(products.content);
           setLoading(false);
         })
       );
@@ -21,7 +21,7 @@ const ProductContextProvider = props => {
   }, []);
 
   return (
-    <ProductContext.Provider value={{ products, loading }}>
+    <ProductContext.Provider value={{ productsProvided, loading }}>
       {props.children}
     </ProductContext.Provider>
   );

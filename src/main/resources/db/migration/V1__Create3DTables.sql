@@ -14,22 +14,24 @@ CREATE TABLE IF NOT EXISTS APPLICATION_USER
     is_enabled BOOL                NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS PRODUCT
-(
-    id           UUID PRIMARY KEY NOT NULL,
-    created_at   DATE             NOT NULL,
-    updated_at   DATE,
-    name         VARCHAR(100)     NOT NULL,
-    pic_location VARCHAR(500)     NOT NULL,
-    price        VARCHAR(20)      NOT NULL
-);
-
 CREATE TABLE IF NOT EXISTS CATEGORY
 (
     id         UUID PRIMARY KEY NOT NULL,
     created_at DATE             NOT NULL,
     updated_at DATE,
     name       VARCHAR(100)     NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS PRODUCT
+(
+    id           UUID PRIMARY KEY NOT NULL,
+    created_at   DATE             NOT NULL,
+    updated_at   DATE,
+    category_id  UUID             NOT NULL,
+    name         VARCHAR(100)     NOT NULL,
+    pic_location VARCHAR(500)     NOT NULL,
+    price        VARCHAR(20)      NOT NULL,
+    FOREIGN KEY (category_id) REFERENCES CATEGORY (id)
 );
 
 CREATE TABLE IF NOT EXISTS CUSTOMER

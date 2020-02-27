@@ -1,8 +1,6 @@
 package com.baghdadfocusit.webshop3d.model;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,15 +12,8 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Product extends BaseModel {
+public class Category extends BaseModel {
 
   @NotNull
   private String name;
-  @NotNull
-  private String picLocation;
-  @NotNull
-  private String price;
-  @ManyToOne
-  @JoinColumn(name = "category_id")
-  private Category category;
 }
