@@ -1,5 +1,6 @@
 package com.baghdadfocusit.webshop3d.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -22,7 +23,7 @@ public class Product extends BaseModel {
   private String picLocation;
   @NotNull
   private String price;
-  @ManyToOne
+  @ManyToOne(cascade = {CascadeType.ALL})
   @JoinColumn(name = "category_id")
   private Category category;
 }

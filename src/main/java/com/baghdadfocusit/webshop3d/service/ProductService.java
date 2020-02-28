@@ -5,6 +5,9 @@ import com.baghdadfocusit.webshop3d.repository.ProductRepository;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,10 +17,6 @@ public class ProductService {
 
   public ProductService(ProductRepository productRepository) {
     this.productRepository = productRepository;
-  }
-
-  public Iterable<Product> getAllProducts() {
-    return productRepository.findAll();
   }
 
   public Optional<Product> findProduct(String productId) {
@@ -35,5 +34,17 @@ public class ProductService {
 
   public Optional<Product> getProductDetails(String productId) {
     return productRepository.findById(UUID.fromString(productId));
+  }
+
+  public Page<Product> getFilterProducts(Optional<String> name,
+                                         Optional<String> categoryName,
+                                         Optional<Integer> page,
+                                         Optional<String> sortBy) {
+    return productRepository.getFilterProducts(name.orElse("_"),
+                                               categoryName.orElse("_"),
+                                               PageRequest.of(page.orElse(0),
+                                                              20,
+                                                              Direction.ASC,
+                                                              sortBy.orElse("name")));
   }
 }

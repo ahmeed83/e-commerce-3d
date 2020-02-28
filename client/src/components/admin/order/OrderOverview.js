@@ -29,7 +29,7 @@ export const OrderOverview = () => {
                         <td>00964 7901 6060941</td>
                         <td>
                             <Link to={`/order-page/${id}`}>
-                                <Button block size="md" color="success">
+                                <Button block size="md" color="primary">
                                     {infoIcon}
                                 </Button>
                             </Link>

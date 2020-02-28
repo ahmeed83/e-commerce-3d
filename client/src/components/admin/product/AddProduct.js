@@ -37,13 +37,13 @@ export const AddProduct = () => {
                         Pictures
                     </Label>
                     <Col>
-                        <ButtonToggle size="lg" outline color="info">
+                        <ButtonToggle size="lg" outline color="primary">
                             Upload
                         </ButtonToggle>
                     </Col>
                 </FormGroup>
                 <FormGroup className="pt-5">
-                    <Button size="lg" className="float-right" outline color="success">
+                    <Button size="lg" className="float-right" outline color="primary">
                         Add Product
                     </Button>
                 </FormGroup>

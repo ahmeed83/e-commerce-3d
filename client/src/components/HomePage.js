@@ -1,20 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Container, Jumbotron, Spinner } from "reactstrap";
-import axios from "axios";
 
 export const HomePage = () => {
-  const [data, setData] = useState("");
-  const [showLoading, setShowLoading] = useState(false);
-  const apiUrl = "/api/message";
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios(apiUrl);
-      setData(result.data);
-      setShowLoading(false);
-    };
-    fetchData();
-  }, []);
+  const [data] = useState("Coming soon");
+  const [showLoading] = useState(false);
 
   return (
     <div>

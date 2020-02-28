@@ -15,7 +15,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.baghdadfocusit.webshop3d.model.Product;
 import com.baghdadfocusit.webshop3d.service.ProductService;
 import java.time.LocalDate;
-import java.util.Arrays;
+import java.util.Optional;
+import org.assertj.core.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -57,7 +59,10 @@ public class ProductControllerTest {
   @BeforeEach
   void setUp() {
     product = Product.builder().createdAt(LocalDate.now()).name("iPhone").price("$200").picLocation("location").build();
-    when(productService.getAllProducts()).thenReturn(Arrays.asList(product));
+    when(productService.getFilterProducts(Optional.empty(),
+                                          Optional.empty(),
+                                          Optional.empty(),
+                                          Optional.empty())).thenReturn((Page) Arrays.asList(product));
   }
 
   @Test
@@ -90,7 +95,7 @@ public class ProductControllerTest {
 
 
   @Test
-  @DisplayName("0- Test PUT NO can change products details")
+  @DisplayName("3- Test PUT NO can change products details")
   void postProductsNotOkPut() throws Exception {
     this.mockMvc.perform(put(ADD_PRODUCTS_PATH))
                 .andDo(print())

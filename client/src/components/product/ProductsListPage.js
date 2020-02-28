@@ -1,225 +1,131 @@
-import React, { useContext, useEffect, useState } from 'react';
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  CardImg,
-  CardText,
-  CardTitle,
-  Col,
-  CustomInput,
-  Form,
-  FormGroup,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  Label,
-  Row
-} from 'reactstrap';
+import React, { useEffect, useState } from 'react';
+import { Card, CardBody, CardHeader, Col, Row } from 'reactstrap';
+import { getProductsPageFilter } from '../../client';
 
-import { Link } from 'react-router-dom';
 import { Carousel3D } from '../shared/Carousel3D';
-import { ProductContext } from '../context/ProductContext';
-import Pagination3D from './Pagination3D';
 import './Product.css';
+import SearchProductsRadio from './SearchProductsRadio';
+import SearchProductsInput from './SearchProductsInput';
+import SearchProductsReset from './SearchProductsReset';
+import Products from './Products';
+import ProductPagination from './ProductPagination';
 
 export const ProductListPage = () => {
-  const products = useContext(ProductContext);
-  const productList = products.productsProvided;
-  const [searchInput, setSearchInput] = useState('');
-  const [filteredProducts, setFilteredProducts] = useState(productList);
-  const [searchTextState, setSearchTextState] = useState(false);
-  const [searchRadioState, setSearchRadioState] = useState(false);
+  const [productsProvidedFiltered, setProductsProvidedFiltered] = useState([]);
+  const [productName, setProductName] = useState('');
+  const [categoryName, setCategoryName] = useState('');
+  const [pageNumber, setPageNumber] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const reset = resetFun(setPageNumber, setProductName, setCategoryName);
+  const searchHandler = searchFun(
+    productName,
+    setCategoryName,
+    categoryName,
+    setProductName
+  );
+  useProducts(
+    productName,
+    categoryName,
+    pageNumber,
+    setTotalPages,
+    setProductsProvidedFiltered
+  );
 
+  return (
+    <Col style={{color: 'skyblue'}}>
+      <div className='pt-2 px-1'>
+        <Carousel3D />
+      </div>
+      <Row className='pt-2 px-2'>
+        <Col lg='3'>
+          <Card>
+            <CardHeader>Search</CardHeader>
+            <CardBody>
+              <SearchProductsReset reset={reset} />
+              <SearchProductsInput searchHandler={searchHandler} />
+              <SearchProductsRadio searchHandler={searchHandler} />
+            </CardBody>
+          </Card>
+        </Col>
+        <Col lg='9'>
+          <Card>
+            <CardHeader>
+              Products
+              <div className='float-right'>
+                <ProductPagination
+                  setPageNumber={setPageNumber}
+                  totalPages={totalPages}
+                  pageNumber={pageNumber}
+                />
+              </div>
+            </CardHeader>
+            <CardBody>
+              <Products productsProvidedFiltered={productsProvidedFiltered} />
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
+    </Col>
+  );
+};
+
+function useProducts(
+  productName,
+  categoryName,
+  pageNumber,
+  setTotalPages,
+  setProductsProvidedFiltered
+) {
   useEffect(() => {
-    setFilteredProducts(productList);
-  }, [productList]);
+    const fetchData = async () => {
+      getProductsPageFilter(productName, categoryName, pageNumber, 'name').then(
+        res =>
+          res.json().then(products => {
+            console.log(products);
+            setTotalPages(products.totalPages);
+            setProductsProvidedFiltered(products.content);
+          })
+      );
+    };
+    fetchData();
+  }, [
+    productName,
+    categoryName,
+    pageNumber,
+    setTotalPages,
+    setProductsProvidedFiltered
+  ]);
+}
 
-  const reset = () => {
-    setFilteredProducts(productList);
+function searchFun(productName, setCategoryName, categoryName, setProductName) {
+  return event => {
+    if (productName && event.target.type === 'radio') {
+      setCategoryName(event.target.value);
+      return;
+    } else if (categoryName && event.type === 'click') {
+      setProductName(event.target.value);
+      event.target.value = '';
+    }
+    if (event.type === 'click') {
+      setProductName(document.getElementById('searchInput').value);
+      document.getElementById('searchInput').value = '';
+    }
+    if (event.target.type === 'radio') {
+      setCategoryName(event.target.value);
+    }
+  };
+}
+
+function resetFun(setPageNumber, setProductName, setCategoryName) {
+  return () => {
+    setPageNumber(0);
+    setProductName('');
+    setCategoryName('');
     document.getElementById('searchInput').value = '';
     document.getElementById('Laptop').checked = false;
     document.getElementById('PC').checked = false;
     document.getElementById('Headphone').checked = false;
     document.getElementById('MacBook').checked = false;
     document.getElementById('iPhone').checked = false;
-    setSearchTextState(false);
-    setSearchRadioState(false);
   };
-
-  const searchTextHandler = () => {
-    if (searchRadioState) {
-      setFilteredProducts(
-        filteredProducts.filter(product =>
-          product.name.toLowerCase().includes(searchInput.toLowerCase())
-        )
-      );
-    } else {
-      setFilteredProducts(
-        productList.filter(product =>
-          product.name.toLowerCase().includes(searchInput.toLowerCase())
-        )
-      );
-      setSearchTextState(true);
-    }
-    document.getElementById('searchInput').value = '';
-  };
-
-  const searchRadioHandler = event => {
-    if (searchTextState) {
-      setFilteredProducts(
-        filteredProducts.filter(product =>
-          product.category.name.includes(event.target.value)
-        )
-      );
-    } else {
-      setFilteredProducts(
-        productList.filter(product =>
-          product.category.name.includes(event.target.value)
-        )
-      );
-      setSearchRadioState(true);
-    }
-  };
-
-  const inputHandler = event => {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      setSearchInput(event.target.value);
-      searchTextHandler();
-      event.target.value = '';
-    } else {
-      setSearchInput(event.target.value);
-    }
-  };
-
-  return (
-    <Col>
-      <div className='pt-2 px-1'>
-        <Carousel3D />
-      </div>
-      <Row className='pt-2 px-2'>
-        <Col lg='3'>
-          <Form>
-            <Card>
-              <CardHeader>Search</CardHeader>
-              <CardBody>
-                <FormGroup className='pb-3'>
-                  <Button onClick={reset} outline color='success' block>
-                    Reset
-                  </Button>
-                </FormGroup>
-                <FormGroup>
-                  <InputGroup>
-                    <InputGroupAddon addonType='prepend'>
-                      <Button onClick={searchTextHandler} outline color='success'>
-                        Search
-                      </Button>
-                    </InputGroupAddon>
-                    <Input
-                      id='searchInput'
-                      onChange={inputHandler}
-                      onKeyPress={inputHandler}
-                      placeholder='Search Products'
-                    />
-                  </InputGroup>
-                </FormGroup>
-                <FormGroup className='pl-2' style={{ color: 'green' }}>
-                  <Label>Choose Category</Label>
-                  <div>
-                    <CustomInput
-                      type='radio'
-                      id='Laptop'
-                      name='customRadio'
-                      label='Laptop'
-                      value='Laptop'
-                      onClick={searchRadioHandler}
-                    />
-                    <CustomInput
-                      type='radio'
-                      id='PC'
-                      name='customRadio'
-                      label='PC'
-                      value='PC'
-                      onClick={searchRadioHandler}
-                    />
-                    <CustomInput
-                      type='radio'
-                      id='Headphone'
-                      name='customRadio'
-                      label='Headphone'
-                      value='Headphone'
-                      onClick={searchRadioHandler}
-                    />
-                    <CustomInput
-                      type='radio'
-                      id='MacBook'
-                      name='customRadio'
-                      label='MacBook'
-                      value='MacBook'
-                      onClick={searchRadioHandler}
-                    />
-                    <CustomInput
-                      type='radio'
-                      id='iPhone'
-                      name='customRadio'
-                      label='iPhone'
-                      value='iPhone'
-                      onClick={searchRadioHandler}
-                    />
-                  </div>
-                </FormGroup>
-              </CardBody>
-            </Card>
-          </Form>
-        </Col>
-        <Col lg='9'>
-          <Row>
-            <Col lg='8'> </Col>
-            <Col lg='4' className='pt-3 float-right'>
-              <Pagination3D />
-            </Col>
-          </Row>
-          <Row>
-            {filteredProducts.map((product, id) => (
-              <Col key={id} lg='3' md='2' sm='2' className='py-2 px-2'>
-                <Link to={`/product/${product.id}`}>
-                  <Card>
-                    <CardHeader
-                      style={{
-                        backgroundColor: 'black',
-                        borderColor: '#333'
-                      }}
-                    >
-                      {product.name}
-                    </CardHeader>
-                    <CardImg
-                      top
-                      width='100%'
-                      src={product.picLocation}
-                      alt='Card image cap'
-                    />
-                    <CardBody style={{ backgroundColor: 'rgb(54, 53, 74)' }}>
-                      <CardTitle>{product.name}</CardTitle>
-                      <CardText>{product.category.name}</CardText>
-                    </CardBody>
-                    <CardFooter
-                      style={{
-                        backgroundColor: 'rgb(54, 53, 74)',
-                        borderColor: 'black'
-                      }}
-                    >
-                      {product.price} $
-                    </CardFooter>
-                  </Card>
-                </Link>
-              </Col>
-            ))}
-          </Row>
-        </Col>
-      </Row>
-    </Col>
-  );
-};
+}

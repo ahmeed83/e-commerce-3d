@@ -19,7 +19,7 @@ export const ProductOverview = () => {
         </Col>
         <Col>
           <Link to="/add-product">
-            <Button className="float-right" outline color="success">
+            <Button className="float-right" outline color="primary">
               Add new Product
             </Button>
           </Link>
@@ -42,7 +42,7 @@ export const ProductOverview = () => {
               <td>MacBook 15</td>
               <td>1300 $</td>
               <td>
-                <Button size="md" color="info">
+                <Button size="md" color="primary">
                   {editIcon}
                 </Button>
               </td>

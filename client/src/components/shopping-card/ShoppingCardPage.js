@@ -14,7 +14,7 @@ export const ShoppingCardPage = () => {
           </Col>
           <Col>
             <Link to="/add-product">
-              <Button className="float-right" outline color="success">
+              <Button className="float-right" outline color="primary">
                 Product
               </Button>
             </Link>
@@ -83,7 +83,7 @@ export const ShoppingCardPage = () => {
             <Button color="secondary">Continue Shopping</Button>
           </Col>
           <Col lg="3">
-            <Button color="success">Check out</Button>
+            <Button color="primary">Check out</Button>
           </Col>
           <ColoredLine color="black" height={1}/>
         </Row>

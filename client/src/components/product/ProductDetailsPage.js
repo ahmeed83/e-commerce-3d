@@ -56,7 +56,7 @@ export const ProductDetailsPage = () => {
                 <CardBody>
                   <p>Add Product to the shopping card!</p>
 
-                  <Button color='success' outline block>
+                  <Button color='primary' outline block>
                     Add to shopping card
                   </Button>
                 </CardBody>

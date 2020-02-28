@@ -45,7 +45,7 @@ export const LoginPage = () => {
 
                   <FormGroup>
                     <Button className="float-right" size="lg" outline
-                            color="success">
+                            color="primary">
                       Login
                     </Button>
                   </FormGroup>

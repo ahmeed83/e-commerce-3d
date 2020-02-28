@@ -58,7 +58,7 @@ export const SignUpPage = () => {
 
                   <FormGroup>
                     <Button className="float-right" size="lg" outline
-                            color="success">
+                            color="primary">
                       Sign UP
                     </Button>
                   </FormGroup>
