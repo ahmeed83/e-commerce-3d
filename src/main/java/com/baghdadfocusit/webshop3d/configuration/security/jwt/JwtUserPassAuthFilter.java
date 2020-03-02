@@ -83,6 +83,13 @@ public class JwtUserPassAuthFilter extends UsernamePasswordAuthenticationFilter 
                              .setExpiration(java.sql.Date.valueOf(LocalDate.now().plusWeeks(expirationAfterDays)))
                              .signWith(secretKey)
                              .compact();
+    authResult.getAuthorities()
+              .stream()
+              .filter(x -> x.getAuthority() != null && x.getAuthority().length() > 5 && x.getAuthority()
+                                                                                         .substring(0, 5)
+                                                                                         .equals("ROLE_"))
+              .findFirst()
+              .ifPresent((role -> response.addHeader("user", role.getAuthority().substring(5).toLowerCase())));
     response.addHeader(authorizationHeader, tokenPrefix + token);
   }
 }

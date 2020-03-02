@@ -1,10 +1,5 @@
-import React, { useState } from 'react';
-import {
-  Row,
-  Pagination,
-  PaginationItem,
-  PaginationLink
-} from 'reactstrap';
+import React from 'react';
+import { Row, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 
 const ProductPagination = props => {
   return (

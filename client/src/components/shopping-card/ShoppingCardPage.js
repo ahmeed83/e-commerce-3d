@@ -52,7 +52,6 @@ export const ShoppingCardPage = () => {
               </Button>
             </td>
           </tr>
-          <hr/>
           </tbody>
         </Table>
         <ColoredLine color="black" height={1}/>

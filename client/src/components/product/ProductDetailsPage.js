@@ -6,11 +6,11 @@ import {
   CardHeader,
   Col,
   Container,
-  Row
+  Row,
+  Spinner
 } from 'reactstrap';
 import { useParams } from 'react-router-dom';
 import { getOneProduct } from '../../client';
-import { Spinner3d } from '../../common/Spinner3d';
 
 export const ProductDetailsPage = () => {
   let { id } = useParams();
@@ -34,7 +34,9 @@ export const ProductDetailsPage = () => {
   return (
     <div>
       {loading ? (
-        <Spinner3d />
+        <div className='spinner'>
+          <Spinner style={{ width: '6rem', height: '6rem' }} type='grow' />
+        </div>
       ) : (
         <Container>
           <Row>

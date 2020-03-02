@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "application.jwt")
 public class JwtConfig {
-
+  //@TODO: what is "application.jwt"????
   private String secretKey;
   private String tokenPrefix;
   private int tokenExpirationAfterDays;
