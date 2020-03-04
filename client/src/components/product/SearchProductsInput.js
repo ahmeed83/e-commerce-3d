@@ -22,6 +22,13 @@ const SearchProductsInput = props => {
           onKeyPress={props.searchHandler}
           placeholder='Search Products'
         />
+        {props.admin ? (
+          <InputGroupAddon addonType='append'>
+            <Button onClick={props.reset} outline color='primary'>
+              Reset
+            </Button>
+          </InputGroupAddon>
+        ) : null}
       </InputGroup>
     </FormGroup>
   );

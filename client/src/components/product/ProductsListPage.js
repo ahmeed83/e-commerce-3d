@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Card, CardBody, CardHeader, Col, Row, Spinner } from 'reactstrap';
-import { getProductsPageFilter } from '../../client';
+import React, { useContext, useState } from 'react';
+import { Card, CardBody, CardHeader, Col, Row } from 'reactstrap';
 
 import { Carousel3D } from '../shared/Carousel3D';
 import './Product.css';
@@ -10,33 +9,24 @@ import SearchProductsReset from './SearchProductsReset';
 import Products from './Products';
 import ProductPagination from './ProductPagination';
 import Loading from '../shared/Loading';
+import { ProductContext } from '../../context/ProductContext';
+
 
 export const ProductListPage = () => {
-  const [loading, setLoading] = useState(false);
-  const [productsProvidedFiltered, setProductsProvidedFiltered] = useState([]);
-  const [productName, setProductName] = useState('');
-  const [categoryName, setCategoryName] = useState('');
-  const [pageNumber, setPageNumber] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
-  const reset = resetFun(setPageNumber, setProductName, setCategoryName);
-
-  const searchHandlerText = searchText(setProductName);
-  const searchHandlerRadio = searchRadio(setCategoryName);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      getProductsPageFilter(productName, categoryName, pageNumber, 'name').then(
-        res =>
-          res.json().then(products => {
-            setTotalPages(products.totalPages);
-            setProductsProvidedFiltered(products.content);
-            setLoading(false);
-          })
-      );
-    };
-    fetchData();
-  }, [productName, categoryName, pageNumber]);
+  const products = useContext(ProductContext);
+  const reset = resetFun(
+    products.setPageNumber,
+    products.setProductName,
+    products.setCategoryName
+  );
+  const searchHandlerText = searchText(
+    products.setPageNumber,
+    products.setProductName
+  );
+  const searchHandlerRadio = searchRadio(
+    products.setPageNumber,
+    products.setCategoryName
+  );
 
   return (
     <div>
@@ -56,47 +46,47 @@ export const ProductListPage = () => {
               </CardBody>
             </Card>
           </Col>
-
-          {loading ? (
-            <Loading />
-          ) : (
-            <Col lg='9'>
-              <Card>
-                <CardHeader>
-                  Products
-                  <div className='float-right'>
-                    <ProductPagination
-                      setPageNumber={setPageNumber}
-                      totalPages={totalPages}
-                      pageNumber={pageNumber}
-                    />
-                  </div>
-                </CardHeader>
+          <Col lg='9'>
+            <Card>
+              <CardHeader>
+                Products
+                <div className='float-right'>
+                  <ProductPagination
+                    setPageNumber={products.setPageNumber}
+                    totalPages={products.totalPages}
+                  />
+                </div>
+              </CardHeader>
+              {products.loading ? (
+                <Loading />
+              ) : (
                 <CardBody>
                   <Products
-                    productsProvidedFiltered={productsProvidedFiltered}
+                    productsProvidedFiltered={products.productsProvidedFiltered}
                   />
                 </CardBody>
-              </Card>
-            </Col>
-          )}
+              )}
+            </Card>
+          </Col>
         </Row>
       </Col>
     </div>
   );
 };
 
-function searchText(setProductName) {
+function searchText(setPageNumber, setProductName) {
   return event => {
     if (event.type === 'click') {
+      setPageNumber(0);
       setProductName(document.getElementById('searchInput').value);
       document.getElementById('searchInput').value = '';
     }
   };
 }
 
-function searchRadio(setCategoryName) {
+function searchRadio(setPageNumber, setCategoryName) {
   return event => {
+    setPageNumber(0);
     setCategoryName(event.target.value);
   };
 }

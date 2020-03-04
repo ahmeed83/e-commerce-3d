@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   Collapse,
   DropdownItem,
@@ -13,10 +13,16 @@ import {
 } from 'reactstrap';
 import logo from '../../assets/3d.webp';
 import { Link } from 'react-router-dom';
-import { ACCESS_TOKEN, USER } from '../../common/constants';
+import { LoginContext } from '../../context/LoginContext';
+import { ACCESS_TOKEN } from '../../common/constants';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faSuitcase } from '@fortawesome/free-solid-svg-icons';
 
 export const Header = () => {
-  const isLoggedIn = localStorage.getItem(ACCESS_TOKEN);
+  const shoppingCartIcon = <FontAwesomeIcon icon={faShoppingCart} />;
+
+  const userLoggedIn = useContext(LoginContext);
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const logout = () => {
@@ -43,16 +49,17 @@ export const Header = () => {
             </NavItem>
           </Nav>
           <Nav className='ml-auto px-5' navbar>
-            {localStorage.getItem(USER) === 'admin' ? (
-              <AdminNav />
+            {userLoggedIn.user === 'admin' ||
+            userLoggedIn.user === 'employee' ? (
+              <AdminNav userLoggedIn={userLoggedIn} />
             ) : (
               <NavItem>
                 <NavLink tag={Link} to='/shopping-card'>
-                  Shopping Card
+                  {shoppingCartIcon}
                 </NavLink>
               </NavItem>
             )}
-            {isLoggedIn ? (
+            {userLoggedIn.token !== null ? (
               <NavItem>
                 <NavLink href='/' onClick={logout}>
                   logout
@@ -72,20 +79,29 @@ export const Header = () => {
   );
 };
 
-const AdminNav = () => {
+const AdminNav = props => {
+  const suitcaseIcon = <FontAwesomeIcon icon={faSuitcase} />;
   return (
     <div>
       <UncontrolledDropdown nav inNavbar>
         <DropdownToggle nav caret>
-          Admin
+          Admin {suitcaseIcon}
         </DropdownToggle>
         <DropdownMenu right>
+          {props.userLoggedIn.user === 'admin' ? (
+            <DropdownItem>
+              <NavLink tag={Link} to='/employees-overview'>
+                Employees Overview
+              </NavLink>
+            </DropdownItem>
+          ) : null}
           <DropdownItem>
             <NavLink tag={Link} to='/customers-overview'>
               Customers Overview
             </NavLink>
           </DropdownItem>
           <DropdownItem divider />
+          <DropdownItem />
           <DropdownItem>
             <NavLink tag={Link} to='/orders-overview'>
               Orders Overview

@@ -1,39 +1,24 @@
 import React from 'react';
-import { Row, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import { Row } from 'reactstrap';
+import PaginationComponent from 'react-reactstrap-pagination';
 
 const ProductPagination = props => {
+  const handleSelected = index => {
+    props.setPageNumber(index - 1);
+  };
+
   return (
     <Row>
-      <Pagination size='sm'>
-        <PaginationItem>
-          <PaginationLink first onClick={() => props.setPageNumber(0)} />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink
-            previous
-            onClick={() => props.setPageNumber(props.pageNumber - 1)}
-          />
-        </PaginationItem>
-        {[...Array(5)].map((item, key) => (
-          <PaginationItem key={key}>
-            <PaginationLink onClick={() => props.setPageNumber(key)}>
-              {key + 1}
-            </PaginationLink>
-          </PaginationItem>
-        ))}
-        <PaginationItem>
-          <PaginationLink
-            next
-            onClick={() => props.setPageNumber(props.pageNumber + 1)}
-          />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink
-            last
-            onClick={() => props.setPageNumber(props.totalPages - 1)}
-          />
-        </PaginationItem>
-      </Pagination>
+      <PaginationComponent
+        totalItems={props.totalPages}
+        pageSize={1}
+        onSelect={handleSelected}
+        firstPageText={'<<'}
+        lastPageText={'>>'}
+        previousPageText={'<'}
+        nextPageText={'>'}
+        size={'sm'}
+      />
     </Row>
   );
 };
