@@ -11,20 +11,21 @@ const ProductContextProvider = props => {
   const [pageNumber, setPageNumber] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
+  const [trigger, setTrigger] = useState(0);
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       getProductsPageFilter(productName, categoryName, pageNumber, 'name').then(
-        res =>
-          res.json().then(products => {
-            setTotalPages(products.totalPages);
-            setProductsProvidedFiltered(products.content);
-            setLoading(false);
-          })
+        res => {
+          setTotalPages(res.data.totalPages);
+          setProductsProvidedFiltered(res.data.content);
+          setLoading(false);
+        }
       );
     };
     fetchData();
-  }, [productName, categoryName, pageNumber]);
+  }, [productName, categoryName, pageNumber, trigger]);
 
   return (
     <ProductContext.Provider
@@ -35,7 +36,8 @@ const ProductContextProvider = props => {
         setPageNumber,
         productsProvidedFiltered,
         totalPages,
-        loading
+        loading,
+        setTrigger
       }}
     >
       {props.children}

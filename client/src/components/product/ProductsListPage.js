@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Card, CardBody, CardHeader, Col, Row } from 'reactstrap';
 
 import { Carousel3D } from '../shared/Carousel3D';

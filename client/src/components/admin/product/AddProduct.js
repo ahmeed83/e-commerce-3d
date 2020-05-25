@@ -1,53 +1,179 @@
-import React from "react";
-import {Button, ButtonToggle, Col, Container, Form, FormGroup, Input, Label} from "reactstrap";
+import React, { useState } from 'react';
+import {
+  Button,
+  Col,
+  Container,
+  FormGroup,
+  Input,
+  Label,
+  Badge
+} from 'reactstrap';
+import { Dropzone3D } from './Dropzone3D';
+import { Link } from 'react-router-dom';
+import { Formik, Field, Form } from 'formik';
+import * as yup from 'yup';
+import { addProduct } from '../../../client';
+import CategoryDropDown from './CategoryDropDown';
+import { Alert3D } from './Alert3D';
 
 export const AddProduct = () => {
-    return (
-        <Container>
-            <h1 className="pt-3">Add Product</h1>
-            <Form className="pt-4">
-                <FormGroup row>
-                    <Label for="productName" sm={2}>
-                        Email
-                    </Label>
-                    <Col>
-                        <Input
-                            type="text"
-                            name="productName"
-                            id="productName"
-                            placeholder="Insert product name"
-                        />
-                    </Col>
-                </FormGroup>
-                <FormGroup row>
-                    <Label for="proudPrice" sm={2}>
-                        Price
-                    </Label>
-                    <Col>
-                        <Input
-                            type="text"
-                            name="proudPrice"
-                            id="proudPrice"
-                            placeholder="Insert product price"
-                        />
-                    </Col>
-                </FormGroup>
-                <FormGroup row className="pt-lg-3">
-                    <Label for="pic" sm={2}>
-                        Pictures
-                    </Label>
-                    <Col>
-                        <ButtonToggle size="lg" outline color="primary">
-                            Upload
-                        </ButtonToggle>
-                    </Col>
-                </FormGroup>
-                <FormGroup className="pt-5">
-                    <Button size="lg" className="float-right" outline color="primary">
-                        Add Product
-                    </Button>
-                </FormGroup>
+  // Alert attributes
+  const [showModal, setModalVisible] = useState(false);
+  const dismissModal = () => setModalVisible(false);
+  const [textModal, setTextModal] = useState('');
+  const [textColorModal, setTextColorModal] = useState('');
+
+  //Formik attributes
+  const initialValues = {
+    productName: '',
+    productPrice: '',
+    categoryName: '',
+    productImage: ''
+  };
+
+  const validationSchema = yup.object({
+    productName: yup.string().required('Please add a name to the product!'),
+    productPrice: yup
+      .number()
+      .typeError('you must specify a number')
+      .positive('The price must be greater than zero')
+      .required('Please add a price to the product!'),
+    categoryName: yup.string().required('Please add a category to the product!'),
+    productImage: yup.string().required('Please add an image to the product!')
+  });
+
+  return (
+    <Container>
+      <h4 className='pt-3'>Add Product</h4>
+      <Formik
+        className='pt-4'
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={(product, { setSubmitting, resetForm }) => {
+          const formData = new FormData();
+          formData.append('productName', product.productName);
+          formData.append('productPrice', product.productPrice);
+          formData.append('categoryName', product.categoryName);
+          formData.append('productImage', product.productImage);
+          addProduct(formData)
+            .then(res => {
+              setModalVisible(true);
+              setTextModal('Product with name ' + res.data + ' is Created!');
+              setTextColorModal('info');
+              resetForm({});
+              setSubmitting(false);
+            })
+            .catch(err => {
+              console.log(err);
+              setModalVisible(true);
+              setTextModal(
+                'There is some error in the server, Try after a while'
+              );
+              setTextColorModal('warning');
+              setSubmitting(false);
+            });
+        }}
+      >
+        {({ submitForm, isSubmitting, errors, touched, setFieldValue }) => (
+          <Col className='pt-4' md={{ size: 8, offset: 2 }}>
+            <Alert3D
+              visible={showModal}
+              text={textModal}
+              textColor={textColorModal}
+              onDismiss={dismissModal}
+            />
+            <Form>
+              <FormGroup row>
+                <Col md='3'>
+                  <Label for='productName'>Product Name:</Label>
+                </Col>
+                <Col md='8'>
+                  <Field
+                    type='productName'
+                    name='productName'
+                    placeholder='Insert name of the product'
+                    as={Input}
+                  />
+                  <div className='pt-1'>
+                    {errors.productName && touched.productName && (
+                      <Badge color='warning'>{errors.productName}</Badge>
+                    )}
+                  </div>
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Col md='3'>
+                  <Label for='productPrice'>Product Price:</Label>
+                </Col>
+                <Col md='8'>
+                  <Field
+                    type='text'
+                    name='productPrice'
+                    placeholder='Insert price of the product'
+                    as={Input}
+                  />
+                  <div className='pt-1'>
+                    {errors.productPrice && touched.productPrice && (
+                      <Badge color='warning'>{errors.productPrice}</Badge>
+                    )}
+                  </div>
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Col md='3'>
+                  <Label for='categoryName'>Product Category:</Label>
+                </Col>
+                <Col md='8'>
+                  <Field name='categoryName' component={CategoryDropDown} />
+                  <div className='pt-1'>
+                    {errors.categoryName && touched.categoryName && (
+                      <Badge color='warning'>{errors.categoryName}</Badge>
+                    )}
+                  </div>
+                </Col>
+              </FormGroup>
+              <FormGroup row>
+                <Col md='3'>
+                  <Label for='productImage'>Product Images:</Label>
+                </Col>
+                <Col md='3'>
+                  <Dropzone3D setFieldValue={setFieldValue} />
+                  <div className='pt-1'>
+                    {errors.productImage && touched.productImage && (
+                      <Badge color='warning'>{errors.productImage}</Badge>
+                    )}
+                  </div>
+                </Col>
+              </FormGroup>
+              <FormGroup className='pt-5'>
+                <Field
+                  size='lg'
+                  className='float-right'
+                  outline
+                  color='info'
+                  onClick={() => submitForm()}
+                  disabled={isSubmitting}
+                  as={Button}
+                >
+                  Add Product
+                </Field>
+              </FormGroup>
+              <FormGroup>
+                <Link to={`/products-overview/`}>
+                  <Button
+                    size='lg'
+                    className='float-left'
+                    outline
+                    color='primary'
+                  >
+                    Go back
+                  </Button>
+                </Link>
+              </FormGroup>
             </Form>
-        </Container>
-    );
+          </Col>
+        )}
+      </Formik>
+    </Container>
+  );
 };

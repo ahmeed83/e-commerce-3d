@@ -2,8 +2,8 @@ package com.baghdadfocusit.webshop3d.repository;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 
-import com.baghdadfocusit.webshop3d.model.Category;
-import com.baghdadfocusit.webshop3d.model.Product;
+import com.baghdadfocusit.webshop3d.entities.Category;
+import com.baghdadfocusit.webshop3d.entities.Product;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;

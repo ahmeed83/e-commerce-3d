@@ -1,39 +1,82 @@
-import { ACCESS_TOKEN } from './common/constants';
+import {
+  AUTHORIZATION_VALUE,
+  CONTENT_TYPE_JSON_VALUE,
+  PRODUCTS_URL,
+  MANAGEMENT_PRODUCTS_URL,
+  MANAGEMENT_CUSTOMERS_URL,
+  LOGIN_URL,
+  CONTENT_TYPE_FORM_VALUE,
+  MANAGEMENT_CATEGORIES_URL
+} from './common/constants';
+import Axios from 'axios';
+
 const checkStatus = response => {
-  if (response.ok) {
+  if (response.status >= 200) {
     return response;
   } else {
     let error = new Error(response.statusText);
     error.response = response;
-    response.json().then(e => {
+    response.then(e => {
       error.error = e;
     });
     return Promise.reject(error);
   }
 };
 
-export const getProducts = () => fetch('api/resources/products');
-
-export const getOneProduct = productId =>
-  fetch(`/api/resources/products/${productId}`);
-
 export const getProductsPageFilter = (name, categoryName, page, sortBy) =>
-  fetch(
-    `api/resources/products?name=${name}&categoryName=${categoryName}&page=${page}&sortBy=${sortBy}`
-  );
+  Axios.get(
+    PRODUCTS_URL +
+      `?name=${name}&categoryName=${categoryName}&page=${page}&sortBy=${sortBy}`,
+    {
+      headers: {
+        'Content-Type': CONTENT_TYPE_JSON_VALUE
+      }
+    }
+  ).then(checkStatus);
 
 export const login = loginInfo =>
-  fetch('api/login', {
-    headers: { 'Content-Type': 'application/json' },
-    method: 'POST',
-    body: JSON.stringify(loginInfo)
+  Axios.post(LOGIN_URL, loginInfo, {
+    headers: {
+      'Content-Type': CONTENT_TYPE_JSON_VALUE
+    }
   }).then(checkStatus);
 
 export const getCustomers = () =>
-  fetch('api/management/v1/customers', {
+  Axios.get(MANAGEMENT_CUSTOMERS_URL, {
     headers: {
-      Authorization: 'Bearer ' + localStorage.getItem(ACCESS_TOKEN),
-      'Content-Type': 'application/json'
-    },
-    method: 'GET'
-  });
+      Authorization: AUTHORIZATION_VALUE,
+      'Content-Type': CONTENT_TYPE_JSON_VALUE
+    }
+  }).then(checkStatus);
+
+export const deleteProduct = productId =>
+  Axios.delete(MANAGEMENT_PRODUCTS_URL + productId, {
+    headers: {
+      Authorization: AUTHORIZATION_VALUE,
+      'Content-Type': CONTENT_TYPE_JSON_VALUE
+    }
+  }).then(checkStatus);
+
+export const editProduct = productId =>
+  Axios.put(MANAGEMENT_PRODUCTS_URL + productId, {
+    headers: {
+      Authorization: AUTHORIZATION_VALUE,
+      'Content-Type': CONTENT_TYPE_JSON_VALUE
+    }
+  }).then(checkStatus);
+
+export const addProduct = product =>
+  Axios.post(MANAGEMENT_PRODUCTS_URL, product, {
+    headers: {
+      Authorization: AUTHORIZATION_VALUE,
+      'Content-Type': CONTENT_TYPE_FORM_VALUE
+    }
+  }).then(checkStatus);
+
+export const getCategories = () =>
+  Axios.get(MANAGEMENT_CATEGORIES_URL, {
+    headers: {
+      Authorization: AUTHORIZATION_VALUE,
+      'Content-Type': CONTENT_TYPE_JSON_VALUE
+    }
+  }).then(checkStatus);

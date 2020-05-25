@@ -116,6 +116,13 @@
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
     </dependency>
+
+    <!--AWS-->
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk</artifactId>
+      <version>1.11.743</version>
+    </dependency>
   </dependencies>
 
   <build>

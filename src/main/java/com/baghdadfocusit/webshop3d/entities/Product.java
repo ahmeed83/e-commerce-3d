@@ -1,7 +1,9 @@
-package com.baghdadfocusit.webshop3d.model;
+package com.baghdadfocusit.webshop3d.entities;
 
-import javax.persistence.CascadeType;
+import java.util.UUID;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
@@ -23,7 +25,12 @@ public class Product extends BaseModel {
   private String picLocation;
   @NotNull
   private String price;
-  @ManyToOne(cascade = {CascadeType.ALL})
-  @JoinColumn(name = "category_id")
+
+  @JoinColumn(name = "category_id", insertable = false, updatable = false)
+  @ManyToOne(targetEntity = Category.class, fetch = FetchType.EAGER)
   private Category category;
+
+  @NotNull
+  @Column(name = "category_id")
+  private UUID categoryId;
 }

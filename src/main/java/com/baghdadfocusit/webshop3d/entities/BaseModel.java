@@ -1,4 +1,4 @@
-package com.baghdadfocusit.webshop3d.model;
+package com.baghdadfocusit.webshop3d.entities;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;

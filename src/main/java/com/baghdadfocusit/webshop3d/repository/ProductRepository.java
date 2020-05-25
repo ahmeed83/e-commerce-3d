@@ -1,6 +1,6 @@
 package com.baghdadfocusit.webshop3d.repository;
 
-import com.baghdadfocusit.webshop3d.model.Product;
+import com.baghdadfocusit.webshop3d.entities.Product;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

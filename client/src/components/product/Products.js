@@ -21,7 +21,12 @@ const Products = props => {
         <Row>
           {props.productsProvidedFiltered.map((product, id) => (
             <Col key={id} lg='3' md='2' sm='2' className='py-2 px-2'>
-              <Link to={`/product/${product.id}`}>
+              <Link
+                to={{
+                  pathname: `/product`,
+                  state: { product }
+                }}
+              >
                 <Card>
                   <CardHeader
                     style={{

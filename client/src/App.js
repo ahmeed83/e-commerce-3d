@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
 import { ProductListPage } from './components/product/ProductsListPage';
 import { Header } from './components/shared/Header';
-import { ErrorPage } from './ErrorPage';
 import { Footer } from './components/shared/Footer';
 import { ProductDetailsPage } from './components/product/ProductDetailsPage';
 import { ShoppingCardPage } from './components/shopping-card/ShoppingCardPage';
@@ -32,14 +31,14 @@ function App() {
             <Route path='/shopping-card'>
               <ShoppingCardPage />
             </Route>
+            <Route path={`/product`}>
+              <ProductDetailsPage />
+            </Route>
             <ProductContextProvider>
               <Route exact path='/'>
                 <ProductListPage />
               </Route>
             </ProductContextProvider>
-            <Route path={`/product/:id`}>
-              <ProductDetailsPage />
-            </Route>
             {/* <ErrorPage /> */}
           </Switch>
         </div>

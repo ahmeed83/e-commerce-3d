@@ -8,3 +8,11 @@ spring:
 
   application:
     name: 3D Webshop
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+
+application:
+  properties:
+    imageBucketLink: 3d-webshop-upload-image

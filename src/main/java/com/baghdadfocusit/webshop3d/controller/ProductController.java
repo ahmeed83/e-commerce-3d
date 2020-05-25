@@ -1,6 +1,6 @@
 package com.baghdadfocusit.webshop3d.controller;
 
-import com.baghdadfocusit.webshop3d.model.Product;
+import com.baghdadfocusit.webshop3d.entities.Product;
 import com.baghdadfocusit.webshop3d.service.ProductService;
 import java.util.Optional;
 import org.springframework.data.domain.Page;

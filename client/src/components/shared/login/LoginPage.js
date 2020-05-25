@@ -46,18 +46,23 @@ export const LoginPage = props => {
                   // rememberMe: false
                 }}
                 validationSchema={validationSchema}
-                onSubmit={loginInfo => {
+                onSubmit={(loginInfo, { setSubmitting }) => {
                   login(loginInfo)
                     .then(response => {
                       // props.onSuccess();
                       console.log(response);
-                      localStorage.setItem(ACCESS_TOKEN, response.headers.get('Authorization'));
-                      localStorage.setItem(USER, response.headers.get('user'));
+                      localStorage.setItem(
+                        ACCESS_TOKEN,
+                        response.headers.authorization
+                      );
+                      localStorage.setItem(USER, response.headers.user);
+                      setSubmitting(false);
                       window.location = '/';
                     })
                     .catch(err => {
                       // props.onFailure(err);
                       console.log(err);
+                      setSubmitting(false);
                     });
                 }}
               >

@@ -1,6 +1,6 @@
 package com.baghdadfocusit.webshop3d.controller.management;
 
-import com.baghdadfocusit.webshop3d.model.Customer;
+import com.baghdadfocusit.webshop3d.entities.Customer;
 import com.baghdadfocusit.webshop3d.service.CustomerService;
 import java.time.LocalDate;
 import javax.validation.Valid;

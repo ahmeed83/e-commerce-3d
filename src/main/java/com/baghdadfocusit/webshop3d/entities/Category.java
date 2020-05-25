@@ -1,4 +1,4 @@
-package com.baghdadfocusit.webshop3d.model;
+package com.baghdadfocusit.webshop3d.entities;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;

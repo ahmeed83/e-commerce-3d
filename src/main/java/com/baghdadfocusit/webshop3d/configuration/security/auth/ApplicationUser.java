@@ -1,6 +1,6 @@
 package com.baghdadfocusit.webshop3d.configuration.security.auth;
 
-import com.baghdadfocusit.webshop3d.model.BaseModel;
+import com.baghdadfocusit.webshop3d.entities.BaseModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import javax.persistence.Column;

@@ -19,16 +19,11 @@ export const CustomersOverview = () => {
   const [isLoading, setLoading] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      getCustomers().then(res =>
-        res.json().then(customers => {
-          setCustomers(customers);
-          setLoading(false);
-        })
-      );
-    };
-    fetchData();
+    setLoading(true);
+    getCustomers().then(res => {
+      setCustomers(res.data);
+      setLoading(false);
+    });
   }, []);
 
   return (

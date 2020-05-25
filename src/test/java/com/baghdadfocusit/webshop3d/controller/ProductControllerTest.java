@@ -12,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.baghdadfocusit.webshop3d.model.Product;
+import com.baghdadfocusit.webshop3d.entities.Product;
 import com.baghdadfocusit.webshop3d.service.ProductService;
 import java.time.LocalDate;
 import java.util.Optional;

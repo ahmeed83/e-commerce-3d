@@ -1,6 +1,5 @@
 package com.baghdadfocusit.webshop3d.controller.management;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -10,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.baghdadfocusit.webshop3d.model.Product;
+import com.baghdadfocusit.webshop3d.entities.Product;
 import com.baghdadfocusit.webshop3d.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDate;
@@ -76,7 +75,7 @@ class ProductManagementControllerTest {
                      .price("$200")
                      .picLocation("location")
                      .build();
-    when(productService.createNewProduct(any(Product.class))).thenReturn(product);
+//    when(productService.createNewProduct(any(ProductJson.class))).thenReturn(product);
     when(productService.findProduct(String.valueOf(TEST_UUID))).thenReturn(java.util.Optional.ofNullable(product));
   }
 
