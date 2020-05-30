@@ -5,7 +5,7 @@ package com.baghdadfocusit.webshop3d.exception.security;
  */
 public class UserNotAuthenticatedException extends UserAuthenticationException {
 
-  public UserNotAuthenticatedException(Throwable cause) {
-    super("User is not authenticated", cause);
-  }
+    public UserNotAuthenticatedException(Throwable cause) {
+        super("User is not authenticated", cause);
+    }
 }

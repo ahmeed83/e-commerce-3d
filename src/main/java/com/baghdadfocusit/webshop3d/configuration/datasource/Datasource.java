@@ -14,15 +14,14 @@ import org.springframework.context.annotation.Profile;
 @Profile("dev")
 public class Datasource {
 
-  /**
-   * Bean that take care of the connection with the database
-   * @return
-   */
-  @Bean
-  @ConfigurationProperties("app.datasource")
-  HikariDataSource hikariDataSource() {
-    return DataSourceBuilder.create()
-        .type(HikariDataSource.class)
-        .build();
-  }
+    /**
+     * Bean that take care of the connection with the database
+     *
+     * @return
+     */
+    @Bean
+    @ConfigurationProperties("app.datasource")
+    HikariDataSource hikariDataSource() {
+        return DataSourceBuilder.create().type(HikariDataSource.class).build();
+    }
 }

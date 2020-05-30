@@ -5,7 +5,7 @@ package com.baghdadfocusit.webshop3d.exception.security;
  */
 public class UserAlreadyExistsException extends UserAuthenticationException {
 
-  public UserAlreadyExistsException() {
-    super("User already exists");
-  }
+    public UserAlreadyExistsException() {
+        super("User already exists");
+    }
 }

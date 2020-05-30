@@ -5,7 +5,7 @@ package com.baghdadfocusit.webshop3d.exception.security;
  */
 public class PasswordDoesNotMatchException extends UserAuthenticationException {
 
-  public PasswordDoesNotMatchException() {
-    super("Password does't match");
-  }
+    public PasswordDoesNotMatchException() {
+        super("Password does't match");
+    }
 }

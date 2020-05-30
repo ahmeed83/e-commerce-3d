@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping
 public class RegistrationController {
 
-  private final ApplicationUserService applicationUserService;
+    private final ApplicationUserService applicationUserService;
 
-  public RegistrationController(ApplicationUserService applicationUserService) {
-    this.applicationUserService = applicationUserService;
-  }
+    public RegistrationController(ApplicationUserService applicationUserService) {
+        this.applicationUserService = applicationUserService;
+    }
 
-  /**
-   * Endpoint to register a new user.
-   *
-   * @param newUser new user
-   * @return ResponseEntity
-   * @throws Exception Exception
-   */
-  @PostMapping("sign-up")
-  public ResponseEntity registerNewUser(@RequestBody ApplicationUser newUser) throws Exception {
-    applicationUserService.saveApplicationUser(newUser);
-    //TODO: after successful registration, redirect to the login page in the frontend
-    return ResponseEntity.ok().build();
-  }
+    /**
+     * Endpoint to register a new user.
+     *
+     * @param newUser new user
+     * @return ResponseEntity
+     * @throws Exception Exception
+     */
+    @PostMapping("sign-up")
+    public ResponseEntity registerNewUser(@RequestBody ApplicationUser newUser) throws Exception {
+        applicationUserService.saveApplicationUser(newUser);
+        //TODO: after successful registration, redirect to the login page in the frontend
+        return ResponseEntity.ok().build();
+    }
 }

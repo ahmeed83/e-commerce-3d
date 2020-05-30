@@ -5,33 +5,24 @@ package com.baghdadfocusit.webshop3d.configuration.security.auth;
  */
 public enum ApplicationUserPermission {
 
-  CUSTOMER_READ("customer:read"),
-  CUSTOMER_WRITE("customer:write"),
-  CUSTOMER_UPDATE("customer:update"),
-  CUSTOMER_DELETE("customer:delete"),
+    CUSTOMER_READ("customer:read"), CUSTOMER_WRITE("customer:write"), CUSTOMER_UPDATE(
+            "customer:update"), CUSTOMER_DELETE("customer:delete"),
 
-  EMPLOYEE_READ("employee:read"),
-  EMPLOYEE_WRITE("employee:write"),
-  EMPLOYEE_UPDATE("employee:update"),
-  EMPLOYEE_DELETE("employee:delete"),
+    EMPLOYEE_READ("employee:read"), EMPLOYEE_WRITE("employee:write"), EMPLOYEE_UPDATE(
+            "employee:update"), EMPLOYEE_DELETE("employee:delete"),
 
-  PRODUCT_READ("product:read"),
-  PRODUCT_WRITE("product:write"),
-  PRODUCT_UPDATE("product:update"),
-  PRODUCT_DELETE("product:delete"),
+    PRODUCT_READ("product:read"), PRODUCT_WRITE("product:write"), PRODUCT_UPDATE("product:update"), PRODUCT_DELETE(
+            "product:delete"),
 
-  ORDER_READ("order:read"),
-  ORDER_WRITE("order:write"),
-  ORDER_UPDATE("order:update"),
-  ORDER_DELETE("order:delete");
+    ORDER_READ("order:read"), ORDER_WRITE("order:write"), ORDER_UPDATE("order:update"), ORDER_DELETE("order:delete");
 
-  private final String permission;
+    private final String permission;
 
-  ApplicationUserPermission(String permission) {
-    this.permission = permission;
-  }
+    ApplicationUserPermission(String permission) {
+        this.permission = permission;
+    }
 
-  public String getPermission() {
-    return permission;
-  }
+    public String getPermission() {
+        return permission;
+    }
 }

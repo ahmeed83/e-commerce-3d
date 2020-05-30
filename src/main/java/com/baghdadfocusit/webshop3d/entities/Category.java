@@ -1,11 +1,12 @@
 package com.baghdadfocusit.webshop3d.entities;
 
-import javax.persistence.Entity;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+
+import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @SuperBuilder
@@ -14,6 +15,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class Category extends BaseModel {
 
-  @NotNull
-  private String name;
+    @NotNull
+    private String name;
 }

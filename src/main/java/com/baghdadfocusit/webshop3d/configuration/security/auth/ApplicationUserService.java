@@ -13,34 +13,32 @@ import org.springframework.stereotype.Service;
 @Service
 public class ApplicationUserService implements UserDetailsService {
 
-  private final ApplicationUserPrincipalRepository applicationUserPrincipalRepository;
+    private final ApplicationUserPrincipalRepository applicationUserPrincipalRepository;
 
-  @Autowired
-  public ApplicationUserService(ApplicationUserPrincipalRepository applicationUserPrincipalRepository) {
-    this.applicationUserPrincipalRepository = applicationUserPrincipalRepository;
-  }
+    @Autowired
+    public ApplicationUserService(ApplicationUserPrincipalRepository applicationUserPrincipalRepository) {
+        this.applicationUserPrincipalRepository = applicationUserPrincipalRepository;
+    }
 
-  /**
-   * Load user form the data base
-   *
-   * @param userName userName
-   * @return the loaded user
-   * @throws UsernameNotFoundException UsernameNotFoundException
-   */
-  @Override
-  public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-    return applicationUserPrincipalRepository.findUserByUserName(userName)
-                                             .orElseThrow(() -> new UsernameNotFoundException(String.format(
-                                                 "UserName %s not found",
-                                                 userName)));
-  }
+    /**
+     * Load user form the data base
+     *
+     * @param userName userName
+     * @return the loaded user
+     * @throws UsernameNotFoundException UsernameNotFoundException
+     */
+    @Override
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        return applicationUserPrincipalRepository.findUserByUserName(userName)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("UserName %s not found", userName)));
+    }
 
-  /**
-   * Register a new user in the database
-   *
-   * @param applicationUser the new user
-   */
-  public void saveApplicationUser(ApplicationUser applicationUser) throws UserAuthenticationException {
-    applicationUserPrincipalRepository.saveApplicationUser(applicationUser);
-  }
+    /**
+     * Register a new user in the database
+     *
+     * @param applicationUser the new user
+     */
+    public void saveApplicationUser(ApplicationUser applicationUser) throws UserAuthenticationException {
+        applicationUserPrincipalRepository.saveApplicationUser(applicationUser);
+    }
 }
