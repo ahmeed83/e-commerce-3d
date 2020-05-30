@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,11 +31,11 @@ import static org.apache.http.entity.ContentType.IMAGE_PNG;
 @RequiredArgsConstructor
 public class ProductService {
 
-    private final ProductRepository productRepository;
-    private final AmazonFileStore amazonFileStore;
-    private final Logger logger = LoggerFactory.getLogger(ProductService.class);
     @Value("${aws.s3.bucket}")
     private String bucket;
+    private final ProductRepository productRepository;
+    private final AmazonFileStore amazonFileStore;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductService.class);
 
     public Optional<Product> findProduct(String productId) {
         return productRepository.findById(UUID.fromString(productId));
@@ -45,10 +46,8 @@ public class ProductService {
     }
 
     public String createProductAndGetProductName(ProductJson productJson) {
-
         final String imageLink = saveImageInAmazonAndGetLink(productJson.getProductImage(),
                                                              productJson.getProductName());
-
         final Product product = Product.builder()
                 .createdAt(LocalDate.now())
                 .name(productJson.getProductName())
@@ -57,7 +56,7 @@ public class ProductService {
                 .categoryId(UUID.fromString(productJson.getCategoryId()))
                 .build();
         final var savedProduct = productRepository.save(product);
-        logger.info("Product is saved with product Id: {}", savedProduct.getId());
+        LOGGER.info("Product is saved with product Id: {}", savedProduct.getId());
         return String.valueOf(savedProduct.getName());
     }
 
@@ -76,18 +75,23 @@ public class ProductService {
 
     private String saveImageInAmazonAndGetLink(final MultipartFile productImage, final String productName) {
         isImage(productImage);
-        final Map<String, String> metadata = new HashMap<>();
-        metadata.put("Content-Type", productImage.getContentType());
-        metadata.put("Content-Length", String.valueOf(productImage.getSize()));
+        final Map<String, String> metadata = getMetaData(productImage);
         final String path = String.format("%s/%s", bucket, productName);
-        final String fileName = String.format("%s-%s", productImage.getOriginalFilename(), UUID.randomUUID());
-
+        final String fileName = String.format("%s-%s-%s", productName, UUID.randomUUID(), LocalDateTime.now());
         try {
+            LOGGER.info("Uploading image with name= " + fileName);
             amazonFileStore.saveImageInAmazon(path, fileName, Optional.of(metadata), productImage.getInputStream());
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
         return fileName;
+    }
+
+    private Map<String, String> getMetaData(final MultipartFile productImage) {
+        final Map<String, String> metadata = new HashMap<>();
+        metadata.put("Content-Type", productImage.getContentType());
+        metadata.put("Content-Length", String.valueOf(productImage.getSize()));
+        return metadata;
     }
 
     private void isImage(final MultipartFile productImage) {

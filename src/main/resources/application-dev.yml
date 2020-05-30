@@ -10,8 +10,9 @@ app:
 
 # AWS S3 configuration
 aws:
-  access_key_id: 'AKIAIW6DFGN33INHDGLQ'
-  secret_access_key: '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'
+  endpointUrl: 'https://s3.us-east-2.amazonaws.com'
+  access_key_id: 'AKIA25AXLWROY7Z4M6FZ'
+  secret_access_key: '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'
   s3:
     bucket: '3d-iraq.com'
     region: 'me-south-1'
