@@ -10,7 +10,7 @@ import { getCategories } from '../../../client';
 const CategoryDropDown = props => {
   const [selectedCategoryName, setSelectedCategoryName] = useState('Choose Category');
   const [categories, setCategories] = useState([]);
-  
+
   useEffect(() => {
     getCategories().then(res => {
       setCategories(res.data);
@@ -19,7 +19,7 @@ const CategoryDropDown = props => {
 
   const handelChange = e => {
     setSelectedCategoryName(e.target.name);
-    props.form.setFieldValue(props.field.name, e.target.name);
+    props.form.setFieldValue(props.field.name, e.target.value);
   };
 
   return (
@@ -31,6 +31,7 @@ const CategoryDropDown = props => {
         {categories.map(category => (
           <DropdownItem
             key={category.id}
+            value={category.id}
             onClick={handelChange}
             name={category.name}
           >

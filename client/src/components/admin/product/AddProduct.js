@@ -27,7 +27,7 @@ export const AddProduct = () => {
   const initialValues = {
     productName: '',
     productPrice: '',
-    categoryName: '',
+    categoryId: '',
     productImage: ''
   };
 
@@ -38,7 +38,7 @@ export const AddProduct = () => {
       .typeError('you must specify a number')
       .positive('The price must be greater than zero')
       .required('Please add a price to the product!'),
-    categoryName: yup.string().required('Please add a category to the product!'),
+    categoryId: yup.string().required('Please add a category to the product!'),
     productImage: yup.string().required('Please add an image to the product!')
   });
 
@@ -53,7 +53,7 @@ export const AddProduct = () => {
           const formData = new FormData();
           formData.append('productName', product.productName);
           formData.append('productPrice', product.productPrice);
-          formData.append('categoryName', product.categoryName);
+          formData.append('categoryId', product.categoryId);
           formData.append('productImage', product.productImage);
           addProduct(formData)
             .then(res => {
@@ -121,13 +121,13 @@ export const AddProduct = () => {
               </FormGroup>
               <FormGroup row>
                 <Col md='3'>
-                  <Label for='categoryName'>Product Category:</Label>
+                  <Label for='categoryId'>Product Category:</Label>
                 </Col>
                 <Col md='8'>
-                  <Field name='categoryName' component={CategoryDropDown} />
+                  <Field name='categoryId' component={CategoryDropDown} />
                   <div className='pt-1'>
-                    {errors.categoryName && touched.categoryName && (
-                      <Badge color='warning'>{errors.categoryName}</Badge>
+                    {errors.categoryId && touched.categoryId && (
+                      <Badge color='warning'>{errors.categoryId}</Badge>
                     )}
                   </div>
                 </Col>
