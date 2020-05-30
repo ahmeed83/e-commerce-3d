@@ -9,6 +9,7 @@ import { CustomersOverview } from './components/admin/customers/CustomersOvervie
 import { LoginContext } from './context/LoginContext';
 import ProductContextProvider from './context/ProductContext';
 import { EmployeeOverview } from './components/admin/employees/EmployeeOverview';
+import { CategoryOverview } from './components/admin/category/CategoryOverview';
 
 const ManagementRoutes = () => {
   const userLoggedIn = useContext(LoginContext);
@@ -17,24 +18,27 @@ const ManagementRoutes = () => {
       {userLoggedIn.user === 'employee' || userLoggedIn.user === 'admin' ? (
         <div>
           {userLoggedIn.user === 'admin' ? (
-            <Route path='/employees-overview'>
+            <Route path="/employees-overview">
               <EmployeeOverview />
             </Route>
           ) : (
-            <Redirect push to='/' />
+            <Redirect push to="/" />
           )}
           <ProductContextProvider>
-            <Route path='/products-overview'>
+            <Route path="/products-overview">
               <ProductOverview />
             </Route>
           </ProductContextProvider>
-          <Route path='/orders-overview'>
+          <Route path="/orders-overview">
             <OrderOverview />
           </Route>
-          <Route path='/customers-overview'>
+          <Route path="/customers-overview">
             <CustomersOverview />
           </Route>
-          <Route exact path='/add-product'>
+          <Route path="/category-overview">
+            <CategoryOverview />
+          </Route>
+          <Route exact path="/add-product">
             <AddProduct />
           </Route>
           <Route path={`/order-page/:orderId`}>
@@ -42,7 +46,7 @@ const ManagementRoutes = () => {
           </Route>
         </div>
       ) : (
-        <Redirect push to='/' />
+        <Redirect push to="/" />
       )}
     </div>
   );

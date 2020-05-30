@@ -112,6 +112,11 @@ const AdminNav = props => {
               Products Overview
             </NavLink>
           </DropdownItem>
+          <DropdownItem>
+            <NavLink tag={Link} to='/category-overview'>
+              Category Overview
+            </NavLink>
+          </DropdownItem>
         </DropdownMenu>
       </UncontrolledDropdown>
     </div>
