@@ -51,17 +51,20 @@ public class CategoryService {
      * @param categoryId categoryId
      * @return sub categories
      */
-    public List<String> getAllSubCategories(final String categoryId) {
+    public List<SubCategoryJson> getAllSubCategories(final String categoryId) {
         final List<SubCategory> subCategoriesByCategoryIdList;
         try {
             subCategoriesByCategoryIdList = subCategoryRepository.findSubCategoriesByCategoryId(
                     UUID.fromString(categoryId));
             if (subCategoriesByCategoryIdList.isEmpty()) {
-                return List.of("No sub categories found");
+                return List.of(new SubCategoryJson(UUID.randomUUID(), "No sub categories found", "categoryId"));
             }
-            return subCategoriesByCategoryIdList.stream().map(SubCategory::getName).collect(Collectors.toList());
+            return subCategoriesByCategoryIdList.stream()
+                    .map(subCategory -> new SubCategoryJson(subCategory.getId(), subCategory.getName(),
+                                                            String.valueOf(subCategory.getCategoryId())))
+                    .collect(Collectors.toList());
         } catch (Exception e) {
-            return List.of("No Category selected");
+            return List.of(new SubCategoryJson(UUID.randomUUID(), "No Category selected", "categoryId"));
         }
     }
 

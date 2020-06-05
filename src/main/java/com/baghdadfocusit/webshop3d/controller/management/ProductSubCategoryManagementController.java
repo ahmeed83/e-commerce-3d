@@ -32,7 +32,7 @@ public class ProductSubCategoryManagementController {
 
     @GetMapping("/{categoryId}")
     @PreAuthorize(HAS_ROLE_ADMIN_AND_EMPLOYEE)
-    public ResponseEntity<List<String>> getSubCategories(@PathVariable String categoryId) {
+    public ResponseEntity<List<SubCategoryJson>> getSubCategories(@PathVariable String categoryId) {
         return new ResponseEntity<>(categoryService.getAllSubCategories(categoryId), HttpStatus.ACCEPTED);
     }
 

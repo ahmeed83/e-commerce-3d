@@ -53,7 +53,7 @@ public class ProductSubCategoryManagementControllerTest {
     @BeforeEach
     void setUp() {
         category = Category.builder().id(CATEGORY_ID).name("Laptop").createdAt(LocalDate.now()).build();
-        subCategoryJson = new SubCategoryJson("MacBook", String.valueOf(CATEGORY_ID));
+        subCategoryJson = new SubCategoryJson(UUID.randomUUID(), "MacBook", String.valueOf(CATEGORY_ID));
     }
 
     @Test

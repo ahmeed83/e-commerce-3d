@@ -22,5 +22,7 @@ public class ProductJson {
     @NotNull
     private String categoryId;
     @NotNull
+    private String subCategoryId;
+    @NotNull
     private MultipartFile productImage;
 }

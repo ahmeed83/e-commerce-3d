@@ -1,6 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown,} from 'reactstrap';
-import {getSubCategories} from '../../../client';
+import React, { useEffect, useState } from 'react';
+import {
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  UncontrolledDropdown,
+} from 'reactstrap';
+import { getSubCategories } from '../../../client';
 
 export const SubCategoryDropDownList = (props) => {
   const [selectedSubCategoryName, setSelectedSubCategoryName] = useState(
@@ -15,8 +20,10 @@ export const SubCategoryDropDownList = (props) => {
   }, [props.categoryId]);
 
   const handelChange = (e) => {
+    if (props.form) {
+      props.form.setFieldValue(props.field.name, e.target.value);
+    }
     setSelectedSubCategoryName(e.target.name);
-    // props.form.setFieldValue(props.field.name, e.target.value);
   };
 
   return (
@@ -27,14 +34,17 @@ export const SubCategoryDropDownList = (props) => {
       <DropdownMenu>
         {subCategories.map((subCategory) => (
           <DropdownItem
-            key={subCategory}
+            key={subCategory.id}
+            value={subCategory.id}
             onClick={handelChange}
-            name={subCategory}
+            name={subCategory.subCategoryName}
           >
-            {subCategory}
+            {subCategory.subCategoryName}
           </DropdownItem>
         ))}
       </DropdownMenu>
     </UncontrolledDropdown>
   );
 };
+
+export default SubCategoryDropDownList;

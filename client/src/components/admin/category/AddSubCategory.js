@@ -27,7 +27,6 @@ export const AddSubCategory = () => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(subCategoryName, { setSubmitting, resetForm }) => {
-        console.log(subCategoryName);
         addSubCategory(subCategoryName)
           .then((res) => {
             setModalVisible(true);

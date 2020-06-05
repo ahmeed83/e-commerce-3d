@@ -1,6 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown,} from 'reactstrap';
-import {getCategories} from '../../../client';
+import React, { useEffect, useState } from 'react';
+import {
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  UncontrolledDropdown,
+} from 'reactstrap';
+import { getCategories } from '../../../client';
 
 const CategoryDropDownList = (props) => {
   const [selectedCategoryName, setSelectedCategoryName] = useState(

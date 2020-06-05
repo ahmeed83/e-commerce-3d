@@ -54,6 +54,7 @@ public class ProductService {
                 .price(productJson.getProductPrice())
                 .picLocation(imageLink)
                 .categoryId(UUID.fromString(productJson.getCategoryId()))
+                .subCategoryId(UUID.fromString(productJson.getSubCategoryId()))
                 .build();
         final var savedProduct = productRepository.save(product);
         LOGGER.info("Product is saved with product Id: {}", savedProduct.getId());

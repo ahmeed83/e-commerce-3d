@@ -50,7 +50,6 @@ export const LoginPage = props => {
                   login(loginInfo)
                     .then(response => {
                       // props.onSuccess();
-                      console.log(response);
                       localStorage.setItem(
                         ACCESS_TOKEN,
                         response.headers.authorization
@@ -61,7 +60,6 @@ export const LoginPage = props => {
                     })
                     .catch(err => {
                       // props.onFailure(err);
-                      console.log(err);
                       setSubmitting(false);
                     });
                 }}
