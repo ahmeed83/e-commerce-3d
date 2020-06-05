@@ -15,9 +15,9 @@ import org.springframework.context.annotation.Profile;
 public class Datasource {
 
     /**
-     * Bean that take care of the connection with the database
+     * Bean that take care of the connection with the database.
      *
-     * @return
+     * @return DataSourceBuilder
      */
     @Bean
     @ConfigurationProperties("app.datasource")

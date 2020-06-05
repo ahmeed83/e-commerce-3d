@@ -1,10 +1,7 @@
 package com.baghdadfocusit.webshop3d.repository;
 
-import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
-
 import com.baghdadfocusit.webshop3d.entities.Category;
 import com.baghdadfocusit.webshop3d.entities.Product;
-import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +9,10 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
+
+import java.time.LocalDate;
+
+import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 
 @DataJpaTest
 @ActiveProfiles("test")
