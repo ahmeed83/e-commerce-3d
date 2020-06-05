@@ -3,14 +3,13 @@ import { Card, CardBody, CardHeader, Col, Row } from 'reactstrap';
 
 import { Carousel3D } from '../shared/Carousel3D';
 import './Product.css';
-import SearchProductsRadio from './SearchProductsRadio';
+import SearchProductsByCategoryPage from './SearchProductsByCategoryPage';
 import SearchProductsInput from './SearchProductsInput';
 import SearchProductsReset from './SearchProductsReset';
 import Products from './Products';
 import ProductPagination from './ProductPagination';
 import Loading from '../shared/Loading';
 import { ProductContext } from '../../context/ProductContext';
-
 
 export const ProductListPage = () => {
   const products = useContext(ProductContext);
@@ -31,26 +30,28 @@ export const ProductListPage = () => {
   return (
     <div>
       <Col style={{ color: 'skyblue' }}>
-        <div className='pt-2 px-1'>
+        <div className="pt-2 px-1">
           <Carousel3D />
         </div>
 
-        <Row className='pt-2 px-2'>
-          <Col lg='3'>
+        <Row className="pt-2 px-2">
+          <Col lg="3">
             <Card>
               <CardHeader>Search</CardHeader>
               <CardBody>
                 <SearchProductsReset reset={reset} />
                 <SearchProductsInput searchHandler={searchHandlerText} />
-                <SearchProductsRadio searchHandler={searchHandlerRadio} />
+                <SearchProductsByCategoryPage
+                  searchHandler={searchHandlerRadio}
+                />
               </CardBody>
             </Card>
           </Col>
-          <Col lg='9'>
+          <Col lg="9">
             <Card>
               <CardHeader>
                 Products
-                <div className='float-right'>
+                <div className="float-right">
                   <ProductPagination
                     setPageNumber={products.setPageNumber}
                     totalPages={products.totalPages}
@@ -75,7 +76,7 @@ export const ProductListPage = () => {
 };
 
 function searchText(setPageNumber, setProductName) {
-  return event => {
+  return (event) => {
     if (event.type === 'click') {
       setPageNumber(0);
       setProductName(document.getElementById('searchInput').value);
@@ -85,22 +86,27 @@ function searchText(setPageNumber, setProductName) {
 }
 
 function searchRadio(setPageNumber, setCategoryName) {
-  return event => {
+  return (event) => {
     setPageNumber(0);
     setCategoryName(event.target.value);
   };
 }
 
-function resetFun(setPageNumber, setProductName, setCategoryName) {
-  return () => {
-    setPageNumber(0);
-    setProductName('');
-    setCategoryName('');
-    document.getElementById('searchInput').value = '';
-    document.getElementById('Laptop').checked = false;
-    document.getElementById('PC').checked = false;
-    document.getElementById('Headphone').checked = false;
-    document.getElementById('MacBook').checked = false;
-    document.getElementById('iPhone').checked = false;
+function resetFun() {
+  return (event) => {
+    window.location.reload(false);
   };
 }
+// function resetFun(setPageNumber, setProductName, setCategoryName) {
+//   return () => {
+//     setPageNumber(0);
+//     setProductName('');
+//     setCategoryName('');
+//     document.getElementById('searchInput').value = '';
+//     document.getElementById('Laptop').checked = false;
+//     document.getElementById('PC').checked = false;
+//     document.getElementById('Headphone').checked = false;
+//     document.getElementById('MacBook').checked = false;
+//     document.getElementById('iPhone').checked = false;
+//   };
+//}
