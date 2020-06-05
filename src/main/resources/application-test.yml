@@ -23,6 +23,15 @@ spring:
     username: sa
     password:
 
+# AWS S3 configuration
+aws:
+  endpointUrl: 'test'
+  access_key_id: 'test'
+  secret_access_key: 'test'
+  s3:
+    bucket: 'test'
+    region: 'test'
+
 application:
   jwt:
     secretKey: 'testsecuretestsecuretestsecuretestsecuretestsecuretestsecure'

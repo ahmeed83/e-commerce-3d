@@ -1,36 +1,111 @@
 package com.baghdadfocusit.webshop3d.service;
 
 import com.baghdadfocusit.webshop3d.entities.Category;
+import com.baghdadfocusit.webshop3d.entities.SubCategory;
+import com.baghdadfocusit.webshop3d.exception.category.CategoryAlreadyExistsException;
+import com.baghdadfocusit.webshop3d.exception.category.CategoryNotFoundException;
+import com.baghdadfocusit.webshop3d.exception.category.SubCategoryAlreadyExistsException;
 import com.baghdadfocusit.webshop3d.model.CategoryJson;
+import com.baghdadfocusit.webshop3d.model.SubCategoryJson;
 import com.baghdadfocusit.webshop3d.repository.CategoryRepository;
+import com.baghdadfocusit.webshop3d.repository.SubCategoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryService.class);
-    CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
+    private final SubCategoryRepository subCategoryRepository;
 
-    public CategoryService(CategoryRepository categoryRepository) {
+    /**
+     * Constructor.
+     *
+     * @param categoryRepository    categoryRepository
+     * @param subCategoryRepository subCategoryRepository
+     */
+    public CategoryService(CategoryRepository categoryRepository, final SubCategoryRepository subCategoryRepository) {
         this.categoryRepository = categoryRepository;
+        this.subCategoryRepository = subCategoryRepository;
     }
 
+    /**
+     * Get all categories.
+     *
+     * @return categories
+     */
     public List<Category> getAllCategories() {
         return (List<Category>) categoryRepository.findAll();
     }
 
+    /**
+     * Get all sub categories based on the category id.
+     *
+     * @param categoryId categoryId
+     * @return sub categories
+     */
+    public List<String> getAllSubCategories(final String categoryId) {
+        final List<SubCategory> subCategoriesByCategoryIdList;
+        try {
+            subCategoriesByCategoryIdList = subCategoryRepository.findSubCategoriesByCategoryId(
+                    UUID.fromString(categoryId));
+            if (subCategoriesByCategoryIdList.isEmpty()) {
+                return List.of("No sub categories found");
+            }
+            return subCategoriesByCategoryIdList.stream().map(SubCategory::getName).collect(Collectors.toList());
+        } catch (Exception e) {
+            return List.of("No Category selected");
+        }
+    }
+
+    /**
+     * Create category.
+     *
+     * @param categoryJson category json
+     * @return category name created
+     */
     public String creatCategoryAndGetCategoryName(final CategoryJson categoryJson) {
+        categoryRepository.findCategoryByNameIgnoreCase(categoryJson.getCategoryName()).
+                ifPresent(s -> {
+                    throw new CategoryAlreadyExistsException();
+                });
         final Category category = Category.builder()
                 .name(categoryJson.getCategoryName())
                 .createdAt(LocalDate.now())
                 .build();
         final var savedCategory = categoryRepository.save(category);
-        LOGGER.info("Product is saved with product Id: {}", savedCategory.getId());
+        LOGGER.info("Category is saved with category Id: {}", savedCategory.getId());
         return savedCategory.getName();
+    }
+
+    /**
+     * Create sub category.
+     *
+     * @param subCategoryJson subCategoryJson
+     * @return sub category name
+     */
+    public String creatSubCategoryAndGetSubCategoryName(final SubCategoryJson subCategoryJson) {
+        subCategoryRepository.findSubCategoryByNameIgnoreCase(subCategoryJson.getSubCategoryName()).
+                ifPresent(s -> {
+                    throw new SubCategoryAlreadyExistsException();
+                });
+        final Category category = categoryRepository.findById(UUID.fromString(subCategoryJson.getCategoryId()))
+                .orElseThrow(CategoryNotFoundException::new);
+        final SubCategory subCategory = SubCategory.builder()
+                .categoryId(category.getId())
+                .category(category)
+                .name(subCategoryJson.getSubCategoryName())
+                .createdAt(LocalDate.now())
+                .build();
+        final var savedSubCategory = subCategoryRepository.save(subCategory);
+        LOGGER.info("Sub Category is saved with sub category Id: {}", savedSubCategory.getId());
+        return savedSubCategory.getName();
     }
 }

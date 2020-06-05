@@ -18,28 +18,16 @@ import java.util.UUID;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Product extends BaseModel {
+public class SubCategory extends BaseModel {
 
     @NotNull
     private String name;
-    @NotNull
-    private String picLocation;
-    @NotNull
-    private String price;
 
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
     @ManyToOne(targetEntity = Category.class, fetch = FetchType.EAGER)
     private Category category;
 
-    @JoinColumn(name = "sub_category_id", insertable = false, updatable = false)
-    @ManyToOne(targetEntity = SubCategory.class, fetch = FetchType.EAGER)
-    private SubCategory subCategory;
-
     @NotNull
-    @Column(name = "category_id")
+    @Column(name = "category_id", columnDefinition="text")
     private UUID categoryId;
-
-    @NotNull
-    @Column(name = "sub_category_id")
-    private UUID subCategoryId;
 }

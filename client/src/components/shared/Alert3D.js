@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Modal, ModalBody, ModalHeader, ModalFooter } from 'reactstrap';
+import {Alert, Modal, ModalBody, ModalFooter, ModalHeader} from 'reactstrap';
 
 export const Alert3D = (props) => {
   const { textColor, text, visible, onDismiss } = props;

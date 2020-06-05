@@ -1,16 +1,6 @@
 import React from 'react';
-import {
-  Card,
-  CardBody,
-  CardFooter,
-  CardHeader,
-  CardImg,
-  CardText,
-  CardTitle,
-  Col,
-  Row
-} from 'reactstrap';
-import { Link } from 'react-router-dom';
+import {Card, CardBody, CardFooter, CardHeader, CardImg, CardText, CardTitle, Col, Row} from 'reactstrap';
+import {Link} from 'react-router-dom';
 
 const Products = props => {
   return (
@@ -44,7 +34,8 @@ const Products = props => {
                   />
                   <CardBody style={{ backgroundColor: 'rgb(54, 53, 74)' }}>
                     <CardTitle>{product.name}</CardTitle>
-                    <CardText>{product.category.name}</CardText>
+                    <CardText>Category: {product.category.name}</CardText>
+                    <CardText>Sub Category: {product.subCategory.name}</CardText>
                   </CardBody>
                   <CardFooter
                     style={{

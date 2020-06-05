@@ -1,20 +1,12 @@
-import React, { useState } from 'react';
-import {
-  Button,
-  Col,
-  Container,
-  FormGroup,
-  Input,
-  Label,
-  Badge
-} from 'reactstrap';
-import { Dropzone3D } from './Dropzone3D';
-import { Link } from 'react-router-dom';
-import { Formik, Field, Form } from 'formik';
+import React, {useState} from 'react';
+import {Badge, Button, Col, Container, FormGroup, Input, Label} from 'reactstrap';
+import {Dropzone3D} from './Dropzone3D';
+import {Link} from 'react-router-dom';
+import {Field, Form, Formik} from 'formik';
 import * as yup from 'yup';
-import { addProduct } from '../../../client';
-import CategoryDropDown from './CategoryDropDown';
-import { Alert3D } from './Alert3D';
+import {addProduct} from '../../../client';
+import {Alert3D} from '../../shared/Alert3D';
+import CategoryDropDownList from '../category/CategoryDropDownList';
 
 export const AddProduct = () => {
   // Alert attributes
@@ -124,7 +116,7 @@ export const AddProduct = () => {
                   <Label for='categoryId'>Product Category:</Label>
                 </Col>
                 <Col md='8'>
-                  <Field name='categoryId' component={CategoryDropDown} />
+                  <Field name='categoryId' component={CategoryDropDownList} />
                   <div className='pt-1'>
                     {errors.categoryId && touched.categoryId && (
                       <Badge color='warning'>{errors.categoryId}</Badge>

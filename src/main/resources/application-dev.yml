@@ -14,7 +14,7 @@ aws:
   access_key_id: 'AKIA25AXLWROY7Z4M6FZ'
   secret_access_key: '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'
   s3:
-    bucket: '3d-iraq.com'
+    bucket: '3d-iraq-products-images'
     region: 'me-south-1'
 
 # JWT configuration
