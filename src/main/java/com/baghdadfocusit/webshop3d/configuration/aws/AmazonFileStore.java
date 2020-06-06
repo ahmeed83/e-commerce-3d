@@ -18,6 +18,25 @@ public class AmazonFileStore {
         this.amazonS3 = amazonS3;
     }
 
+    /**
+     * Get image from AWS bucket.
+     *
+     * @param bucketName aws bucketName
+     * @param imageKey image key
+     * @return url of the image in AWS
+     */
+    public String getImageUrl(final String bucketName, final String imageKey) {
+        return amazonS3.getUrl(bucketName, imageKey).toExternalForm();
+    }
+
+    /**
+     * Save image  to the Amazon bucket.
+     *
+     * @param path             path where the image will be stores
+     * @param fileName         file name
+     * @param optionalMetaData image optionalMetaData
+     * @param inputStream      image inputStream
+     */
     public void saveImageInAmazon(String path,
                                   String fileName,
                                   Optional<Map<String, String>> optionalMetaData,

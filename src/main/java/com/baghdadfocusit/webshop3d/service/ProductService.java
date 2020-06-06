@@ -46,8 +46,7 @@ public class ProductService {
     }
 
     public String createProductAndGetProductName(ProductJson productJson) {
-        final String imageLink = saveImageInAmazonAndGetLink(productJson.getProductImage(),
-                                                             productJson.getProductName());
+        final String imageLink = saveImageInAmazonAndGetLink(productJson.getProductImage());
         final Product product = Product.builder()
                 .createdAt(LocalDate.now())
                 .name(productJson.getProductName())
@@ -74,18 +73,18 @@ public class ProductService {
                                                                   sortBy.orElse("name")));
     }
 
-    private String saveImageInAmazonAndGetLink(final MultipartFile productImage, final String productName) {
+    private String saveImageInAmazonAndGetLink(final MultipartFile productImage) {
         isImage(productImage);
         final Map<String, String> metadata = getMetaData(productImage);
-        final String path = String.format("%s/%s", bucket, productName);
-        final String fileName = String.format("%s-%s-%s", productName, UUID.randomUUID(), LocalDateTime.now());
+        final String path = String.format("%s", bucket);
+        final String fileName = String.format("%s-%s", UUID.randomUUID(), LocalDateTime.now());
         try {
             LOGGER.info("Uploading image with name= " + fileName);
             amazonFileStore.saveImageInAmazon(path, fileName, Optional.of(metadata), productImage.getInputStream());
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
-        return fileName;
+        return amazonFileStore.getImageUrl(bucket, fileName);
     }
 
     private Map<String, String> getMetaData(final MultipartFile productImage) {
