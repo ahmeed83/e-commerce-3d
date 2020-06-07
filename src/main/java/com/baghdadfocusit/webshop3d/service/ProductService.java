@@ -41,6 +41,15 @@ public class ProductService {
         return productRepository.findById(UUID.fromString(productId));
     }
 
+    public Page<Product> getFilterProducts(Optional<String> name,
+                                           Optional<String> categoryName,
+                                           Optional<Integer> page,
+                                           Optional<String> sortBy) {
+        return productRepository.getFilterProducts(name.orElse("_"), categoryName.orElse("_"),
+                                                   PageRequest.of(page.orElse(0), 20, Direction.ASC,
+                                                                  sortBy.orElse("name")));
+    }
+
     public void deleteProduct(String productId) {
         productRepository.deleteById(UUID.fromString(productId));
     }
@@ -62,15 +71,6 @@ public class ProductService {
 
     public Optional<Product> getProductDetails(String productId) {
         return productRepository.findById(UUID.fromString(productId));
-    }
-
-    public Page<Product> getFilterProducts(Optional<String> name,
-                                           Optional<String> categoryName,
-                                           Optional<Integer> page,
-                                           Optional<String> sortBy) {
-        return productRepository.getFilterProducts(name.orElse("_"), categoryName.orElse("_"),
-                                                   PageRequest.of(page.orElse(0), 20, Direction.ASC,
-                                                                  sortBy.orElse("name")));
     }
 
     private String saveImageInAmazonAndGetLink(final MultipartFile productImage) {

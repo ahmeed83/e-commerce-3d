@@ -10,11 +10,10 @@ app:
 
 # AWS S3 configuration
 aws:
-  endpointUrl: 'https://s3.us-east-2.amazonaws.com'
-  access_key_id: 'AKIA25AXLWROY7Z4M6FZ'
-  secret_access_key: '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'
+  access_key_id: 'AKIA25AXLWROZGJI3QHL'
+  secret_access_key: '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'
   s3:
-    bucket: '3d-iraq-products-images'
+    bucket: '3d-products-images'
     region: 'me-south-1'
 
 # JWT configuration
