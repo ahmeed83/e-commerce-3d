@@ -10,8 +10,6 @@ import {
 } from 'reactstrap';
 import logo from '../../assets/img/logo.png';
 import $ from 'jquery';
-import ShoppingCartSideBar from './ShoppingCartSideBar';
-import LoginSideBar from './LoginSideBar';
 import { LoginContext } from '../../services/context/LoginContext';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,8 +19,6 @@ import { ACCESS_TOKEN } from '../../services/common/constants';
 
 const Header = () => {
   const userLoggedIn = useContext(LoginContext);
-
-  console.log(userLoggedIn);
 
   const logout = () => {
     localStorage.clear(ACCESS_TOKEN);
@@ -82,28 +78,34 @@ const Header = () => {
                         <a href="/login">تسجيل الدخول</a>
                       </li>
                     )}
-                    <li>
-                      <a href="/contact">اتصل بنا</a>
-                      <ul className="dropdown">
-                        <li>
-                          <a href="/contact">اتصل بنا</a>
-                        </li>
-                        <li>
-                          <a href="/about-us">من نحن</a>
-                        </li>
-                      </ul>
-                    </li>
-                    <li>
-                      <a href="/shopping-cart">سلة المشتريات</a>
-                      <ul className="dropdown">
-                        <li>
-                          <a href="/shopping-cart">سلة المشتريات</a>
-                        </li>
-                        <li>
-                          <a href="/checkout">تقديم طلب الشراء</a>
-                        </li>
-                      </ul>
-                    </li>
+                    {userLoggedIn.user === 'admin' ||
+                    userLoggedIn.user === 'employee' ? null : (
+                      <li>
+                        <a href="/contact">اتصل بنا</a>
+                        <ul className="dropdown">
+                          <li>
+                            <a href="/contact">اتصل بنا</a>
+                          </li>
+                          <li>
+                            <a href="/about-us">من نحن</a>
+                          </li>
+                        </ul>
+                      </li>
+                    )}
+                    {userLoggedIn.user === 'admin' ||
+                    userLoggedIn.user === 'employee' ? null : (
+                      <li>
+                        <a href="/shopping-cart">سلة المشتريات</a>
+                        <ul className="dropdown">
+                          <li>
+                            <a href="/shopping-cart">سلة المشتريات</a>
+                          </li>
+                          <li>
+                            <a href="/checkout">تقديم طلب الشراء</a>
+                          </li>
+                        </ul>
+                      </li>
+                    )}
                     <li>
                       <a href="/">الرئيسية</a>
                     </li>
@@ -118,7 +120,10 @@ const Header = () => {
                 <Col lg="2" md="2" sm="2">
                   <div className="header-search-cart">
                     <div className="header-cart common-style">
-                      <button onClick={sidebarCart} className="sidebar-trigger">
+                      <button
+                        onClick={() => (window.location.href = '/checkout')}
+                        className="sidebar-trigger"
+                      >
                         <span className="ion-bag"></span>
                       </button>
                     </div>
@@ -129,8 +134,6 @@ const Header = () => {
           </div>
         </div>
       </header>
-      <ShoppingCartSideBar />
-      <LoginSideBar />
     </div>
   );
 };

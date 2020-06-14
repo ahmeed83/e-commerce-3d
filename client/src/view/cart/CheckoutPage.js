@@ -1,11 +1,19 @@
 import React from 'react';
-import WelcomeBanner from '../../WelcomeBanner';
 import { Container, Col, Row, Label, Form } from 'reactstrap';
 
 const CheckoutPage = () => {
+  const products = [];
+
+  Object.keys(localStorage).forEach(function(key) {
+    products.push(JSON.parse(localStorage.getItem(key)));
+  });
+
+  const totalPrice = products.reduce(function(index, product) {
+    return index + parseInt(product.price);
+  }, 0);
+
   return (
     <div>
-      <WelcomeBanner />
       <Container>
         <div className="checkbox-page ptb-100">
           <Row>
@@ -20,31 +28,21 @@ const CheckoutPage = () => {
                         <th className="product-name">المنتج</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr className="cart_item">
-                        <td className="product-total">
-                          <span className="amount">165.00 $</span>
-                        </td>
-                        <td className="product-name">DELL Laptop</td>
-                      </tr>
-                      <tr className="cart_item">
-                        <td className="product-total">
-                          <span className="amount">400.00 $</span>
-                        </td>
-                        <td className="product-name">MacBook 15</td>
-                      </tr>
-                      <tr className="cart_item">
-                        <td className="product-total">
-                          <span className="amount">900.00 $</span>
-                        </td>
-                        <td className="product-name">iPhone 11</td>
-                      </tr>
-                    </tbody>
+                    {products.map((item, i) => (
+                      <tbody key={i}>
+                        <tr className="cart_item">
+                          <td className="product-total">
+                            <span className="amount">{item.price} $</span>
+                          </td>
+                          <td className="product-name">{item.name}</td>
+                        </tr>
+                      </tbody>
+                    ))}
                     <tfoot>
                       <tr className="order-total">
                         <td>
                           <strong>
-                            <span className="amount">495.00 $</span>
+                            <span className="amount">{totalPrice} $</span>
                           </strong>
                         </td>
                         <th>السعر الأجمالي</th>

@@ -4,6 +4,16 @@ import { Col } from 'reactstrap';
 import ShoppingCartProductItemList from './ShoppingCartProductItemList';
 
 const ShoppingCartPage = () => {
+  const products = [];
+
+  Object.keys(localStorage).forEach(function(key) {
+    products.push(JSON.parse(localStorage.getItem(key)));
+  });
+
+  const totalPrice = products.reduce(function(index, product) {
+    return index + parseInt(product.price);
+  }, 0);
+
   return (
     <div>
       <WelcomeBanner />
@@ -23,11 +33,7 @@ const ShoppingCartPage = () => {
                         <th className="product-price">السعر</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <ShoppingCartProductItemList />
-                      <ShoppingCartProductItemList />
-                      <ShoppingCartProductItemList />
-                    </tbody>
+                    <ShoppingCartProductItemList />
                   </table>
                 </div>
                 <Col>
@@ -36,11 +42,11 @@ const ShoppingCartPage = () => {
                       <h2>المجموع</h2>
                       <ul>
                         <li>
-                          <span>495.00</span>
+                          <span>$ {totalPrice}</span>
                           المبلغ الاجمالي
                         </li>
                       </ul>
-                      <a href="/">تقديم طلب الشراء</a>
+                      <a href="/checkout">تقديم طلب الشراء</a>
                     </div>
                   </Col>
                 </Col>

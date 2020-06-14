@@ -26,7 +26,11 @@ const ProductModal = props => {
             <p>{props.product.description}</p>
             <div className="quickview-plus-minus">
               <div className="quickview-btn-cart">
-                <a className="btn-hover-black" href="/">
+                <a
+                  className="btn-hover-black"
+                  href="#-"
+                  onClick={props.addToCart}
+                >
                   add to cart
                 </a>
               </div>

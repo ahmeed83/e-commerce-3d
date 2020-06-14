@@ -1,26 +1,43 @@
 import React from 'react';
-import pic from '../../assets/img/cart/laptop80x80.jpg';
 
 const ShoppingCartProductItemList = () => {
+  const products = [];
+
+  Object.keys(localStorage).forEach(function(key) {
+    products.push(JSON.parse(localStorage.getItem(key)));
+  });
+
+  const deleteProductFromCart = productId => {
+    localStorage.removeItem(productId);
+  };
+
   return (
-    <tr>
-      <td className="product-remove">
-        <a href="/">
-          <i className="ion-android-close"></i>
-        </a>
-      </td>
-      <td className="product-thumbnail">
-        <a href="/">
-          <img src={pic} alt="" />
-        </a>
-      </td>
-      <td className="product-name">
-        <a href="/">DELL Laptop</a>
-      </td>
-      <td className="product-price">
-        <span className="amount">$165.00</span>
-      </td>
-    </tr>
+    <tbody>
+      {products.map((item, i) => (
+        <tr key={i}>
+          <td className="product-remove">
+            <a href="#-" onClick={() => deleteProductFromCart(item.id)}>
+              <i className="ion-android-close"></i>
+            </a>
+          </td>
+          <td className="product-thumbnail">
+            <a href="/">
+              <img
+                style={{ width: '100px', height: '100px' }}
+                src={item.picLocation}
+                alt=""
+              />
+            </a>
+          </td>
+          <td className="product-name">
+            <a href="/">{item.name}</a>
+          </td>
+          <td className="product-price">
+            <span className="amount">$ {item.price}</span>
+          </td>
+        </tr>
+      ))}
+    </tbody>
   );
 };
 

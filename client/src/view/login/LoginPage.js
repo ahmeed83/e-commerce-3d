@@ -4,7 +4,7 @@ import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import { login } from '../../services/client';
 import { ACCESS_TOKEN, USER } from '../../services/common/constants';
-import { FormGroup, InputGroup, Badge, Input } from 'reactstrap';
+import { FormGroup, InputGroup, Badge, Input, Label } from 'reactstrap';
 
 const LoginPage = () => {
   const validationSchema = yup.object({
@@ -20,6 +20,10 @@ const LoginPage = () => {
             <div className="col-md-12 col-12 col-lg-6 col-xl-6 ml-auto mr-auto">
               <div className="login">
                 <div className="login-form-container">
+                  <h3 style={{ color: 'blue' }} className="text-center">
+                    لا يشترط تسجيل الدخول حاليا، بأمكانك طلب البضاعة مباشرة بدون
+                    تسجيل الدخول
+                  </h3>
                   <h3 className="text-center">تسجيل الدخول</h3>
                   <div className="login-form">
                     <Formik

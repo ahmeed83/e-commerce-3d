@@ -6,6 +6,13 @@ const ProductListItem = props => {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
+  let productList = [];
+
+  const addToCart = () => {
+    productList.push(JSON.stringify(props.product));
+    localStorage.setItem(props.product.id, productList);
+  };
+
   return (
     <div className="custom-col-5 custom-col-style">
       <div className="single-product mb-35">
@@ -31,7 +38,7 @@ const ProductListItem = props => {
               <span>({props.product.subCategory.name})</span>
             </div>
             <div className="product-category">
-              <a href="/">
+              <a href="#-" onClick={addToCart}>
                 <i className="ion-bag"></i> Add to cart
               </a>
             </div>
@@ -43,7 +50,7 @@ const ProductListItem = props => {
         toggle={toggle}
         backdropTransition={{ timeout: 700 }}
       >
-        <ProductModal product={props.product} />
+        <ProductModal addToCart={addToCart} product={props.product} />
       </Modal>
     </div>
   );
