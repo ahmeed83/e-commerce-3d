@@ -12,10 +12,10 @@ import { Dropzone3D } from './Dropzone3D';
 import { Link } from 'react-router-dom';
 import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
-import { addProduct } from '../../../client';
-import { Alert3D } from '../../shared/Alert3D';
+import { Alert3D } from '../../common/Alert3D';
 import CategoryDropDownList from '../category/CategoryDropDownList';
 import SubCategoryDropDownList from '../category/SubCategoryDropDownList';
+import { addProduct } from '../../../services/client';
 
 export const AddProduct = () => {
   // Alert attributes
@@ -42,7 +42,9 @@ export const AddProduct = () => {
       .positive('The price must be greater than zero')
       .required('Please add a price to the product!'),
     categoryId: yup.string().required('Please add a category to the product!'),
-    subCategoryId: yup.string().required('Please add a sub category to the product!'),
+    subCategoryId: yup
+      .string()
+      .required('Please add a sub category to the product!'),
     productImage: yup.string().required('Please add an image to the product!'),
   });
 
@@ -61,14 +63,14 @@ export const AddProduct = () => {
           formData.append('subCategoryId', product.subCategoryId);
           formData.append('productImage', product.productImage);
           addProduct(formData)
-            .then((res) => {
+            .then(res => {
               setModalVisible(true);
               setTextModal('Product with name ' + res.data + ' is Created!');
               setTextColorModal('info');
               resetForm({});
               setSubmitting(false);
             })
-            .catch((err) => {
+            .catch(err => {
               setModalVisible(true);
               setTextModal(
                 'There is some error in the server, Try after a while'
@@ -128,7 +130,11 @@ export const AddProduct = () => {
                   <Label for="categoryId">Product Category:</Label>
                 </Col>
                 <Col md="8">
-                  <Field name="categoryId" setCategoryId={setCategoryId} component={CategoryDropDownList} />
+                  <Field
+                    name="categoryId"
+                    setCategoryId={setCategoryId}
+                    component={CategoryDropDownList}
+                  />
                   <div className="pt-1">
                     {errors.categoryId && touched.categoryId && (
                       <Badge color="warning">{errors.categoryId}</Badge>
@@ -141,7 +147,11 @@ export const AddProduct = () => {
                   <Label for="subCategoryId">Product Sub Category:</Label>
                 </Col>
                 <Col md="8">
-                  <Field name="subCategoryId" categoryId={categoryId} component={SubCategoryDropDownList} />
+                  <Field
+                    name="subCategoryId"
+                    categoryId={categoryId}
+                    component={SubCategoryDropDownList}
+                  />
                   <div className="pt-1">
                     {errors.subCategoryId && touched.subCategoryId && (
                       <Badge color="warning">{errors.subCategoryId}</Badge>

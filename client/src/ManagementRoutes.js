@@ -6,15 +6,15 @@ import { OrderOverview } from './components/admin/order/OrderOverview';
 import { OrderDetailsPage } from './components/admin/order/OrderDetailsPage';
 import { AddProduct } from './components/admin/product/AddProduct';
 import { CustomersOverview } from './components/admin/customers/CustomersOverview';
-import { LoginContext } from './context/LoginContext';
-import ProductContextProvider from './context/ProductContext';
+import { LoginContext } from './services/context/LoginContext';
+import ProductContextProvider from './services/context/ProductContext';
 import { EmployeeOverview } from './components/admin/employees/EmployeeOverview';
 import { CategoryOverview } from './components/admin/category/CategoryOverview';
 
 const ManagementRoutes = () => {
   const userLoggedIn = useContext(LoginContext);
   return (
-    <div>
+    <div className="py-5">
       {userLoggedIn.user === 'employee' || userLoggedIn.user === 'admin' ? (
         <div>
           {userLoggedIn.user === 'admin' ? (
@@ -45,9 +45,7 @@ const ManagementRoutes = () => {
             <OrderDetailsPage />
           </Route>
         </div>
-      ) : (
-        <Redirect push to="/" />
-      )}
+      ) : null}
     </div>
   );
 };

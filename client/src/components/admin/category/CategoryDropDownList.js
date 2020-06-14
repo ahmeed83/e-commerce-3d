@@ -5,21 +5,21 @@ import {
   DropdownToggle,
   UncontrolledDropdown,
 } from 'reactstrap';
-import { getCategories } from '../../../client';
+import { getCategories } from '../../../services/client';
 
-const CategoryDropDownList = (props) => {
+const CategoryDropDownList = props => {
   const [selectedCategoryName, setSelectedCategoryName] = useState(
     'Choose Category'
   );
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    getCategories().then((res) => {
+    getCategories().then(res => {
       setCategories(res.data);
     });
   }, []);
 
-  const handelChange = (e) => {
+  const handelChange = e => {
     setSelectedCategoryName(e.target.name);
     if (props.setCategoryId) {
       props.setCategoryId(e.target.value);
@@ -35,7 +35,7 @@ const CategoryDropDownList = (props) => {
         {selectedCategoryName}
       </DropdownToggle>
       <DropdownMenu>
-        {categories.map((category) => (
+        {categories.map(category => (
           <DropdownItem
             key={category.id}
             value={category.id}

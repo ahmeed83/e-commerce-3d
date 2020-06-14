@@ -5,21 +5,21 @@ import {
   DropdownToggle,
   UncontrolledDropdown,
 } from 'reactstrap';
-import { getSubCategories } from '../../../client';
+import { getSubCategories } from '../../../services/client';
 
-export const SubCategoryDropDownList = (props) => {
+export const SubCategoryDropDownList = props => {
   const [selectedSubCategoryName, setSelectedSubCategoryName] = useState(
     'Choose Sub Category'
   );
   const [subCategories, setSubCategories] = useState([]);
 
   useEffect(() => {
-    getSubCategories(props.categoryId).then((res) => {
+    getSubCategories(props.categoryId).then(res => {
       setSubCategories(res.data);
     });
   }, [props.categoryId]);
 
-  const handelChange = (e) => {
+  const handelChange = e => {
     if (props.form) {
       props.form.setFieldValue(props.field.name, e.target.value);
     }
@@ -32,7 +32,7 @@ export const SubCategoryDropDownList = (props) => {
         {selectedSubCategoryName}
       </DropdownToggle>
       <DropdownMenu>
-        {subCategories.map((subCategory) => (
+        {subCategories.map(subCategory => (
           <DropdownItem
             key={subCategory.id}
             value={subCategory.id}

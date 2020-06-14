@@ -1,28 +1,30 @@
-import React, {useState} from 'react';
-import {Col, Container, Label, Row} from 'reactstrap';
-import {AddCategory} from '../category/AddCategory';
-import {AddSubCategory} from '../category/AddSubCategory';
+import React, { useState } from 'react';
+import { Col, Container, Label, Row } from 'reactstrap';
+import { AddCategory } from '../category/AddCategory';
+import { AddSubCategory } from '../category/AddSubCategory';
 import CategoryDropDownList from './CategoryDropDownList';
-import {SubCategoryDropDownList} from './SubCategoryDropDownList';
+import { SubCategoryDropDownList } from './SubCategoryDropDownList';
 
 export const CategoryOverview = () => {
   const [categoryId, setCategoryId] = useState(null);
 
   return (
-    <Container className="pt-3 px-5">
-      <div className="border border-success py-4 px-2">
-        <div className="pb-3 px-3">
-          <h4>Category Overview</h4>
+    <div className="py-5">
+      <Container className="pt-5 px-5">
+        <div className="border border-success py-4 px-2">
+          <div className="pb-3 px-3">
+            <h4>Category Overview</h4>
+          </div>
+          <ShowCategory categoryId={categoryId} setCategoryId={setCategoryId} />
+          <AddCategory />
+          <AddSubCategory />
         </div>
-        <ShowCategory categoryId={categoryId} setCategoryId={setCategoryId} />
-        <AddCategory />
-        <AddSubCategory />
-      </div>
-    </Container>
+      </Container>
+    </div>
   );
 };
 
-const ShowCategory = (props) => {
+const ShowCategory = props => {
   return (
     <Col>
       <div className="border border-success py-2 px-2">

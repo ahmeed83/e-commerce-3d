@@ -1,9 +1,9 @@
-import React, {useState} from 'react';
-import {Badge, Button, Col, FormGroup, Input, Label} from 'reactstrap';
-import {Field, Form, Formik} from 'formik';
+import React, { useState } from 'react';
+import { Badge, Button, Col, FormGroup, Input, Label } from 'reactstrap';
+import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
-import {addCategory} from '../../../client';
-import {Alert3D} from '../../shared/Alert3D';
+import { Alert3D } from '../../common/Alert3D';
+import { addCategory } from '../../../services/client';
 
 const initialValues = {
   categoryName: '',
@@ -25,14 +25,14 @@ export const AddCategory = () => {
       validationSchema={validationSchema}
       onSubmit={(category, { setSubmitting, resetForm }) => {
         addCategory(category)
-          .then((res) => {
+          .then(res => {
             setModalVisible(true);
             setTextModal('Category with name ' + res.data + ' is Created!');
             setTextColorModal('info');
             resetForm({});
             setSubmitting(false);
           })
-          .catch((err) => {
+          .catch(err => {
             setModalVisible(true);
             if (err.response.data.status === 409) {
               setTextColorModal('secondary');
