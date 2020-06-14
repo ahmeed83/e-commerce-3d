@@ -26,6 +26,8 @@ public class Product extends BaseModel {
     private String picLocation;
     @NotNull
     private String price;
+    private boolean sale;
+    private String description;
 
     @JoinColumn(name = "category_id", insertable = false, updatable = false)
     @ManyToOne(targetEntity = Category.class, fetch = FetchType.EAGER)

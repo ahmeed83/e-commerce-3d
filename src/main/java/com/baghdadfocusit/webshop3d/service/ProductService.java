@@ -46,7 +46,7 @@ public class ProductService {
                                            Optional<Integer> page,
                                            Optional<String> sortBy) {
         return productRepository.getFilterProducts(name.orElse("_"), categoryName.orElse("_"),
-                                                   PageRequest.of(page.orElse(0), 20, Direction.ASC,
+                                                   PageRequest.of(page.orElse(0), 10, Direction.ASC,
                                                                   sortBy.orElse("name")));
     }
 
@@ -61,6 +61,7 @@ public class ProductService {
                 .name(productJson.getProductName())
                 .price(productJson.getProductPrice())
                 .picLocation(imageLink)
+                .sale(false)
                 .categoryId(UUID.fromString(productJson.getCategoryId()))
                 .subCategoryId(UUID.fromString(productJson.getSubCategoryId()))
                 .build();

@@ -42,8 +42,10 @@ CREATE TABLE IF NOT EXISTS PRODUCT
     name            VARCHAR(100)     NOT NULL,
     pic_location    VARCHAR(500)     NOT NULL,
     price           VARCHAR(20)      NOT NULL,
+    description     VARCHAR(500),
+    sale            BOOLEAN,
     FOREIGN KEY (category_id) REFERENCES CATEGORY (id),
-    FOREIGN KEY (sub_category_id) REFERENCES  SUB_CATEGORY (id)
+    FOREIGN KEY (sub_category_id) REFERENCES SUB_CATEGORY (id)
 );
 
 CREATE TABLE IF NOT EXISTS CUSTOMER
