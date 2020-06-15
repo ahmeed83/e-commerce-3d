@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { getCategoriesOpen } from '../../services/client';
+import { getCategories } from '../../services/client';
 
 const ProductListFilter = props => {
   const [categories, setCategories] = useState([]);
   useEffect(() => {
     let isMounted = true;
-    getCategoriesOpen().then(res => {
+    getCategories().then(res => {
       if (isMounted) {
         setCategories(res.data);
       }

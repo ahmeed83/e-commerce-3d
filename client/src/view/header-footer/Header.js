@@ -149,7 +149,7 @@ const AdminNav = props => {
           Admin {suitcaseIcon}
         </DropdownToggle>
         <DropdownMenu right>
-          {props.userLoggedIn.user === 'admin' ? (
+          {/* {props.userLoggedIn.user === 'admin' ? (
             <DropdownItem>
               <NavLink tag={Link} to="/employees-overview">
                 Employees Overview
@@ -160,14 +160,15 @@ const AdminNav = props => {
             <NavLink tag={Link} to="/customers-overview">
               Customers Overview
             </NavLink>
-          </DropdownItem>
-          <DropdownItem divider />
+          </DropdownItem> */}
+
           <DropdownItem />
           <DropdownItem>
             <NavLink tag={Link} to="/orders-overview">
               Orders Overview
             </NavLink>
           </DropdownItem>
+          <DropdownItem divider />
           <DropdownItem>
             <NavLink tag={Link} to="/products-overview">
               Products Overview

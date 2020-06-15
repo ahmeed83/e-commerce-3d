@@ -14,5 +14,6 @@ export const MANAGEMENT_CATEGORIES_ADD_URL =
 export const MANAGEMENT_SUB_CATEGORIES_ADD_URL =
   MANAGEMENT_SUB_CATEGORIES_URL + 'add-sub-category';
 export const PRODUCTS_URL = 'api/resources/products';
-export const MANAGEMENT_CATEGORIES_OPEN_URL = PRODUCTS_URL + '/categories/';
+export const CATEGORIES_URL = PRODUCTS_URL + '/categories/';
+export const SUB_CATEGORIES_URL = PRODUCTS_URL + '/sub-category/';
 export const MANAGEMENT_CUSTOMERS_URL = 'api/management/v1/customers';

@@ -4,13 +4,12 @@ import {
   CONTENT_TYPE_JSON_VALUE,
   LOGIN_URL,
   MANAGEMENT_CATEGORIES_ADD_URL,
-  MANAGEMENT_CATEGORIES_URL,
   MANAGEMENT_CUSTOMERS_URL,
   MANAGEMENT_PRODUCTS_URL,
   MANAGEMENT_SUB_CATEGORIES_ADD_URL,
-  MANAGEMENT_SUB_CATEGORIES_URL,
   PRODUCTS_URL,
-  MANAGEMENT_CATEGORIES_OPEN_URL,
+  CATEGORIES_URL,
+  SUB_CATEGORIES_URL,
 } from './common/constants';
 import Axios from 'axios';
 
@@ -38,8 +37,8 @@ export const getProductsPageFilter = (name, categoryName, page, sortBy) =>
     }
   ).then(checkStatus);
 
-export const getCategoriesOpen = () =>
-  Axios.get(MANAGEMENT_CATEGORIES_OPEN_URL, {
+export const getCategories = () =>
+  Axios.get(CATEGORIES_URL, {
     headers: {
       'Content-Type': CONTENT_TYPE_JSON_VALUE,
     },
@@ -84,14 +83,6 @@ export const addProduct = product =>
     },
   }).then(checkStatus);
 
-export const getCategories = () =>
-  Axios.get(MANAGEMENT_CATEGORIES_URL, {
-    headers: {
-      Authorization: AUTHORIZATION_VALUE,
-      'Content-Type': CONTENT_TYPE_JSON_VALUE,
-    },
-  }).then(checkStatus);
-
 export const addCategory = category =>
   Axios.post(MANAGEMENT_CATEGORIES_ADD_URL, category, {
     headers: {
@@ -101,9 +92,8 @@ export const addCategory = category =>
   }).then(checkStatus);
 
 export const getSubCategories = categoryId =>
-  Axios.get(MANAGEMENT_SUB_CATEGORIES_URL + '/' + categoryId, {
+  Axios.get(SUB_CATEGORIES_URL + '/' + categoryId, {
     headers: {
-      Authorization: AUTHORIZATION_VALUE,
       'Content-Type': CONTENT_TYPE_JSON_VALUE,
     },
   }).then(checkStatus);

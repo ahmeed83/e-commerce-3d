@@ -5,10 +5,8 @@ import { ProductOverview } from './components/admin/product/ProductOverview';
 import { OrderOverview } from './components/admin/order/OrderOverview';
 import { OrderDetailsPage } from './components/admin/order/OrderDetailsPage';
 import { AddProduct } from './components/admin/product/AddProduct';
-import { CustomersOverview } from './components/admin/customers/CustomersOverview';
 import { LoginContext } from './services/context/LoginContext';
 import ProductContextProvider from './services/context/ProductContext';
-import { EmployeeOverview } from './components/admin/employees/EmployeeOverview';
 import { CategoryOverview } from './components/admin/category/CategoryOverview';
 
 const ManagementRoutes = () => {
@@ -17,13 +15,13 @@ const ManagementRoutes = () => {
     <div className="py-5">
       {userLoggedIn.user === 'employee' || userLoggedIn.user === 'admin' ? (
         <div>
-          {userLoggedIn.user === 'admin' ? (
+          {/* {userLoggedIn.user === 'admin' ? (
             <Route path="/employees-overview">
               <EmployeeOverview />
             </Route>
           ) : (
             <Redirect push to="/" />
-          )}
+          )} */}
           <ProductContextProvider>
             <Route path="/products-overview">
               <ProductOverview />
@@ -32,9 +30,9 @@ const ManagementRoutes = () => {
           <Route path="/orders-overview">
             <OrderOverview />
           </Route>
-          <Route path="/customers-overview">
+          {/* <Route path="/customers-overview">
             <CustomersOverview />
-          </Route>
+          </Route> */}
           <Route path="/category-overview">
             <CategoryOverview />
           </Route>
