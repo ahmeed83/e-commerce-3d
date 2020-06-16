@@ -63,16 +63,18 @@ CREATE TABLE IF NOT EXISTS PRODUCT
 
 CREATE TABLE IF NOT EXISTS ORDER3D
 (
-    id                UUID PRIMARY KEY NOT NULL,
-    created_at        DATE             NOT NULL,
+    id                UUID PRIMARY KEY      NOT NULL,
+    created_at        DATE                  NOT NULL,
     updated_at        DATE,
-    customer_track_id VARCHAR(20)      NOT NULL,
+    total_amount      DOUBLE PRECISION      NOT NULL,
+    customer_track_id VARCHAR(20)           NOT NULL,
+    State             BOOLEAN DEFAULT FALSE NOT NULL,
     company_name      VARCHAR(100),
-    name              VARCHAR(100)     NOT NULL,
-    city              VARCHAR(100)     NOT NULL,
-    district          VARCHAR(100)     NOT NULL,
+    name              VARCHAR(100)          NOT NULL,
+    city              VARCHAR(100)          NOT NULL,
+    district          VARCHAR(100)          NOT NULL,
     district2         VARCHAR(100),
-    mobile_number     VARCHAR(20)      NOT NULL,
+    mobile_number     VARCHAR(20)           NOT NULL,
     email             VARCHAR(20),
     notes             VARCHAR(500)
 );

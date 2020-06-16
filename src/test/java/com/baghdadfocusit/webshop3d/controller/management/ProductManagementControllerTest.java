@@ -73,7 +73,7 @@ class ProductManagementControllerTest {
                 .createdAt(LocalDate.now())
                 .id(TEST_UUID)
                 .name("iPhone")
-                .price("$200")
+                .price(200)
                 .picLocation("location")
                 .build();
         //    when(productService.createNewProduct(any(ProductJson.class))).thenReturn(product);

@@ -17,5 +17,5 @@ public class ProductResponseJson {
     @NotNull
     private String productName;
     @NotNull
-    private String productPrice;
+    private double productPrice;
 }

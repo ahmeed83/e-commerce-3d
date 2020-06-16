@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import './App.css';
 import { ProductOverview } from './components/admin/product/ProductOverview';
 import { OrderOverview } from './components/admin/order/OrderOverview';
-import { OrderDetailsPage } from './components/admin/order/OrderDetailsPage';
 import { AddProduct } from './components/admin/product/AddProduct';
 import { LoginContext } from './services/context/LoginContext';
 import ProductContextProvider from './services/context/ProductContext';
@@ -38,9 +37,6 @@ const ManagementRoutes = () => {
           </Route>
           <Route exact path="/add-product">
             <AddProduct />
-          </Route>
-          <Route path={`/order-page/:orderId`}>
-            <OrderDetailsPage />
           </Route>
         </div>
       ) : null}

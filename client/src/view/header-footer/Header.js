@@ -67,31 +67,31 @@ const Header = () => {
               <Col>
                 <nav>
                   <ul>
-                    {userLoggedIn.token !== null ? (
-                      <li>
-                        <a href="/" onClick={logout}>
-                          تسجيل الخروج
-                        </a>
-                      </li>
-                    ) : (
-                      <li>
-                        <a href="/login">تسجيل الدخول</a>
-                      </li>
-                    )}
-                    {userLoggedIn.user === 'admin' ||
-                    userLoggedIn.user === 'employee' ? null : (
-                      <li>
-                        <a href="/contact">اتصل بنا</a>
-                        <ul className="dropdown">
+                    <li>
+                      <a href="/">العنوان</a>
+                    </li>
+                    <li>
+                      <a href="/contact">اتصل بنا</a>
+                      <ul className="dropdown">
+                        <li>
+                          <a href="/contact">اتصل بنا</a>
+                        </li>
+                        <li>
+                          <a href="/about-us">من نحن</a>
+                        </li>
+                        {userLoggedIn.token !== null ? (
                           <li>
-                            <a href="/contact">اتصل بنا</a>
+                            <a href="/" onClick={logout}>
+                              تسجيل الخروج
+                            </a>
                           </li>
+                        ) : (
                           <li>
-                            <a href="/about-us">من نحن</a>
+                            <a href="/login">تسجيل الدخول</a>
                           </li>
-                        </ul>
-                      </li>
-                    )}
+                        )}
+                      </ul>
+                    </li>
                     {userLoggedIn.user === 'admin' ||
                     userLoggedIn.user === 'employee' ? null : (
                       <li>

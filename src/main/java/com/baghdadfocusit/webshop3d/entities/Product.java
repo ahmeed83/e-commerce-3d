@@ -28,7 +28,7 @@ public class Product extends BaseModel {
     @NotNull
     private String picLocation;
     @NotNull
-    private String price;
+    private double price;
     @NotNull
     private int quantity;
     private boolean sale;

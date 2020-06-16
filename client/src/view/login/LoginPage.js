@@ -4,7 +4,7 @@ import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import { login } from '../../services/client';
 import { ACCESS_TOKEN, USER } from '../../services/common/constants';
-import { FormGroup, InputGroup, Badge, Input, Label } from 'reactstrap';
+import { FormGroup, InputGroup, Badge, Input } from 'reactstrap';
 
 const LoginPage = () => {
   const validationSchema = yup.object({

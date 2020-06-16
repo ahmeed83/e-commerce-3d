@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -38,9 +39,12 @@ public class OrderService {
                     .stream()
                     .map(product -> new ProductResponseJson(product.getName(), product.getPrice()))
                     .collect(Collectors.toList());
-            return new OrderResponseJson(order.getName(), order.getCity(), order.getCompanyName(), order.getDistrict(),
-                                         order.getDistrict2(), order.getMobileNumber(), order.getEmail(),
-                                         order.getNotes(), productResponseJsons);
+
+            return new OrderResponseJson(order.getCity(), order.getName(), order.getCustomerTrackId(),
+                                         order.getTotalAmount(), order.isState() ? "Completed" : "In Progress",
+                                         order.getCompanyName(), order.getDistrict(), order.getDistrict2(),
+                                         order.getMobileNumber(), order.getEmail(), order.getNotes(),
+                                         productResponseJsons);
         }).collect(Collectors.toList());
     }
 
@@ -52,16 +56,21 @@ public class OrderService {
      */
     public String creatOrderAndGetOrderId(final OrderJson orderJson) {
 
-        Set<Product> products = orderJson.getProductsIds()
+        final Set<Product> products = orderJson.getProductsIds()
                 .stream()
                 .map(productId -> productRepository.findById(UUID.fromString(productId))
                         .orElseThrow(
                                 () -> new IllegalArgumentException("No Products found when inserting a new Order")))
                 .collect(Collectors.toSet());
 
+        final double totalAmount = products.stream().mapToDouble(Product::getPrice).sum();
+        final Random orderTrackId = new Random();
+        final String format = String.format("3D-" + "%07d", orderTrackId.nextInt(10000000));
+
         final Order order = Order.builder()
                 .createdAt(LocalDate.now())
-                .customerTrackId(String.valueOf(System.currentTimeMillis()))
+                .totalAmount(totalAmount)
+                .customerTrackId(format)
                 .name(orderJson.getName())
                 .city(orderJson.getCity())
                 .district(orderJson.getDistrict())

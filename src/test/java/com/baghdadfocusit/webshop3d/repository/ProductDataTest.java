@@ -26,7 +26,7 @@ public class ProductDataTest {
     productRepository.save(Product.builder()
                                   .createdAt(LocalDate.now())
                                   .name("iPhone")
-                                  .price("$200")
+                                  .price(200)
                                   .picLocation("location")
                                   .category(Category.builder().createdAt(LocalDate.now()).name("MacBook").build())
                                   .build());

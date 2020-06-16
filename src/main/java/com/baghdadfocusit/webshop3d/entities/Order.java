@@ -23,7 +23,11 @@ import java.util.Set;
 public class Order extends BaseModel {
 
     @NotNull
+    private double totalAmount;
+    @NotNull
     private String customerTrackId;
+    @NotNull
+    private boolean state;
     @NotNull
     private String city;
     @NotNull

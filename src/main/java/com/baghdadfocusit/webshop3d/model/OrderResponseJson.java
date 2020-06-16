@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -20,6 +18,12 @@ public class OrderResponseJson {
     private String city;
     @NotNull
     private String name;
+    @NotNull
+    private String orderTrackId;
+    @NotNull
+    private double totalAmount;
+    @NotNull
+    private String orderState;
     private String companyName;
     @NotNull
     private String district;

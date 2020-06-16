@@ -18,7 +18,7 @@ public class ProductJson {
     @NotNull
     private String productName;
     @NotNull
-    private String productPrice;
+    private double productPrice;
     @NotNull
     private String categoryId;
     @NotNull

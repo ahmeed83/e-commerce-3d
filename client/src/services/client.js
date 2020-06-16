@@ -10,6 +10,8 @@ import {
   PRODUCTS_URL,
   CATEGORIES_URL,
   SUB_CATEGORIES_URL,
+  ADD_ORDER_URL,
+  MANAGEMENT_ORDERS_URL,
 } from './common/constants';
 import Axios from 'axios';
 
@@ -100,6 +102,21 @@ export const getSubCategories = categoryId =>
 
 export const addSubCategory = subCategory =>
   Axios.post(MANAGEMENT_SUB_CATEGORIES_ADD_URL, subCategory, {
+    headers: {
+      Authorization: AUTHORIZATION_VALUE,
+      'Content-Type': CONTENT_TYPE_JSON_VALUE,
+    },
+  }).then(checkStatus);
+
+export const addOrder = order =>
+  Axios.post(ADD_ORDER_URL, order, {
+    headers: {
+      'Content-Type': CONTENT_TYPE_JSON_VALUE,
+    },
+  }).then(checkStatus);
+
+export const getOrder = () =>
+  Axios.get(MANAGEMENT_ORDERS_URL, {
     headers: {
       Authorization: AUTHORIZATION_VALUE,
       'Content-Type': CONTENT_TYPE_JSON_VALUE,

@@ -49,158 +49,174 @@ export const AddProduct = () => {
   });
 
   return (
-    <Container>
-      <h4 className="pt-3">Add Product</h4>
-      <Formik
-        className="pt-4"
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={(product, { setSubmitting, resetForm }) => {
-          const formData = new FormData();
-          formData.append('productName', product.productName);
-          formData.append('productPrice', product.productPrice);
-          formData.append('categoryId', product.categoryId);
-          formData.append('subCategoryId', product.subCategoryId);
-          formData.append('productImage', product.productImage);
-          addProduct(formData)
-            .then(res => {
-              setModalVisible(true);
-              setTextModal('Product with name ' + res.data + ' is Created!');
-              setTextColorModal('info');
-              resetForm({});
-              setSubmitting(false);
-            })
-            .catch(err => {
-              setModalVisible(true);
-              setTextModal(
-                'There is some error in the server, Try after a while'
-              );
-              setTextColorModal('warning');
-              setSubmitting(false);
-            });
-        }}
-      >
-        {({ submitForm, isSubmitting, errors, touched, setFieldValue }) => (
-          <Col className="pt-4" md={{ size: 8, offset: 2 }}>
-            <Alert3D
-              visible={showModal}
-              text={textModal}
-              textColor={textColorModal}
-              onDismiss={dismissModal}
-            />
-            <Form>
-              <FormGroup row>
-                <Col md="3">
-                  <Label for="productName">Product Name:</Label>
-                </Col>
-                <Col md="8">
-                  <Field
-                    type="productName"
-                    name="productName"
-                    placeholder="Insert name of the product"
-                    as={Input}
+    <div className="pt-5">
+      <div className="pt-5">
+        <Container>
+          <div className="border border-success py-5 px-5">
+            <h4 className="pt-3">Add Product</h4>
+            <Formik
+              className="pt-4"
+              initialValues={initialValues}
+              validationSchema={validationSchema}
+              onSubmit={(product, { setSubmitting, resetForm }) => {
+                const formData = new FormData();
+                formData.append('productName', product.productName);
+                formData.append('productPrice', product.productPrice);
+                formData.append('categoryId', product.categoryId);
+                formData.append('subCategoryId', product.subCategoryId);
+                formData.append('productImage', product.productImage);
+                addProduct(formData)
+                  .then(res => {
+                    setModalVisible(true);
+                    setTextModal(
+                      'Product with name ' + res.data + ' is Created!'
+                    );
+                    setTextColorModal('info');
+                    resetForm({});
+                    setSubmitting(false);
+                  })
+                  .catch(err => {
+                    setModalVisible(true);
+                    setTextModal(
+                      'There is some error in the server, Try after a while'
+                    );
+                    setTextColorModal('warning');
+                    setSubmitting(false);
+                  });
+              }}
+            >
+              {({
+                submitForm,
+                isSubmitting,
+                errors,
+                touched,
+                setFieldValue,
+              }) => (
+                <Col className="pt-4" md={{ size: 8, offset: 2 }}>
+                  <Alert3D
+                    visible={showModal}
+                    text={textModal}
+                    textColor={textColorModal}
+                    onDismiss={dismissModal}
                   />
-                  <div className="pt-1">
-                    {errors.productName && touched.productName && (
-                      <Badge color="warning">{errors.productName}</Badge>
-                    )}
-                  </div>
+                  <Form>
+                    <FormGroup row>
+                      <Col md="3">
+                        <Label for="productName">Product Name:</Label>
+                      </Col>
+                      <Col md="8">
+                        <Field
+                          type="productName"
+                          name="productName"
+                          placeholder="Insert name of the product"
+                          as={Input}
+                        />
+                        <div className="pt-1">
+                          {errors.productName && touched.productName && (
+                            <Badge color="warning">{errors.productName}</Badge>
+                          )}
+                        </div>
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Col md="3">
+                        <Label for="productPrice">Product Price:</Label>
+                      </Col>
+                      <Col md="8">
+                        <Field
+                          type="text"
+                          name="productPrice"
+                          placeholder="Insert price of the product"
+                          as={Input}
+                        />
+                        <div className="pt-1">
+                          {errors.productPrice && touched.productPrice && (
+                            <Badge color="warning">{errors.productPrice}</Badge>
+                          )}
+                        </div>
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Col md="3">
+                        <Label for="categoryId">Product Category:</Label>
+                      </Col>
+                      <Col md="8">
+                        <Field
+                          name="categoryId"
+                          setCategoryId={setCategoryId}
+                          component={CategoryDropDownList}
+                        />
+                        <div className="pt-1">
+                          {errors.categoryId && touched.categoryId && (
+                            <Badge color="warning">{errors.categoryId}</Badge>
+                          )}
+                        </div>
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Col md="3">
+                        <Label for="subCategoryId">Product Sub Category:</Label>
+                      </Col>
+                      <Col md="8">
+                        <Field
+                          name="subCategoryId"
+                          categoryId={categoryId}
+                          component={SubCategoryDropDownList}
+                        />
+                        <div className="pt-1">
+                          {errors.subCategoryId && touched.subCategoryId && (
+                            <Badge color="warning">
+                              {errors.subCategoryId}
+                            </Badge>
+                          )}
+                        </div>
+                      </Col>
+                    </FormGroup>
+                    <FormGroup row>
+                      <Col md="3">
+                        <Label for="productImage">Product Images:</Label>
+                      </Col>
+                      <Col md="3">
+                        <Dropzone3D setFieldValue={setFieldValue} />
+                        <div className="pt-1">
+                          {errors.productImage && touched.productImage && (
+                            <Badge color="warning">{errors.productImage}</Badge>
+                          )}
+                        </div>
+                      </Col>
+                    </FormGroup>
+                    <FormGroup className="pt-5">
+                      <Field
+                        size="lg"
+                        className="float-right"
+                        outline
+                        color="info"
+                        onClick={() => submitForm()}
+                        disabled={isSubmitting}
+                        as={Button}
+                      >
+                        Add Product
+                      </Field>
+                    </FormGroup>
+                    <FormGroup>
+                      <Link to={`/products-overview/`}>
+                        <Button
+                          size="lg"
+                          className="float-left"
+                          outline
+                          color="primary"
+                        >
+                          Go back
+                        </Button>
+                      </Link>
+                    </FormGroup>
+                  </Form>
                 </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Col md="3">
-                  <Label for="productPrice">Product Price:</Label>
-                </Col>
-                <Col md="8">
-                  <Field
-                    type="text"
-                    name="productPrice"
-                    placeholder="Insert price of the product"
-                    as={Input}
-                  />
-                  <div className="pt-1">
-                    {errors.productPrice && touched.productPrice && (
-                      <Badge color="warning">{errors.productPrice}</Badge>
-                    )}
-                  </div>
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Col md="3">
-                  <Label for="categoryId">Product Category:</Label>
-                </Col>
-                <Col md="8">
-                  <Field
-                    name="categoryId"
-                    setCategoryId={setCategoryId}
-                    component={CategoryDropDownList}
-                  />
-                  <div className="pt-1">
-                    {errors.categoryId && touched.categoryId && (
-                      <Badge color="warning">{errors.categoryId}</Badge>
-                    )}
-                  </div>
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Col md="3">
-                  <Label for="subCategoryId">Product Sub Category:</Label>
-                </Col>
-                <Col md="8">
-                  <Field
-                    name="subCategoryId"
-                    categoryId={categoryId}
-                    component={SubCategoryDropDownList}
-                  />
-                  <div className="pt-1">
-                    {errors.subCategoryId && touched.subCategoryId && (
-                      <Badge color="warning">{errors.subCategoryId}</Badge>
-                    )}
-                  </div>
-                </Col>
-              </FormGroup>
-              <FormGroup row>
-                <Col md="3">
-                  <Label for="productImage">Product Images:</Label>
-                </Col>
-                <Col md="3">
-                  <Dropzone3D setFieldValue={setFieldValue} />
-                  <div className="pt-1">
-                    {errors.productImage && touched.productImage && (
-                      <Badge color="warning">{errors.productImage}</Badge>
-                    )}
-                  </div>
-                </Col>
-              </FormGroup>
-              <FormGroup className="pt-5">
-                <Field
-                  size="lg"
-                  className="float-right"
-                  outline
-                  color="info"
-                  onClick={() => submitForm()}
-                  disabled={isSubmitting}
-                  as={Button}
-                >
-                  Add Product
-                </Field>
-              </FormGroup>
-              <FormGroup>
-                <Link to={`/products-overview/`}>
-                  <Button
-                    size="lg"
-                    className="float-left"
-                    outline
-                    color="primary"
-                  >
-                    Go back
-                  </Button>
-                </Link>
-              </FormGroup>
-            </Form>
-          </Col>
-        )}
-      </Formik>
-    </Container>
+              )}
+            </Formik>
+          </div>
+        </Container>
+      </div>
+    </div>
   );
 };

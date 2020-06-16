@@ -59,7 +59,7 @@ public class ProductControllerTest {
 
   @BeforeEach
   void setUp() {
-    product = Product.builder().createdAt(LocalDate.now()).name("iPhone").price("$200").picLocation("location").build();
+    product = Product.builder().createdAt(LocalDate.now()).name("iPhone").price(200).picLocation("location").build();
     when(productService.getFilterProducts(Optional.empty(),
                                           Optional.empty(),
                                           Optional.empty(),
