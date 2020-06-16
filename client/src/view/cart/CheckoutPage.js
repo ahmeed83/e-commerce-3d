@@ -135,48 +135,23 @@ const CheckoutPage = () => {
                     <Col className="col-md-12">
                       <div className="checkout-form-list">
                         <Label>
-                          العنوان <span className="required">*</span>
+                          أسم المنطقة <span className="required">*</span>
                         </Label>
                         <input type="text" placeholder="أسم الشارع" />
                       </div>
                     </Col>
                     <Col className="col-md-12">
                       <div className="checkout-form-list">
+                        <Label>أقرب منطقة دالة</Label>
                         <input
                           type="text"
                           placeholder="أسم العمارة/البيت ان كانت شركة"
                         />
                       </div>
                     </Col>
-                    <Col className="col-md-4">
-                      <div className="checkout-form-list">
-                        <Label>
-                          رقم الدار <span className="required">*</span>
-                        </Label>
-                        <input type="text" />
-                      </div>
-                    </Col>
-                    <Col className="col-md-4">
-                      <div className="checkout-form-list">
-                        <Label>
-                          زقاق <span className="required">*</span>
-                        </Label>
-                        <input type="text" placeholder="" />
-                      </div>
-                    </Col>
-                    <Col className="col-md-4">
-                      <div className="checkout-form-list">
-                        <Label>
-                          محلة <span className="required">*</span>
-                        </Label>
-                        <input type="text" />
-                      </div>
-                    </Col>
                     <Col className="col-md-6">
                       <div className="checkout-form-list">
-                        <Label>
-                          الايميل <span className="required">*</span>
-                        </Label>
+                        <Label>الايميل</Label>
                         <input type="email" />
                       </div>
                     </Col>

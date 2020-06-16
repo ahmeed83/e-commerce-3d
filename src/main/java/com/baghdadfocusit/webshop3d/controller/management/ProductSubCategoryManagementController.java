@@ -30,12 +30,6 @@ public class ProductSubCategoryManagementController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping("/{categoryId}")
-    @PreAuthorize(HAS_ROLE_ADMIN_AND_EMPLOYEE)
-    public ResponseEntity<List<SubCategoryJson>> getSubCategories(@PathVariable String categoryId) {
-        return new ResponseEntity<>(categoryService.getAllSubCategories(categoryId), HttpStatus.ACCEPTED);
-    }
-
     @PostMapping("/add-sub-category")
     @PreAuthorize(HAS_ROLE_ADMIN_AND_EMPLOYEE)
     public ResponseEntity<String> createSubCategory(@Valid @RequestBody SubCategoryJson subCategoryJson) {

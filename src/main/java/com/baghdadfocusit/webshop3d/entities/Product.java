@@ -1,5 +1,6 @@
 package com.baghdadfocusit.webshop3d.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,8 +10,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -26,6 +29,8 @@ public class Product extends BaseModel {
     private String picLocation;
     @NotNull
     private String price;
+    @NotNull
+    private int quantity;
     private boolean sale;
     private String description;
 
@@ -44,4 +49,8 @@ public class Product extends BaseModel {
     @NotNull
     @Column(name = "sub_category_id")
     private UUID subCategoryId;
+
+    @ManyToMany(mappedBy = "products", fetch = FetchType.LAZY)
+    @JsonBackReference
+    Set<Order> orders;
 }
