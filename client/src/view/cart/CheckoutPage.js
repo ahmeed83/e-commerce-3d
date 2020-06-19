@@ -4,6 +4,8 @@ import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import { addOrder } from '../../services/client';
 import { Alert3D } from '../../components/common/Alert3D';
+import PrintButton from './pdf/PrintButton';
+import ResetPagePDF from './pdf/ResetPagePDF';
 
 const CheckoutPage = () => {
   const formRef = useRef();
@@ -62,12 +64,22 @@ const CheckoutPage = () => {
       onSubmit={(order, { setSubmitting, resetForm }) => {
         addOrder(order)
           .then(res => {
+            console.log(res.data);
+
             setModalVisible(true);
             setTextModal(
-              `${res.data}
-              لقد استلمنا الطلبية، الرجاء الاحتفاظ برقم الطلبية جيدا
-              : رقم الطلبية
-              `
+              <div>
+                <PrintButton
+                  id={'resetPage'}
+                  fileName={res.data.orderTrackId}
+                />
+                <p></p>
+                <h4 style={{ color: 'blue' }}>
+                  لقد استلمنا الطلبية، الرجاء الاحتفاظ برقم الطلبية جيدا
+                </h4>
+                <h7>لقد تم ارسال فاتوة الشراء الى ايميلك</h7>
+                <ResetPagePDF id={'resetPage'} data={res.data} />
+              </div>
             );
             setTextColorModal('info');
             resetForm({});

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
+import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 
 export const Alert3D = props => {
   const { textColor, text, visible, onDismiss } = props;
@@ -9,14 +9,26 @@ export const Alert3D = props => {
     </button>
   );
   return (
-    <Modal centered autoFocus size="md" isOpen={visible} toggle={onDismiss}>
+    <Modal
+      backdrop={'static'}
+      centered
+      autoFocus
+      size="lg"
+      isOpen={visible}
+      toggle={onDismiss}
+    >
       <ModalHeader toggle={onDismiss} close={closeBtn}></ModalHeader>
       <ModalBody>
-        <Alert className="text-center" color={textColor}>
-          {text}
-        </Alert>
+        <div className="modal-content">
+          <div className="modal-body" color={textColor}>
+            <div>
+              <div color={textColor} className="text-center pl-5">
+                {text}
+              </div>
+            </div>
+          </div>
+        </div>
       </ModalBody>
-      <ModalFooter />
     </Modal>
   );
 };

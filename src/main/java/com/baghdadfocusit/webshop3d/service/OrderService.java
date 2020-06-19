@@ -54,7 +54,7 @@ public class OrderService {
      * @param orderJson orderJson
      * @return order id. The customer can track his order by this ID
      */
-    public String creatOrderAndGetOrderId(final OrderJson orderJson) {
+    public OrderResponseJson creatOrder(final OrderJson orderJson) {
 
         final Set<Product> products = orderJson.getProductsIds()
                 .stream()
@@ -82,7 +82,14 @@ public class OrderService {
                 .products(products)
                 .build();
         final var savedOrder = orderRepository.save(order);
-        LOGGER.info("Order is saved with category Id: {}", savedOrder.getId());
-        return String.valueOf(savedOrder.getCustomerTrackId());
+        LOGGER.info("Order is successfully saved with category Id: {}", savedOrder.getId());
+
+        return new OrderResponseJson(order.getCity(), order.getName(), order.getCustomerTrackId(),
+                                     order.getTotalAmount(), null, order.getCompanyName(), order.getDistrict(),
+                                     order.getDistrict2(), order.getMobileNumber(), order.getEmail(), order.getNotes(),
+                                     order.getProducts()
+                                             .stream()
+                                             .map(p -> new ProductResponseJson(p.getName(), p.getPrice()))
+                                             .collect(Collectors.toList()));
     }
 }

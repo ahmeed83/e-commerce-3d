@@ -1158,10 +1158,10 @@ textarea {
 /* modal style */
 
 .modal-body {
+  display: block;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
-  display: flex;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -1192,6 +1192,7 @@ textarea {
 }
 .modal-content {
   border-radius: 3rem;
+  display: table;
 }
 .qwick-view-content > h3 {
   color: #707070;

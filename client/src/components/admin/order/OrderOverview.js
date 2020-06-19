@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Button,
-  Container,
-  Table,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-} from 'reactstrap';
+import { Button, Container, Table, Modal, ModalBody } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
