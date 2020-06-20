@@ -18,6 +18,7 @@
     "pigeon-overlay": "^0.2.3",
     "react": "^16.10.2",
     "react-bootstrap": "^1.0.0-beta.14",
+    "react-counter-input": "^0.2.1",
     "react-dom": "^16.10.2",
     "react-dropzone": "^11.0.1",
     "react-reactstrap-pagination": "^2.0.3",

@@ -29,6 +29,7 @@ const ShoppingCartPage = () => {
                       <tr>
                         <th className="product-name">حذف</th>
                         <th className="product-price">الصور</th>
+                        <th className="product-name">العدد</th>
                         <th className="product-name">المنتج</th>
                         <th className="product-price">السعر</th>
                       </tr>
