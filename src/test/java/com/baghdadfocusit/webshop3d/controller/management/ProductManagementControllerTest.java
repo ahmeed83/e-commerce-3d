@@ -77,7 +77,7 @@ class ProductManagementControllerTest {
                 .picLocation("location")
                 .build();
         //    when(productService.createNewProduct(any(ProductJson.class))).thenReturn(product);
-        when(productService.findProduct(String.valueOf(TEST_UUID))).thenReturn(java.util.Optional.ofNullable(product));
+//        when(productService.findProduct(String.valueOf(TEST_UUID))).thenReturn(java.util.Optional.ofNullable(product));
     }
 
     @Test

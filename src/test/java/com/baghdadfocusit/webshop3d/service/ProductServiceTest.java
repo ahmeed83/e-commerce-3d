@@ -79,13 +79,6 @@ class ProductServiceTest {
   }
 
   @Test
-  void findProduct() {
-    final var foundProduct = productService.findProduct(String.valueOf(randomUUID));
-    assertNotNull(foundProduct);
-    assertEquals("iPhone", foundProduct.get().getName());
-  }
-
-  @Test
   void deleteProduct() {
     productService.deleteProduct(String.valueOf(randomUUID));
     verify(productRepository, times(1)).deleteById(eq(randomUUID));

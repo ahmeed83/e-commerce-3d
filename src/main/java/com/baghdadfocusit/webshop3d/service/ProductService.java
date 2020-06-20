@@ -37,10 +37,6 @@ public class ProductService {
     private final AmazonFileStore amazonFileStore;
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductService.class);
 
-    public Optional<Product> findProduct(String productId) {
-        return productRepository.findById(UUID.fromString(productId));
-    }
-
     public Page<Product> getFilterProducts(Optional<String> name,
                                            Optional<String> categoryName,
                                            Optional<Integer> page,
@@ -68,10 +64,6 @@ public class ProductService {
         final var savedProduct = productRepository.save(product);
         LOGGER.info("Product is saved with product Id: {}", savedProduct.getId());
         return String.valueOf(savedProduct.getName());
-    }
-
-    public Optional<Product> getProductDetails(String productId) {
-        return productRepository.findById(UUID.fromString(productId));
     }
 
     private String saveImageInAmazonAndGetLink(final MultipartFile productImage) {

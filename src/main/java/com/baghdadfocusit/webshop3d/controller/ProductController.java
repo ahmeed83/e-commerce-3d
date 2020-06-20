@@ -50,9 +50,4 @@ public class ProductController {
                                                         @RequestParam Optional<String> sortBy) {
         return ResponseEntity.ok(productService.getFilterProducts(name, categoryName, page, sortBy));
     }
-
-    @GetMapping("{productId}")
-    public ResponseEntity<Product> getProductDetails(@PathVariable String productId) {
-        return ResponseEntity.ok(productService.getProductDetails(productId).orElseThrow());
-    }
 }
