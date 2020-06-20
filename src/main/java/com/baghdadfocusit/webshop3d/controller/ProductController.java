@@ -1,8 +1,8 @@
 package com.baghdadfocusit.webshop3d.controller;
 
 import com.baghdadfocusit.webshop3d.entities.Category;
-import com.baghdadfocusit.webshop3d.entities.Product;
 import com.baghdadfocusit.webshop3d.model.SubCategoryJson;
+import com.baghdadfocusit.webshop3d.model.product.ProductJsonResponse;
 import com.baghdadfocusit.webshop3d.service.CategoryService;
 import com.baghdadfocusit.webshop3d.service.ProductService;
 import org.springframework.data.domain.Page;
@@ -44,10 +44,10 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Product>> getAllProducts(@RequestParam Optional<String> name,
-                                                        @RequestParam Optional<String> categoryName,
-                                                        @RequestParam Optional<Integer> page,
-                                                        @RequestParam Optional<String> sortBy) {
+    public ResponseEntity<Page<ProductJsonResponse>> getAllProducts(@RequestParam Optional<String> name,
+                                                                    @RequestParam Optional<String> categoryName,
+                                                                    @RequestParam Optional<Integer> page,
+                                                                    @RequestParam Optional<String> sortBy) {
         return ResponseEntity.ok(productService.getFilterProducts(name, categoryName, page, sortBy));
     }
 }

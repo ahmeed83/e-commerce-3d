@@ -1,6 +1,6 @@
 package com.baghdadfocusit.webshop3d.controller.management;
 
-import com.baghdadfocusit.webshop3d.model.ProductJson;
+import com.baghdadfocusit.webshop3d.model.product.ProductJsonRequest;
 import com.baghdadfocusit.webshop3d.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,7 +32,7 @@ public class ProductManagementController {
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize(HAS_ROLE_ADMIN_AND_EMPLOYEE)
-    public ResponseEntity<String> createProduct(@ModelAttribute @Valid ProductJson product) {
+    public ResponseEntity<String> createProduct(@ModelAttribute @Valid ProductJsonRequest product) {
         return new ResponseEntity<>(productService.createProductAndGetProductName(product), HttpStatus.CREATED);
     }
 

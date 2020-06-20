@@ -1,6 +1,6 @@
 package com.baghdadfocusit.webshop3d.controller.management;
 
-import com.baghdadfocusit.webshop3d.model.OrderResponseJson;
+import com.baghdadfocusit.webshop3d.model.order.OrderResponseJson;
 import com.baghdadfocusit.webshop3d.service.OrderService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;

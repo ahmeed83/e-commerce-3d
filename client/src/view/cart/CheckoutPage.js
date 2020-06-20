@@ -11,7 +11,7 @@ const CheckoutPage = () => {
   const formRef = useRef();
 
   const products = [];
-  const productsIds = [];
+  const productIdsAndCounts = [];
 
   Object.keys(localStorage).forEach(function(key) {
     products.push(JSON.parse(localStorage.getItem(key)));
@@ -21,7 +21,14 @@ const CheckoutPage = () => {
     return index + parseInt(product.price);
   }, 0);
 
-  products.forEach(product => productsIds.push(product.id));
+  console.log(products);
+
+  products.forEach(product =>
+    productIdsAndCounts.push({
+      productsId: product.id,
+      productCount: 0,
+    })
+  );
 
   const submitAndClearProductList = () => {
     if (Array.isArray(products) && products.length) {
@@ -41,7 +48,7 @@ const CheckoutPage = () => {
     mobileNumber: '',
     email: '',
     notes: '',
-    productsIds: productsIds,
+    productsIds: productIdsAndCounts,
   };
 
   const validationSchema = yup.object({

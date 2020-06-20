@@ -6,6 +6,8 @@ const ProductListItemCard = props => {
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
 
+  const [productCount, setProductCount] = useState(1);
+
   return (
     <div className="single-product single-product-list mb-50">
       <div className="product-img list-img-width">
@@ -33,7 +35,10 @@ const ProductListItemCard = props => {
         toggle={toggle}
         backdropTransition={{ timeout: 700 }}
       >
-        <ProductModal product={props.product} />
+        <ProductModal
+          product={props.product}
+          setProductCount={setProductCount}
+        />
       </Modal>
     </div>
   );

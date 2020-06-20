@@ -7,10 +7,14 @@ const ProductListItem = props => {
   const toggle = () => setModal(!modal);
 
   let productList = [];
+  const [productCount, setProductCount] = useState(1);
+
+  console.log(productCount);
 
   const addToCart = () => {
     productList.push(JSON.stringify(props.product));
-    localStorage.setItem(props.product.id, productList);
+    localStorage.setItem(props.product.name, productList);
+    localStorage.setItem(props.product.name + ' - productCount', productCount);
   };
 
   return (
@@ -50,7 +54,11 @@ const ProductListItem = props => {
         toggle={toggle}
         backdropTransition={{ timeout: 700 }}
       >
-        <ProductModal addToCart={addToCart} product={props.product} />
+        <ProductModal
+          addToCart={addToCart}
+          product={props.product}
+          setProductCount={setProductCount}
+        />
       </Modal>
     </div>
   );

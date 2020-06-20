@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import CounterInput from 'react-counter-input';
 
 const ProductModal = props => {
-  const [productCount, setProductCount] = useState(1);
-
   return (
     <div className="modal-content">
       <div className="modal-body">
@@ -44,7 +42,7 @@ const ProductModal = props => {
                   count={2 - 1}
                   min={1}
                   max={10}
-                  onCountChange={count => setProductCount(count)}
+                  onCountChange={count => props.setProductCount(count)}
                 />
               </div>
               <div className="quickview-btn-cart">

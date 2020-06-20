@@ -1,4 +1,4 @@
-package com.baghdadfocusit.webshop3d.model;
+package com.baghdadfocusit.webshop3d.model.product;
 
 
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductJson {
+public class ProductJsonRequest {
 
     @NotNull
     private String productName;

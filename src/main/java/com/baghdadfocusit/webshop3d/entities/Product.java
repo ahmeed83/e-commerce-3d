@@ -51,6 +51,5 @@ public class Product extends BaseModel {
     private UUID subCategoryId;
 
     @ManyToMany(mappedBy = "products", fetch = FetchType.LAZY)
-    @JsonBackReference
     Set<Order> orders;
 }

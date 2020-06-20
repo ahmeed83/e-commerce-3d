@@ -1,7 +1,7 @@
 package com.baghdadfocusit.webshop3d.controller;
 
-import com.baghdadfocusit.webshop3d.model.OrderJson;
-import com.baghdadfocusit.webshop3d.model.OrderResponseJson;
+import com.baghdadfocusit.webshop3d.model.order.OrderRequestJson;
+import com.baghdadfocusit.webshop3d.model.order.OrderResponseJson;
 import com.baghdadfocusit.webshop3d.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class OrderController {
     }
 
     @PostMapping("/add-order")
-    public ResponseEntity<OrderResponseJson> createOrder(@RequestBody OrderJson orderJson) {
+    public ResponseEntity<OrderResponseJson> createOrder(@RequestBody OrderRequestJson orderJson) {
         return new ResponseEntity<>(orderService.creatOrder(orderJson), HttpStatus.CREATED);
     }
 }

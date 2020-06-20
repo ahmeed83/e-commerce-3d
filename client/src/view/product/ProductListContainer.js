@@ -60,7 +60,7 @@ const ProductListContainer = props => {
             {showProductListCard ? (
               <Row className="custom-row">
                 {props.products.map(product => (
-                  <ProductListItem key={product.id} product={product} />
+                  <ProductListItem key={product.name} product={product} />
                 ))}
               </Row>
             ) : (

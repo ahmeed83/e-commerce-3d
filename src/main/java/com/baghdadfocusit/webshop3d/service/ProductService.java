@@ -2,13 +2,15 @@ package com.baghdadfocusit.webshop3d.service;
 
 import com.baghdadfocusit.webshop3d.configuration.aws.AmazonFileStore;
 import com.baghdadfocusit.webshop3d.entities.Product;
-import com.baghdadfocusit.webshop3d.model.ProductJson;
+import com.baghdadfocusit.webshop3d.model.product.ProductJsonRequest;
+import com.baghdadfocusit.webshop3d.model.product.ProductJsonResponse;
 import com.baghdadfocusit.webshop3d.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static org.apache.http.entity.ContentType.IMAGE_GIF;
 import static org.apache.http.entity.ContentType.IMAGE_JPEG;
@@ -37,20 +40,34 @@ public class ProductService {
     private final AmazonFileStore amazonFileStore;
     private static final Logger LOGGER = LoggerFactory.getLogger(ProductService.class);
 
-    public Page<Product> getFilterProducts(Optional<String> name,
-                                           Optional<String> categoryName,
-                                           Optional<Integer> page,
-                                           Optional<String> sortBy) {
-        return productRepository.getFilterProducts(name.orElse("_"), categoryName.orElse("_"),
-                                                   PageRequest.of(page.orElse(0), 10, Direction.ASC,
-                                                                  sortBy.orElse("name")));
+    public Page<ProductJsonResponse> getFilterProducts(Optional<String> name,
+                                                       Optional<String> categoryName,
+                                                       Optional<Integer> page,
+                                                       Optional<String> sortBy) {
+
+        Page<Product> productPage = productRepository.getFilterProducts(name.orElse("_"), categoryName.orElse("_"),
+                                                                        PageRequest.of(page.orElse(0), 10,
+                                                                                       Direction.ASC,
+                                                                                       sortBy.orElse("name")));
+        return new PageImpl<>(productPage.getContent()
+                                      .stream()
+                                      .map(product -> new ProductJsonResponse(product.getName(), product.getPrice(),
+                                                                              product.isSale(),
+                                                                              product.getPicLocation(),
+                                                                              product.getDescription(),
+                                                                              product.getQuantity(),
+                                                                              product.getCategory(),
+                                                                              product.getSubCategory()))
+                                      .collect(Collectors.toList()),
+                              productPage.getPageable(),
+                              productPage.getTotalElements());
     }
 
     public void deleteProduct(String productId) {
         productRepository.deleteById(UUID.fromString(productId));
     }
 
-    public String createProductAndGetProductName(ProductJson productJson) {
+    public String createProductAndGetProductName(ProductJsonRequest productJson) {
         final String imageLink = saveImageInAmazonAndGetLink(productJson.getProductImage());
         final Product product = Product.builder()
                 .createdAt(LocalDate.now())

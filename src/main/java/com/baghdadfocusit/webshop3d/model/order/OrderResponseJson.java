@@ -1,4 +1,4 @@
-package com.baghdadfocusit.webshop3d.model;
+package com.baghdadfocusit.webshop3d.model.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

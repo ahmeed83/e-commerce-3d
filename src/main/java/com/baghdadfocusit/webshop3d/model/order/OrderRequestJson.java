@@ -1,4 +1,4 @@
-package com.baghdadfocusit.webshop3d.model;
+package com.baghdadfocusit.webshop3d.model.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderJson {
+public class OrderRequestJson {
 
     @NotNull
     private String city;
@@ -28,5 +28,5 @@ public class OrderJson {
     private String email;
     private String notes;
     @NotNull
-    private Set<String> productsIds = new HashSet<>();
+    private Set<OrderProductRequestJson> orderedProducts = new HashSet<>();
 }
