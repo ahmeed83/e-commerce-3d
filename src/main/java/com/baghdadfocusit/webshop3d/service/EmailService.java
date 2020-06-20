@@ -54,10 +54,12 @@ public class EmailService {
                         <p>Company Name: %s</p>
                         <p>City: %s</p>
                         <p>Products: %s</p>
+                        <p>Total price: %s</p>
                     </body>
                 </html>
                 """.formatted(order.getName(), order.getDistrict(), order.getDistrict2(), order.getMobileNumber(),
-                              order.getEmail(), order.getCompanyName(), order.getCity(), products);
+                              order.getEmail(), order.getCompanyName(), order.getCity(), products,
+                              order.getTotalAmount());
         helper.setText(emailContent, true);
         javaMailSender.send(msg);
     }
