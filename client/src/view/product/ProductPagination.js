@@ -4,7 +4,6 @@ import PaginationComponent from 'react-reactstrap-pagination';
 
 const ProductPagination = props => {
   const handleSelected = index => {
-    console.log(index);
     props.setPageNumber(index - 1);
   };
 

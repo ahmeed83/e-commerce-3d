@@ -118,7 +118,7 @@ const OrderModal = props => {
                 <td>Total Amount</td>
                 <td>{props.order.totalAmount}</td>
               </tr>
-              {props.order.productResponseJsons.map((product, id) => (
+              {props.order.orderProductResponseJsons.map((product, id) => (
                 <tr key={id}>
                   <td> Product ({id + 1})</td>
                   <td>{product.productName}</td>

@@ -57,21 +57,23 @@ const ResetPagePDF = props => {
                 <Table>
                   <tbody>
                     <div className="containerResetForm">
-                      {props.data.productResponseJsons.map((product, id) => (
-                        <tr key={id}>
-                          <td style={{ width: '40%' }}>
-                            Name :
-                            <b style={{ color: 'red' }}>
-                              {product.productName}
-                            </b>
-                            <br />
-                            Price :
-                            <b style={{ color: 'red' }}>
-                              {product.productPrice}
-                            </b>
-                          </td>
-                        </tr>
-                      ))}
+                      {props.data.orderProductResponseJsons.map(
+                        (product, id) => (
+                          <tr key={id}>
+                            <td style={{ width: '40%' }}>
+                              Name :
+                              <b style={{ color: 'red' }}>
+                                {product.productName}
+                              </b>
+                              <br />
+                              Price :
+                              <b style={{ color: 'red' }}>
+                                {product.productPrice}
+                              </b>
+                            </td>
+                          </tr>
+                        )
+                      )}
                     </div>
                   </tbody>
                 </Table>

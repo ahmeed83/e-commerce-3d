@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductResponseJson {
+public class OrderProductResponseJsons {
 
     @NotNull
     private String productName;

@@ -33,5 +33,5 @@ public class OrderResponseJson {
     private String email;
     private String notes;
     @NotNull
-    private List<ProductResponseJson> productResponseJsons;
+    private List<OrderProductResponseJsons> orderProductResponseJsons;
 }

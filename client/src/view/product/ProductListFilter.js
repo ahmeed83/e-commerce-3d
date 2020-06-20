@@ -22,7 +22,6 @@ const ProductListFilter = props => {
 
   const chooseProduct = e => {
     if (e.key === 'Enter') {
-      console.log(e.target.value);
       props.products.setPageNumber(0);
       props.products.setProductName(e.target.value);
     }

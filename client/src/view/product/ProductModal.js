@@ -4,8 +4,6 @@ import CounterInput from 'react-counter-input';
 const ProductModal = props => {
   const [productCount, setProductCount] = useState(1);
 
-  console.log(productCount);
-
   return (
     <div className="modal-content">
       <div className="modal-body">

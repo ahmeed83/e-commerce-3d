@@ -5,8 +5,6 @@ const ShoppingCartProductItemList = () => {
   const products = [];
   const [productCount, setProductCount] = useState(1);
 
-  console.log(productCount);
-
   Object.keys(localStorage).forEach(function(key) {
     products.push(JSON.parse(localStorage.getItem(key)));
   });

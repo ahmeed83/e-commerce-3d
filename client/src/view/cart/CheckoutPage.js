@@ -64,8 +64,6 @@ const CheckoutPage = () => {
       onSubmit={(order, { setSubmitting, resetForm }) => {
         addOrder(order)
           .then(res => {
-            console.log(res.data);
-
             setModalVisible(true);
             setTextModal(
               <div>

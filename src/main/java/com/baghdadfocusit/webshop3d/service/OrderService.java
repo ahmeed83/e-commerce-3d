@@ -4,7 +4,7 @@ import com.baghdadfocusit.webshop3d.entities.Order;
 import com.baghdadfocusit.webshop3d.entities.Product;
 import com.baghdadfocusit.webshop3d.model.OrderJson;
 import com.baghdadfocusit.webshop3d.model.OrderResponseJson;
-import com.baghdadfocusit.webshop3d.model.ProductResponseJson;
+import com.baghdadfocusit.webshop3d.model.OrderProductResponseJsons;
 import com.baghdadfocusit.webshop3d.repository.OrderRepository;
 import com.baghdadfocusit.webshop3d.repository.ProductRepository;
 import org.slf4j.Logger;
@@ -39,16 +39,16 @@ public class OrderService {
         final List<Order> orders = (List<Order>) orderRepository.findAll();
 
         return orders.stream().map(order -> {
-            var productResponseJsons = order.getProducts()
+            var orderProductResponseJsons = order.getProducts()
                     .stream()
-                    .map(product -> new ProductResponseJson(product.getName(), product.getPrice()))
+                    .map(product -> new OrderProductResponseJsons(product.getName(), product.getPrice()))
                     .collect(Collectors.toList());
 
             return new OrderResponseJson(order.getCity(), order.getName(), order.getCustomerTrackId(),
                                          order.getTotalAmount(), order.isState() ? "Completed" : "In Progress",
                                          order.getCompanyName(), order.getDistrict(), order.getDistrict2(),
                                          order.getMobileNumber(), order.getEmail(), order.getNotes(),
-                                         productResponseJsons);
+                                         orderProductResponseJsons);
         }).collect(Collectors.toList());
     }
 
@@ -95,7 +95,7 @@ public class OrderService {
                                      order.getDistrict2(), order.getMobileNumber(), order.getEmail(), order.getNotes(),
                                      order.getProducts()
                                              .stream()
-                                             .map(p -> new ProductResponseJson(p.getName(), p.getPrice()))
+                                             .map(p -> new OrderProductResponseJsons(p.getName(), p.getPrice()))
                                              .collect(Collectors.toList()));
     }
 }
