@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
@@ -22,13 +23,16 @@ import java.util.stream.Collectors;
 public class OrderService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(OrderService.class);
-
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
+    private final EmailService emailService;
 
-    public OrderService(final OrderRepository orderRepository, final ProductRepository productRepository) {
+    public OrderService(final OrderRepository orderRepository,
+                        final ProductRepository productRepository,
+                        final EmailService emailService) {
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
+        this.emailService = emailService;
     }
 
     public List<OrderResponseJson> getAllOrders() {
@@ -55,7 +59,6 @@ public class OrderService {
      * @return order id. The customer can track his order by this ID
      */
     public OrderResponseJson creatOrder(final OrderJson orderJson) {
-
         final Set<Product> products = orderJson.getProductsIds()
                 .stream()
                 .map(productId -> productRepository.findById(UUID.fromString(productId))
@@ -66,7 +69,6 @@ public class OrderService {
         final double totalAmount = products.stream().mapToDouble(Product::getPrice).sum();
         final Random orderTrackId = new Random();
         final String format = String.format("3D-" + "%07d", orderTrackId.nextInt(10000000));
-
         final Order order = Order.builder()
                 .createdAt(LocalDate.now())
                 .totalAmount(totalAmount)
@@ -82,8 +84,12 @@ public class OrderService {
                 .products(products)
                 .build();
         final var savedOrder = orderRepository.save(order);
+        try {
+            emailService.sendEmailToAdminWithOrder(order);
+        } catch (MessagingException e) {
+            LOGGER.info("Email failed to be sent", e);
+        }
         LOGGER.info("Order is successfully saved with category Id: {}", savedOrder.getId());
-
         return new OrderResponseJson(order.getCity(), order.getName(), order.getCustomerTrackId(),
                                      order.getTotalAmount(), null, order.getCompanyName(), order.getDistrict(),
                                      order.getDistrict2(), order.getMobileNumber(), order.getEmail(), order.getNotes(),
