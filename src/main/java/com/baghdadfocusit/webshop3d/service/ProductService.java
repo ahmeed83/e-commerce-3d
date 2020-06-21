@@ -51,15 +51,14 @@ public class ProductService {
                                                                                        sortBy.orElse("name")));
         return new PageImpl<>(productPage.getContent()
                                       .stream()
-                                      .map(product -> new ProductJsonResponse(product.getName(), product.getPrice(),
-                                                                              product.isSale(),
+                                      .map(product -> new ProductJsonResponse(product.getId(), product.getName(),
+                                                                              product.getPrice(), product.isSale(),
                                                                               product.getPicLocation(),
                                                                               product.getDescription(),
                                                                               product.getQuantity(),
                                                                               product.getCategory(),
                                                                               product.getSubCategory()))
-                                      .collect(Collectors.toList()),
-                              productPage.getPageable(),
+                                      .collect(Collectors.toList()), productPage.getPageable(),
                               productPage.getTotalElements());
     }
 

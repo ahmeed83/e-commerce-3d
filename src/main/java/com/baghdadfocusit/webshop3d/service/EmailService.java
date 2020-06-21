@@ -11,6 +11,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,7 +24,7 @@ public class EmailService {
     }
 
     @Async
-    void sendEmailToAdminWithOrder(final Order order) throws MessagingException {
+    void sendEmailToAdminWithOrder(final Order order, final Set<Product> products) throws MessagingException {
         MimeMessage msg = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(msg, true);
         if (order.getEmail() == null) {
@@ -32,12 +33,12 @@ public class EmailService {
             helper.setTo(InternetAddress.parse("ahmed83@me.com," + order.getEmail()));
         }
         helper.setSubject("3D Order id: " + order.getCustomerTrackId());
-        List<Product> productList = order.getProducts()
-                .stream()
+        List<Product> productList = products.stream()
                 .map(prod -> Product.builder().name(prod.getName()).price(prod.getPrice()).build())
                 .collect(Collectors.toList());
-        StringBuilder products = new StringBuilder();
-        productList.forEach(product -> products.append("[ ")
+
+        StringBuilder productSB = new StringBuilder();
+        productList.forEach(product -> productSB.append("[ ")
                 .append(product.getName())
                 .append(": ")
                 .append(product.getPrice())
@@ -58,7 +59,7 @@ public class EmailService {
                     </body>
                 </html>
                 """.formatted(order.getName(), order.getDistrict(), order.getDistrict2(), order.getMobileNumber(),
-                              order.getEmail(), order.getCompanyName(), order.getCity(), products,
+                              order.getEmail(), order.getCompanyName(), order.getCity(), productSB,
                               order.getTotalAmount());
         helper.setText(emailContent, true);
         javaMailSender.send(msg);

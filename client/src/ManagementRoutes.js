@@ -5,7 +5,7 @@ import { ProductOverview } from './components/admin/product/ProductOverview';
 import { OrderOverview } from './components/admin/order/OrderOverview';
 import { AddProduct } from './components/admin/product/AddProduct';
 import { LoginContext } from './services/context/LoginContext';
-import ProductContextProvider from './services/context/ProductContext';
+import OrderContextProvider from './services/context/ProductContext';
 import { CategoryOverview } from './components/admin/category/CategoryOverview';
 
 const ManagementRoutes = () => {
@@ -21,11 +21,11 @@ const ManagementRoutes = () => {
           ) : (
             <Redirect push to="/" />
           )} */}
-          <ProductContextProvider>
+          <OrderContextProvider>
             <Route path="/products-overview">
               <ProductOverview />
             </Route>
-          </ProductContextProvider>
+          </OrderContextProvider>
           <Route path="/orders-overview">
             <OrderOverview />
           </Route>

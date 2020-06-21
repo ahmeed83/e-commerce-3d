@@ -83,6 +83,7 @@ CREATE TABLE order3d_products
 (
     orders_id   UUID REFERENCES ORDER3D (id) ON UPDATE CASCADE ON DELETE CASCADE,
     products_id UUID REFERENCES PRODUCT (id) ON UPDATE CASCADE,
-    amount      numeric NOT NULL DEFAULT 1,
+    count       numeric          NOT NULL DEFAULT 1,
+    amount      DOUBLE PRECISION NOT NULL,
     CONSTRAINT order_product_pkey PRIMARY KEY (orders_id, products_id) -- explicit pk
 );

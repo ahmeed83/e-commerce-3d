@@ -4,11 +4,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.NaturalIdCache;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.util.HashSet;
@@ -20,11 +23,14 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
+@NaturalIdCache
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Order extends BaseModel {
 
     @NotNull
     private double totalAmount;
     @NotNull
+    @NaturalId
     private String customerTrackId;
     @NotNull
     private boolean state;
@@ -40,7 +46,17 @@ public class Order extends BaseModel {
     private String mobileNumber;
     private String email;
     private String notes;
-    @NotNull
-    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE})
-    private Set<Product> products = new HashSet<>();
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<OrderItem> products = new HashSet<>();
+
+    public void addProduct(final Product product, final int count, final double amount) {
+        final OrderItem orderItem = new OrderItem(this, product, count, amount);
+        products.add(orderItem);
+        product.getOrders().add(orderItem);
+    }
+
+    public Set<OrderItem> getOrderItems(Order this) {
+        return this.getProducts();
+    }
 }

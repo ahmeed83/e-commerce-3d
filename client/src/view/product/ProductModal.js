@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CounterInput from 'react-counter-input';
 
 const ProductModal = props => {
+  const [productCount, setProductCount] = useState(1);
   return (
     <div className="modal-content">
       <div className="modal-body">
@@ -31,7 +32,9 @@ const ProductModal = props => {
           <div className="qwick-view-content">
             <h4>{props.product.name}</h4>
             <div className="price">
-              <span className="new">$ {props.product.price}</span>
+              <span className="new">
+                $ {props.product.price * productCount}
+              </span>
             </div>
             <p>{props.product.description}</p>
 
@@ -39,17 +42,17 @@ const ProductModal = props => {
               <div className="cart-plus-minus">
                 <CounterInput
                   className="cart-plus-minus-box"
-                  count={2 - 1}
+                  count={productCount}
                   min={1}
                   max={10}
-                  onCountChange={count => props.setProductCount(count)}
+                  onCountChange={setProductCount}
                 />
               </div>
               <div className="quickview-btn-cart">
                 <a
                   className="btn-hover-black"
                   href="#-"
-                  onClick={props.addToCart}
+                  onClick={() => props.addToCart(productCount)}
                 >
                   add to cart
                 </a>

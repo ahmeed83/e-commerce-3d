@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -15,6 +16,8 @@ import java.util.List;
 public class OrderResponseJson {
 
     @NotNull
+    private LocalDate localDate;
+    @NotNull
     private String city;
     @NotNull
     private String name;
@@ -23,7 +26,7 @@ public class OrderResponseJson {
     @NotNull
     private double totalAmount;
     @NotNull
-    private String orderState;
+    private boolean orderState;
     private String companyName;
     @NotNull
     private String district;
@@ -32,6 +35,7 @@ public class OrderResponseJson {
     private String mobileNumber;
     private String email;
     private String notes;
+    private int itemAmount;
     @NotNull
-    private List<OrderProductResponseJsons> orderProductResponseJsons;
+    private List<OrderProductsResponse> orderProductsResponse;
 }

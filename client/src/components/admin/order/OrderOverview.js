@@ -14,6 +14,10 @@ export const OrderOverview = props => {
     });
   }, []);
 
+  const handleSelect = e => {
+    console.log(e.target.name);
+  };
+
   return (
     <div className="py-5">
       <div className="py-5">
@@ -25,6 +29,7 @@ export const OrderOverview = props => {
                 <tr>
                   <th style={{ width: '5%' }}>#</th>
                   <th style={{ width: '15%' }}>Order State</th>
+                  <th style={{ width: '15%' }}>Complete?</th>
                   <th style={{ width: '15%' }}>Order Track Id</th>
                   <th style={{ width: '15%' }}>Name</th>
                   <th style={{ width: '15%' }}>Telephone</th>
@@ -36,7 +41,19 @@ export const OrderOverview = props => {
                 {orders.map((order, id) => (
                   <tr key={id}>
                     <th scope="row">{id + 1}</th>
-                    <td>{order.orderState}</td>
+                    {order.orderState ? (
+                      <td style={{ color: 'green' }}>Completed</td>
+                    ) : (
+                      <td style={{ color: 'red' }}>In Progress</td>
+                    )}
+                    <td>
+                      <input
+                        name={order.orderTrackId}
+                        type="checkbox"
+                        checked={order.orderState}
+                        onChange={handleSelect}
+                      />
+                    </td>
                     <td>{order.orderTrackId}</td>
                     <td>{order.name}</td>
                     <td>{order.mobileNumber}</td>
@@ -72,57 +89,105 @@ const OrderModal = props => {
         backdropTransition={{ timeout: 700 }}
       >
         <ModalBody>
-          <Table>
+          <Table borderless>
             <tbody>
               <tr>
                 <td>Order State</td>
-                <td>{props.order.orderState}</td>
+                <td>
+                  {props.order.orderState ? (
+                    <td style={{ color: 'green' }}>Completed</td>
+                  ) : (
+                    <td style={{ color: 'red' }}>In Progress</td>
+                  )}
+                </td>
               </tr>
               <tr>
                 <td>Name</td>
-                <td>{props.order.name}</td>
+                <td>
+                  <b>{props.order.name}</b>
+                </td>
+              </tr>
+              <tr>
+                <td>Order date</td>
+                <td>
+                  <b>{props.order.localDate}</b>
+                </td>
               </tr>
               <tr>
                 <td>City</td>
-                <td>{props.order.city}</td>
+                <td>
+                  <b>{props.order.city}</b>
+                </td>
               </tr>
               <tr>
                 <td>Order Track Id</td>
-                <td>{props.order.orderTrackId}</td>
+                <td>
+                  <b>{props.order.orderTrackId}</b>
+                </td>
               </tr>
               <tr>
                 <td>Company Name</td>
-                <td>{props.order.companyName}</td>
+                <td>
+                  <b>{props.order.companyName}</b>
+                </td>
               </tr>
               <tr>
                 <td>District</td>
-                <td>{props.order.district}</td>
+                <td>
+                  <b>{props.order.district}</b>
+                </td>
               </tr>
               <tr>
                 <td>More ditrict info</td>
-                <td>{props.order.district2}</td>
+                <td>
+                  <b>{props.order.district2}</b>
+                </td>
               </tr>
               <tr>
                 <td>Mobile Number</td>
-                <td>{props.order.mobileNumber}</td>
+                <td>
+                  <b>{props.order.mobileNumber}</b>
+                </td>
               </tr>
               <tr>
                 <td>Email</td>
-                <td>{props.order.email}</td>
+                <td>
+                  <b>{props.order.email}</b>
+                </td>
               </tr>
               <tr>
                 <td>Customer notes</td>
-                <td>{props.order.notes}</td>
+                <td>
+                  <b>{props.order.notes}</b>
+                </td>
               </tr>
               <tr>
                 <td>Total Amount</td>
-                <td>{props.order.totalAmount}</td>
+                <td>
+                  <b>{props.order.totalAmount}</b>
+                </td>
               </tr>
-              {props.order.orderProductResponseJsons.map((product, id) => (
+              <tr>
+                <td>Item number</td>
+                <td>
+                  <b>{props.order.itemAmount}</b>
+                </td>
+              </tr>
+              {props.order.orderProductsResponse.map((product, id) => (
                 <tr key={id}>
                   <td> Product ({id + 1})</td>
-                  <td>{product.productName}</td>
-                  <td>Price: {product.productPrice}</td>
+                  <td>
+                    <b>{product.productName}</b>
+                  </td>
+                  <td>
+                    Price: <b>{product.productPrice}</b>
+                  </td>
+                  <td>
+                    Count: <b>{product.productCount}</b>
+                  </td>
+                  <td>
+                    Amount: <b>{product.totalAmount}</b>
+                  </td>
                 </tr>
               ))}
             </tbody>

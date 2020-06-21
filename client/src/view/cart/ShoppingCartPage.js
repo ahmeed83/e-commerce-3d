@@ -1,18 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import WelcomeBanner from '../../WelcomeBanner';
-import { Col } from 'reactstrap';
+import { Table, Col } from 'reactstrap';
 import ShoppingCartProductItemList from './ShoppingCartProductItemList';
+import { OrderContext } from '../../services/context/OrderContext';
 
 const ShoppingCartPage = () => {
-  const products = [];
-
-  Object.keys(localStorage).forEach(function(key) {
-    products.push(JSON.parse(localStorage.getItem(key)));
-  });
-
-  const totalPrice = products.reduce(function(index, product) {
-    return index + parseInt(product.price);
-  }, 0);
+  const order = useContext(OrderContext);
 
   return (
     <div>
@@ -24,27 +17,29 @@ const ShoppingCartPage = () => {
               <h1 className="cart-heading">سلة المشتريات</h1>
               <form action="/">
                 <div className="table-content table-responsive">
-                  <table>
+                  <Table>
                     <thead>
                       <tr>
                         <th className="product-name">حذف</th>
                         <th className="product-price">الصور</th>
+                        <th className="product-price">المجموع</th>
+                        <th className="product-name">العدد المطلوب</th>
                         <th className="product-name">العدد</th>
-                        <th className="product-name">المنتج</th>
                         <th className="product-price">السعر</th>
+                        <th className="product-name">المنتج</th>
                       </tr>
                     </thead>
-                    <ShoppingCartProductItemList />
-                  </table>
+                    <ShoppingCartProductItemList order={order} />
+                  </Table>
                 </div>
                 <Col>
                   <Col className="col-md-6 ml-auto">
                     <div className="cart-page-total">
-                      <h2>المجموع</h2>
+                      <h2>مبلغ الطلبية</h2>
                       <ul>
                         <li>
-                          <span>$ {totalPrice}</span>
-                          المبلغ الاجمالي
+                          <span>$ {order.totalPrice}</span>
+                          الاجمالي
                         </li>
                       </ul>
                       <a href="/checkout">تقديم طلب الشراء</a>

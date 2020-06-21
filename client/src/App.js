@@ -12,9 +12,10 @@ import ShoppingCartPage from './view/cart/ShoppingCartPage';
 import CheckoutPage from './view/cart/CheckoutPage';
 import AboutUsPage from './view/about-us/AboutUsPage';
 import Test from './Test';
-import ProductContextProvider from './services/context/ProductContext';
-import LoginContextProvider from './services/context/LoginContext';
 import ManagementRoutes from './ManagementRoutes';
+import LoginContextProvider from './services/context/LoginContext';
+import ProductContextProvider from './services/context/ProductContext';
+import OrderContextProvider from './services/context/OrderContext';
 
 function App() {
   return (
@@ -30,8 +31,16 @@ function App() {
           </Route>
           <Route path="/register" component={RegisterPage} />
           <Route path="/contact" component={ContactPage} />
-          <Route path="/shopping-cart" component={ShoppingCartPage} />
-          <Route path="/checkout" component={CheckoutPage} />
+          <Route path="/shopping-cart">
+            <OrderContextProvider>
+              <ShoppingCartPage />
+            </OrderContextProvider>
+          </Route>
+          <Route path="/checkout">
+            <OrderContextProvider>
+              <CheckoutPage />
+            </OrderContextProvider>
+          </Route>
           <Route path="/about-us" component={AboutUsPage} />
           <Route path="/test" component={Test} />
           <ProductContextProvider>

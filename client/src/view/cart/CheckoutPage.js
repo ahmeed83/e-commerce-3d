@@ -1,43 +1,23 @@
-import React, { useState, useRef } from 'react';
-import { Container, Col, Row, Label, Input, Badge } from 'reactstrap';
+import React, { useState, useContext } from 'react';
+import { Container, Col, Row, Label, Input, Badge, Spinner } from 'reactstrap';
 import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import { addOrder } from '../../services/client';
 import { Alert3D } from '../../components/common/Alert3D';
 import PrintButton from './pdf/PrintButton';
 import ResetPagePDF from './pdf/ResetPagePDF';
+import { OrderContext } from '../../services/context/OrderContext';
 
 const CheckoutPage = () => {
-  const formRef = useRef();
+  const order = useContext(OrderContext);
+  const orderedProducts = [];
 
-  const products = [];
-  const productIdsAndCounts = [];
-
-  Object.keys(localStorage).forEach(function(key) {
-    products.push(JSON.parse(localStorage.getItem(key)));
-  });
-
-  const totalPrice = products.reduce(function(index, product) {
-    return index + parseInt(product.price);
-  }, 0);
-
-  console.log(products);
-
-  products.forEach(product =>
-    productIdsAndCounts.push({
-      productsId: product.id,
-      productCount: 0,
+  order.products.forEach(product =>
+    orderedProducts.push({
+      productId: product.id,
+      productCount: product.count,
     })
   );
-
-  const submitAndClearProductList = () => {
-    if (Array.isArray(products) && products.length) {
-      if (formRef.current) {
-        formRef.current.handleSubmit();
-        localStorage.clear();
-      }
-    }
-  };
 
   const initialValues = {
     name: '',
@@ -48,7 +28,7 @@ const CheckoutPage = () => {
     mobileNumber: '',
     email: '',
     notes: '',
-    productsIds: productIdsAndCounts,
+    orderedProducts: orderedProducts,
   };
 
   const validationSchema = yup.object({
@@ -56,6 +36,9 @@ const CheckoutPage = () => {
     city: yup.string().required('رجاء اضافة اسم المدينة'),
     district: yup.string().required('رجاء اضافة اسم المنطقة'),
     mobileNumber: yup.string().required('رجاء اضافة رقم التلفون'),
+    orderedProducts: yup
+      .string()
+      .required('رجاء اضافة بضاعة الى سلة المشتريات'),
   });
 
   const [showModal, setModalVisible] = useState(false);
@@ -65,7 +48,6 @@ const CheckoutPage = () => {
 
   return (
     <Formik
-      innerRef={formRef}
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={(order, { setSubmitting, resetForm }) => {
@@ -87,8 +69,9 @@ const CheckoutPage = () => {
               </div>
             );
             setTextColorModal('info');
-            resetForm({});
             setSubmitting(false);
+            localStorage.clear();
+            resetForm({});
           })
           .catch(err => {
             setModalVisible(true);
@@ -105,7 +88,7 @@ const CheckoutPage = () => {
           });
       }}
     >
-      {({ isSubmitting, errors, touched }) => (
+      {({ isSubmitting, errors, touched, resetForm }) => (
         <div>
           <Alert3D
             visible={showModal}
@@ -125,15 +108,19 @@ const CheckoutPage = () => {
                           <thead>
                             <tr>
                               <th className="product-total">السعر</th>
+                              <th className="product-name">العدد</th>
                               <th className="product-name">المنتج</th>
                             </tr>
                           </thead>
-                          {products.map((item, i) => (
+                          {order.products.map((item, i) => (
                             <tbody key={i}>
                               <tr className="cart_item">
                                 <td className="product-total">
-                                  <span className="amount">{item.price} $</span>
+                                  <span className="amount">
+                                    {item.price * item.count} $
+                                  </span>
                                 </td>
+                                <td className="product-name">{item.count}</td>
                                 <td className="product-name">{item.name}</td>
                               </tr>
                             </tbody>
@@ -142,7 +129,9 @@ const CheckoutPage = () => {
                             <tr className="order-total">
                               <td>
                                 <strong>
-                                  <span className="amount">{totalPrice} $</span>
+                                  <span className="amount">
+                                    {order.totalPrice} $
+                                  </span>
                                 </strong>
                               </td>
                               <th>السعر الأجمالي</th>
@@ -188,13 +177,26 @@ const CheckoutPage = () => {
                               </div>
                             </div>
                           </div>
+                          <div className="pt-1">
+                            {errors.orderedProducts &&
+                              touched.orderedProducts && (
+                                <Badge color="warning">
+                                  {errors.orderedProducts}
+                                </Badge>
+                              )}
+                          </div>
                           <div className="order-button-payment">
                             <Field
-                              value="أطلب البضاعة"
-                              onClick={() => submitAndClearProductList()}
+                              name="أطلب البضاعة"
+                              value="orderedProducts"
+                              type="submit"
                               disabled={isSubmitting}
+                              placeholder=""
                               as={Input}
                             >
+                              {isSubmitting ? (
+                                <Spinner color="#fff" size="24" />
+                              ) : null}
                               أطلب البضاعة
                             </Field>
                           </div>
@@ -220,14 +222,14 @@ const CheckoutPage = () => {
                               as={Input}
                             >
                               <option>اختر مدينة</option>
-                              <option value="baghdad">بغداد</option>
-                              <option value="basra">البصرة</option>
-                              <option value="mosul">الموصل</option>
-                              <option value="najaf">النجف</option>
-                              <option value="karbala">كربلاء</option>
-                              <option value="amarah">العمارة</option>
-                              <option value="nasryah">الناصرية</option>
-                              <option value="north-iraq">الشمال</option>
+                              <option value="Baghdad">بغداد</option>
+                              <option value="Basra">البصرة</option>
+                              <option value="Mosul">الموصل</option>
+                              <option value="Najaf">النجف</option>
+                              <option value="Karbala">كربلاء</option>
+                              <option value="Amarah">العمارة</option>
+                              <option value="Nasryah">الناصرية</option>
+                              <option value="North-iraq">الشمال</option>
                             </Field>
                             <div className="pt-1">
                               {errors.city && touched.city && (

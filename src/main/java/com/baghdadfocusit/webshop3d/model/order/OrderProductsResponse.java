@@ -12,10 +12,14 @@ import javax.validation.constraints.NotNull;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderProductResponseJsons {
+public class OrderProductsResponse {
 
     @NotNull
     private String productName;
     @NotNull
     private double productPrice;
+    @NotNull
+    private int productCount;
+    @NotNull
+    private double totalAmount;
 }

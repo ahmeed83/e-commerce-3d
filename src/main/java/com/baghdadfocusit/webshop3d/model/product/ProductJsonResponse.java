@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -16,6 +17,8 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class ProductJsonResponse {
 
+    @NotNull
+    private UUID id;
     @NotNull
     private String name;
     @NotNull
