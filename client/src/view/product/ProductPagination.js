@@ -3,14 +3,15 @@ import { Row } from 'reactstrap';
 import PaginationComponent from 'react-reactstrap-pagination';
 
 const ProductPagination = props => {
+  const { totalPages, setPageNumber, pageNumber } = props;
   const handleSelected = index => {
-    props.setPageNumber(index - 1);
+    setPageNumber(index - 1);
   };
 
   return (
     <Row>
       <PaginationComponent
-        totalItems={props.totalPages}
+        totalItems={totalPages}
         pageSize={1}
         onSelect={handleSelected}
         firstPageText={'<<'}
@@ -18,6 +19,7 @@ const ProductPagination = props => {
         previousPageText={'<'}
         nextPageText={'>'}
         size={'md'}
+        defaultActivePage={pageNumber + 1}
       />
     </Row>
   );

@@ -1,12 +1,12 @@
 /*----------- 0. 3D custom css style --------*/
 input {
   text-align: right;
-  direction: rtl;
+  /* direction: rtl; */
 }
 
 textarea {
   text-align: right;
-  direction: rtl;
+  /* direction: rtl; */
 }
 
 h3 {

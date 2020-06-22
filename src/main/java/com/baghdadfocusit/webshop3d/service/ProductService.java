@@ -46,7 +46,7 @@ public class ProductService {
                                                        Optional<String> sortBy) {
 
         Page<Product> productPage = productRepository.getFilterProducts(name.orElse("_"), categoryName.orElse("_"),
-                                                                        PageRequest.of(page.orElse(0), 10,
+                                                                        PageRequest.of(page.orElse(0), 25,
                                                                                        Direction.ASC,
                                                                                        sortBy.orElse("name")));
         return new PageImpl<>(productPage.getContent()
