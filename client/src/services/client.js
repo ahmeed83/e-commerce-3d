@@ -123,10 +123,13 @@ export const addOrder = order =>
     },
   }).then(checkStatus);
 
-export const getOrder = () =>
-  Axios.get(MANAGEMENT_ORDERS_URL, {
-    headers: {
-      Authorization: AUTHORIZATION_VALUE,
-      'Content-Type': CONTENT_TYPE_JSON_VALUE,
-    },
-  }).then(checkStatus);
+export const getOrders = (name, page, sortBy) =>
+  Axios.get(
+    MANAGEMENT_ORDERS_URL + `?name=${name}&page=${page}&sortBy=${sortBy}`,
+    {
+      headers: {
+        Authorization: AUTHORIZATION_VALUE,
+        'Content-Type': CONTENT_TYPE_JSON_VALUE,
+      },
+    }
+  ).then(checkStatus);

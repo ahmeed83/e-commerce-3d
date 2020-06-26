@@ -6,7 +6,7 @@ import { Col, Container, Row, Table, Input, Alert } from 'reactstrap';
 import { deleteProduct } from '../../../services/client';
 import { updatePriceProduct } from '../../../services/client';
 import { ProductContext } from '../../../services/context/ProductContext';
-import ProductPagination from '../../../view/product/ProductPagination';
+import Pagination3D from '../../../view/product/Pagination3D';
 import SearchProductsInput from './SearchProductsInput';
 
 import 'antd/dist/antd.css';
@@ -89,7 +89,7 @@ export const ProductOverview = () => {
               </Col>
               <Col>
                 <div className="float-right">
-                  <ProductPagination
+                  <Pagination3D
                     setPageNumber={products.setPageNumber}
                     totalPages={products.totalPages}
                     pageNumber={products.pageNumber}

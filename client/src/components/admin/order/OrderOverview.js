@@ -3,14 +3,24 @@ import { Button, Container, Table, Modal, ModalBody } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
-import { getOrder } from '../../../services/client';
+import { getOrders } from '../../../services/client';
+import Loading from '../../common/Loading';
+import Pagination3D from '../../../view/product/Pagination3D';
 
 export const OrderOverview = props => {
+  const [loading, setLoading] = useState(false);
   const [orders, setOrders] = useState([]);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
 
   useEffect(() => {
-    getOrder().then(res => {
-      setOrders(res.data);
+    setLoading(true);
+    getOrders('', 0, 'name').then(res => {
+      setOrders(res.data.content);
+      setTotalPage(res.data.totalPages);
+      setPageNumber(res.data.totalElements);
+      setLoading(false);
+      console.log(res.data);
     });
   }, []);
 
@@ -22,50 +32,61 @@ export const OrderOverview = props => {
     <div className="py-5">
       <div className="py-5">
         <Container className="pt-5 mb-4">
-          <div className="border border-success py-3 px-5">
-            <h4 className="pb-3">Orders overview</h4>
-            <Table>
-              <thead>
-                <tr>
-                  <th style={{ width: '5%' }}>#</th>
-                  <th style={{ width: '15%' }}>Order State</th>
-                  <th style={{ width: '15%' }}>Complete?</th>
-                  <th style={{ width: '15%' }}>Order Track Id</th>
-                  <th style={{ width: '15%' }}>Name</th>
-                  <th style={{ width: '15%' }}>Telephone</th>
-                  <th style={{ width: '15%' }}>District</th>
-                  <th style={{ width: '5%' }}>More details</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map((order, id) => (
-                  <tr key={id}>
-                    <th scope="row">{id + 1}</th>
-                    {order.orderState ? (
-                      <td style={{ color: 'green' }}>Completed</td>
-                    ) : (
-                      <td style={{ color: 'red' }}>In Progress</td>
-                    )}
-                    <td>
-                      <input
-                        name={order.orderTrackId}
-                        type="checkbox"
-                        checked={order.orderState}
-                        onChange={handleSelect}
-                      />
-                    </td>
-                    <td>{order.orderTrackId}</td>
-                    <td>{order.name}</td>
-                    <td>{order.mobileNumber}</td>
-                    <td>{order.district}</td>
-                    <td>
-                      <OrderModal order={order} />
-                    </td>
+          {loading ? (
+            <Loading />
+          ) : (
+            <div className="py-3 px-5">
+              <h4>Orders overview</h4>
+              <div className="float-right pb-2">
+                <Pagination3D
+                  setPageNumber={setPageNumber}
+                  totalPages={totalPage}
+                  pageNumber={pageNumber}
+                />
+              </div>
+              <Table>
+                <thead>
+                  <tr>
+                    <th style={{ width: '5%' }}>#</th>
+                    <th style={{ width: '15%' }}>Order State</th>
+                    <th style={{ width: '15%' }}>Complete?</th>
+                    <th style={{ width: '15%' }}>Order Track Id</th>
+                    <th style={{ width: '15%' }}>Name</th>
+                    <th style={{ width: '15%' }}>Telephone</th>
+                    <th style={{ width: '15%' }}>District</th>
+                    <th style={{ width: '5%' }}>More details</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
+                </thead>
+                <tbody>
+                  {orders.map((order, id) => (
+                    <tr key={id}>
+                      <th scope="row">{id + 1}</th>
+                      {order.orderState ? (
+                        <td style={{ color: 'green' }}>Completed</td>
+                      ) : (
+                        <td style={{ color: 'red' }}>In Progress</td>
+                      )}
+                      <td>
+                        <input
+                          name={order.orderTrackId}
+                          type="checkbox"
+                          checked={order.orderState}
+                          onChange={handleSelect}
+                        />
+                      </td>
+                      <td>{order.orderTrackId}</td>
+                      <td>{order.name}</td>
+                      <td>{order.mobileNumber}</td>
+                      <td>{order.district}</td>
+                      <td>
+                        <OrderModal order={order} />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
+          )}
         </Container>
       </div>
     </div>

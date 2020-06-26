@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,11 +46,16 @@ public class ProductService {
                                                        Optional<String> categoryName,
                                                        Optional<Integer> page,
                                                        Optional<String> sortBy) {
+        Page<Product> productPage;
+        if (sortBy.isPresent()) {
+            productPage = productRepository.getFilterProducts(name.orElse("_"), categoryName.orElse("_"),
+                                                              PageRequest.of(page.orElse(0), 25, Direction.ASC,
+                                                                             sortBy.orElse("name")));
+        } else {
+            productPage = productRepository.getFilterProducts(name.orElse("_"), categoryName.orElse("_"),
+                                                              PageRequest.of(page.orElse(0), 25, Sort.unsorted()));
+        }
 
-        Page<Product> productPage = productRepository.getFilterProducts(name.orElse("_"), categoryName.orElse("_"),
-                                                                        PageRequest.of(page.orElse(0), 25,
-                                                                                       Direction.ASC,
-                                                                                       sortBy.orElse("name")));
         return new PageImpl<>(productPage.getContent()
                                       .stream()
                                       .map(product -> new ProductJsonResponse(product.getId(), product.getName(),

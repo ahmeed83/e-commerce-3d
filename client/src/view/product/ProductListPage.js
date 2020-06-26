@@ -5,7 +5,7 @@ import { ProductContext } from '../../services/context/ProductContext';
 import Loading from '../../components/common/Loading';
 import WelcomeBanner from '../../WelcomeBanner';
 
-import ProductPagination from './ProductPagination';
+import Pagination3D from './Pagination3D';
 import ProductListContainer from './ProductListContainer';
 import { Container } from 'reactstrap';
 
@@ -35,7 +35,7 @@ const ProductListPage = () => {
         <div className="px-5">
           <div className="px-5">
             <div className="px-5">
-              <ProductPagination
+              <Pagination3D
                 setPageNumber={products.setPageNumber}
                 totalPages={products.totalPages}
               />

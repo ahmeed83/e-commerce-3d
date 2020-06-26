@@ -10,16 +10,22 @@ import com.baghdadfocusit.webshop3d.repository.OrderRepository;
 import com.baghdadfocusit.webshop3d.repository.ProductRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import java.time.LocalDate;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
+;
 
 @Service
 public class OrderService {
@@ -37,25 +43,55 @@ public class OrderService {
         this.emailService = emailService;
     }
 
-    public List<OrderResponseJson> getAllOrders() {
-        final List<Order> orders = (List<Order>) orderRepository.findAll();
+    //    public List<OrderResponseJson> getAllOrders() {
+    //        final List<Order> orders = (List<Order>) orderRepository.findAll();
+    //
+    //        return orders.stream().map(order -> {
+    //            var orderProductsResponse = order.getOrderItems()
+    //                    .stream()
+    //                    .map(orderItem -> new OrderProductsResponse(orderItem.getProduct().getName(),
+    //                                                                orderItem.getProduct().getPrice(), orderItem
+    //                                                                .getCount(),
+    //                                                                orderItem.getAmount()))
+    //                    .collect(Collectors.toList());
+    //
+    //            return new OrderResponseJson(order.getCreatedAt(), order.getCity(), order.getName(),
+    //                                         order.getCustomerTrackId(), order.getTotalAmount(), order.isState(),
+    //                                         order.getCompanyName(), order.getDistrict(), order.getDistrict2(),
+    //                                         order.getMobileNumber(), order.getEmail(), order.getNotes(),
+    //                                         orderProductsResponse.size(), orderProductsResponse);
+    //        }).collect(Collectors.toList());
+    //    }
 
-        return orders.stream().map(order -> {
+
+    public Page<OrderResponseJson> getFilterOrders(Optional<String> name,
+                                                   Optional<Integer> page,
+                                                   Optional<String> sortBy) {
+
+        Page<Order> orderPage;
+        if (sortBy.isPresent()) {
+            orderPage = orderRepository.getFilterOrders(name.orElse("_"),
+                                                        PageRequest.of(page.orElse(0), 25, Sort.Direction.ASC,
+                                                                       sortBy.orElse("name")));
+        } else {
+            orderPage = orderRepository.getFilterOrders(name.orElse("_"),
+                                                        PageRequest.of(page.orElse(0), 25, Sort.unsorted()));
+        }
+        return new PageImpl<>(orderPage.getContent().stream().map(order -> {
             var orderProductsResponse = order.getOrderItems()
                     .stream()
                     .map(orderItem -> new OrderProductsResponse(orderItem.getProduct().getName(),
                                                                 orderItem.getProduct().getPrice(), orderItem.getCount(),
                                                                 orderItem.getAmount()))
                     .collect(Collectors.toList());
-
             return new OrderResponseJson(order.getCreatedAt(), order.getCity(), order.getName(),
-                                         order.getCustomerTrackId(),
-                                         order.getTotalAmount(), order.isState(),
+                                         order.getCustomerTrackId(), order.getTotalAmount(), order.isState(),
                                          order.getCompanyName(), order.getDistrict(), order.getDistrict2(),
                                          order.getMobileNumber(), order.getEmail(), order.getNotes(),
                                          orderProductsResponse.size(), orderProductsResponse);
-        }).collect(Collectors.toList());
+        }).collect(Collectors.toList()), orderPage.getPageable(), orderPage.getTotalElements());
     }
+
 
     /**
      * Create order by the customer.
