@@ -1,9 +1,10 @@
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Col, Container, Row, Table } from 'reactstrap';
+import { Col, Container, Row, Table, Input, Alert } from 'reactstrap';
 import { deleteProduct } from '../../../services/client';
+import { updatePriceProduct } from '../../../services/client';
 import { ProductContext } from '../../../services/context/ProductContext';
 import ProductPagination from '../../../view/product/ProductPagination';
 import SearchProductsInput from './SearchProductsInput';
@@ -18,7 +19,17 @@ export const ProductOverview = () => {
 
   const products = useContext(ProductContext);
 
-  const del = productId => {
+  const [
+    priceAlertUpdateVisibleSuccess,
+    setPriceAlertUpdateVisibleSuccess,
+  ] = useState(false);
+
+  const [
+    priceAlertUpdateVisibleError,
+    setPriceAlertUpdateVisibleError,
+  ] = useState(false);
+
+  const deleteOneProduct = productId => {
     deleteProduct(productId);
     products.setTrigger(Math.random());
   };
@@ -28,10 +39,47 @@ export const ProductOverview = () => {
     products.setPageNumber(0);
   };
 
+  const changePrice = (e, productId) => {
+    if (e.key === 'Enter') {
+      const productPrice = {
+        productPrice: e.target.value,
+      };
+      updatePriceProduct(productId, productPrice)
+        .then(res => {
+          setPriceAlertUpdateVisibleSuccess(true);
+          products.setTrigger(Math.random());
+          setTimeout(() => {
+            setPriceAlertUpdateVisibleSuccess(false);
+          }, 2000);
+        })
+        .catch(err => {
+          setPriceAlertUpdateVisibleError(true);
+          setTimeout(() => {
+            setPriceAlertUpdateVisibleError(false);
+          }, 2000);
+        });
+      e.target.value = '';
+    }
+  };
+
   return (
     <div className="py-5">
       <div className="py-5">
         <Container className="pt-5">
+          <Alert
+            className="text-center"
+            color="success"
+            isOpen={priceAlertUpdateVisibleSuccess}
+          >
+            Price is updated!
+          </Alert>
+          <Alert
+            className="text-center"
+            color="danger"
+            isOpen={priceAlertUpdateVisibleError}
+          >
+            Price is not updated! Some error occurred!
+          </Alert>
           <div className="border border-info py-3 px-5">
             <Row>
               <Col>
@@ -62,12 +110,14 @@ export const ProductOverview = () => {
             <div className="pb-3 float-right">
               <SearchProductsInput searchHandler={searchProduct} />
             </div>
+
             <Table hover>
               <thead>
                 <tr>
                   <th style={{ width: '5%' }}>#</th>
                   <th style={{ width: '35%' }}>Name</th>
-                  <th style={{ width: '20%' }}>Price</th>
+                  <th style={{ width: '10%' }}>Price</th>
+                  <th style={{ width: '20%' }}>Change Price</th>
                   <th style={{ width: '20%' }}>Category</th>
                   <th style={{ width: '10%' }}>Edit</th>
                   <th style={{ width: '10%' }}>Delete</th>
@@ -78,14 +128,23 @@ export const ProductOverview = () => {
                   <tr onClick={() => openProductOverview(product)} key={id}>
                     <th scope="row">{id + 1 + products.pageNumber * 25}</th>
                     <td>{product.name}</td>
-                    <td>{product.price} $</td>
+                    <td>{product.price}</td>
+                    <td>
+                      <Input
+                        onKeyDown={e => changePrice(e, product.id)}
+                        className="product-price"
+                        type="number"
+                        min="0"
+                        step="5"
+                      ></Input>
+                    </td>
                     <td>{product.category.name}</td>
                     <td>
                       <ProductDetailsModal product={product} />
                     </td>
                     <td>
                       <Button
-                        onClick={() => del(product.id)}
+                        onClick={() => deleteOneProduct(product.id)}
                         type="primary"
                         danger
                       >

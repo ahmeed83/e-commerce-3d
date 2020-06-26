@@ -647,6 +647,12 @@ textarea:focus {
 .input-group.divcenter.input-group .form-control {
   padding-left: 0px;
 }
+
+.product-price {
+  padding-left: 0px;
+  width: 60%;
+}
+
 /*************************
         back-to-top
 *************************/

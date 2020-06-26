@@ -4,6 +4,7 @@ import com.baghdadfocusit.webshop3d.configuration.aws.AmazonFileStore;
 import com.baghdadfocusit.webshop3d.entities.Product;
 import com.baghdadfocusit.webshop3d.model.product.ProductJsonRequest;
 import com.baghdadfocusit.webshop3d.model.product.ProductJsonResponse;
+import com.baghdadfocusit.webshop3d.model.product.ProductUpdatePriceRequest;
 import com.baghdadfocusit.webshop3d.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -108,5 +109,14 @@ public class ProductService {
                 .contains(productImage.getContentType())) {
             throw new IllegalStateException("File must be an Image [" + productImage.getContentType() + "]");
         }
+    }
+
+    public void updateProductPrice(final String productId, final ProductUpdatePriceRequest updatePriceRequest) {
+        Product product = productRepository.findById(UUID.fromString(productId))
+                .orElseThrow(() -> new IllegalArgumentException("No Product found!"));
+        product.setPrice(updatePriceRequest.getProductPrice());
+        product.setUpdatedAt(LocalDate.now());
+        productRepository.save(product);
+        LOGGER.info("Price is updated for product with product id {} ", product.getId());
     }
 }

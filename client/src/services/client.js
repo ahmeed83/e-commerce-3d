@@ -85,6 +85,14 @@ export const addProduct = product =>
     },
   }).then(checkStatus);
 
+export const updatePriceProduct = (productId, price) =>
+  Axios.patch(MANAGEMENT_PRODUCTS_URL + productId, price, {
+    headers: {
+      Authorization: AUTHORIZATION_VALUE,
+      'Content-Type': CONTENT_TYPE_JSON_VALUE,
+    },
+  }).then(checkStatus);
+
 export const addCategory = category =>
   Axios.post(MANAGEMENT_CATEGORIES_ADD_URL, category, {
     headers: {
