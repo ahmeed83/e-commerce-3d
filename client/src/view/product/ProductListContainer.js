@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import $ from 'jquery';
 import ProductListItem from './ProductListItem';
 import { Row } from 'reactstrap';
-import ProductListItemCard from './ProductListItemCard';
+import ProductListItemMobile from './ProductListItemMobile';
 
 const ProductListContainer = props => {
   const [showProductListCard, setShowProductListCard] = useState(true);
@@ -60,13 +60,13 @@ const ProductListContainer = props => {
             {showProductListCard ? (
               <Row className="custom-row">
                 {props.products.map(product => (
-                  <ProductListItem key={product.name} product={product} />
+                  <ProductListItem key={product.id} product={product} />
                 ))}
               </Row>
             ) : (
               <Row>
                 {props.products.map(product => (
-                  <ProductListItemCard key={product.id} product={product} />
+                  <ProductListItemMobile key={product.id} product={product} />
                 ))}
               </Row>
             )}
