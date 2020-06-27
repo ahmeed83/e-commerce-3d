@@ -8,6 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -15,4 +16,6 @@ public interface OrderRepository extends CrudRepository<Order, UUID> {
 
     @Query("SELECT o FROM Order o WHERE UPPER(o.name)" + " LIKE CONCAT" + "('%',UPPER(:orderName),'%')")
     Page<Order> getFilterOrders(@Param("orderName") String orderName, Pageable pageable);
+
+    Optional<Order> findOrderByOrderTrackId(String trackId);
 }

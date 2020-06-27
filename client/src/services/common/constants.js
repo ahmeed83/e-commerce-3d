@@ -23,5 +23,7 @@ export const MANAGEMENT_SUB_CATEGORIES_ADD_URL = `${MANAGEMENT_SUB_CATEGORIES_UR
 export const MANAGEMENT_CUSTOMERS_URL = 'api/management/v1/customers';
 
 // Order url
-export const ADD_ORDER_URL = 'api/resources/orders/add-order';
+export const ORDER_URL = 'api/resources/orders';
+export const ADD_ORDER_URL = `${ORDER_URL}/add-order`;
+export const CHECK_STATUS_ORDER_URL = `${ORDER_URL}/checkStatus/`;
 export const MANAGEMENT_ORDERS_URL = '/api/management/v1/orders';

@@ -1,5 +1,6 @@
 package com.baghdadfocusit.webshop3d.controller;
 
+import com.baghdadfocusit.webshop3d.entities.Order;
 import com.baghdadfocusit.webshop3d.model.order.OrderProductsResponse;
 import com.baghdadfocusit.webshop3d.model.order.OrderRequestJson;
 import com.baghdadfocusit.webshop3d.model.order.OrderResponseJson;
@@ -65,7 +66,7 @@ public class OrderControllerTest {
     @BeforeEach
     void setUp() {
         orderResponseJson = new OrderResponseJson(LocalDate.now(), "Amsterdam", "somename", "3D-123232", 1200,
-                                                  false, null, "alkaradh", "street 52", "1212121", "email",
+                                                  Order.OrderState.RECEIVED, null, "alkaradh", "street 52", "1212121", "email",
                                                   "notes", 1,
                                                   List.of(new OrderProductsResponse("iPhone 10", 1200, 1, 1)));
         when(orderService.creatOrder(any(OrderRequestJson.class))).thenReturn(orderResponseJson);

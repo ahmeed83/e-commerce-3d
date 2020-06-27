@@ -12,6 +12,7 @@ import {
   SUB_CATEGORIES_URL,
   ADD_ORDER_URL,
   MANAGEMENT_ORDERS_URL,
+  CHECK_STATUS_ORDER_URL,
 } from './common/constants';
 import Axios from 'axios';
 
@@ -133,3 +134,10 @@ export const getOrders = (name, page, sortBy) =>
       },
     }
   ).then(checkStatus);
+
+export const checkOrderStatus = orderTrackId =>
+  Axios.get(CHECK_STATUS_ORDER_URL + orderTrackId, {
+    headers: {
+      'Content-Type': CONTENT_TYPE_JSON_VALUE,
+    },
+  }).then(checkStatus);

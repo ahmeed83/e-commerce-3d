@@ -16,6 +16,9 @@ import ManagementRoutes from './ManagementRoutes';
 import LoginContextProvider from './services/context/LoginContext';
 import ProductContextProvider from './services/context/ProductContext';
 import OrderContextProvider from './services/context/OrderContext';
+import OrderState from './view/order-state/OrderState';
+
+import 'antd/dist/antd.css';
 
 function App() {
   return (
@@ -31,6 +34,9 @@ function App() {
           </Route>
           <Route path="/register" component={RegisterPage} />
           <Route path="/contact" component={ContactPage} />
+          <Route path="/order-state">
+            <OrderState />
+          </Route>
           <Route path="/shopping-cart">
             <OrderContextProvider>
               <ShoppingCartPage />

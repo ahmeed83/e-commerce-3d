@@ -2,6 +2,7 @@ server:
   port: 8080
 
 app:
+  email: 3d@3d-iraq.com
   datasource:
     jdbc-url: jdbc:postgresql://db/webshop3d
     username: postgres

@@ -120,7 +120,11 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.vladmihalcea</groupId>
+            <artifactId>hibernate-types-52</artifactId>
+            <version>2.9.12</version>
+        </dependency>
         <!--AWS-->
         <dependency>
             <groupId>com.amazonaws</groupId>

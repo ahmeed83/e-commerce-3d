@@ -15,7 +15,6 @@ import {
   Container,
 } from 'reactstrap';
 
-import 'antd/dist/antd.css';
 import { Button } from 'antd';
 
 export const ProductDetailsModal = props => {

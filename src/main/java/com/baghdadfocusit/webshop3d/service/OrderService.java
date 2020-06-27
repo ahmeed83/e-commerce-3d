@@ -6,6 +6,7 @@ import com.baghdadfocusit.webshop3d.model.order.OrderProductRequestJson;
 import com.baghdadfocusit.webshop3d.model.order.OrderProductsResponse;
 import com.baghdadfocusit.webshop3d.model.order.OrderRequestJson;
 import com.baghdadfocusit.webshop3d.model.order.OrderResponseJson;
+import com.baghdadfocusit.webshop3d.model.order.OrderStatusResponse;
 import com.baghdadfocusit.webshop3d.repository.OrderRepository;
 import com.baghdadfocusit.webshop3d.repository.ProductRepository;
 import org.slf4j.Logger;
@@ -43,31 +44,9 @@ public class OrderService {
         this.emailService = emailService;
     }
 
-    //    public List<OrderResponseJson> getAllOrders() {
-    //        final List<Order> orders = (List<Order>) orderRepository.findAll();
-    //
-    //        return orders.stream().map(order -> {
-    //            var orderProductsResponse = order.getOrderItems()
-    //                    .stream()
-    //                    .map(orderItem -> new OrderProductsResponse(orderItem.getProduct().getName(),
-    //                                                                orderItem.getProduct().getPrice(), orderItem
-    //                                                                .getCount(),
-    //                                                                orderItem.getAmount()))
-    //                    .collect(Collectors.toList());
-    //
-    //            return new OrderResponseJson(order.getCreatedAt(), order.getCity(), order.getName(),
-    //                                         order.getCustomerTrackId(), order.getTotalAmount(), order.isState(),
-    //                                         order.getCompanyName(), order.getDistrict(), order.getDistrict2(),
-    //                                         order.getMobileNumber(), order.getEmail(), order.getNotes(),
-    //                                         orderProductsResponse.size(), orderProductsResponse);
-    //        }).collect(Collectors.toList());
-    //    }
-
-
     public Page<OrderResponseJson> getFilterOrders(Optional<String> name,
                                                    Optional<Integer> page,
                                                    Optional<String> sortBy) {
-
         Page<Order> orderPage;
         if (sortBy.isPresent()) {
             orderPage = orderRepository.getFilterOrders(name.orElse("_"),
@@ -85,7 +64,7 @@ public class OrderService {
                                                                 orderItem.getAmount()))
                     .collect(Collectors.toList());
             return new OrderResponseJson(order.getCreatedAt(), order.getCity(), order.getName(),
-                                         order.getCustomerTrackId(), order.getTotalAmount(), order.isState(),
+                                         order.getOrderTrackId(), order.getTotalAmount(), order.getOrderState(),
                                          order.getCompanyName(), order.getDistrict(), order.getDistrict2(),
                                          order.getMobileNumber(), order.getEmail(), order.getNotes(),
                                          orderProductsResponse.size(), orderProductsResponse);
@@ -113,11 +92,12 @@ public class OrderService {
 
         final double totalAmount = products.stream().mapToDouble(Product::getPrice).sum();
         final Random orderTrackId = new Random();
-        final String format = String.format("3D-" + "%07d", orderTrackId.nextInt(10000000));
+        final String format = String.format("3D-" + "%04d", orderTrackId.nextInt(10000));
 
         order.setCreatedAt(LocalDate.now());
+        order.setOrderState(Order.OrderState.RECEIVED);
         order.setTotalAmount(totalAmount);
-        order.setCustomerTrackId(format);
+        order.setOrderTrackId(format);
         order.setName(orderJson.getName());
         order.setCity(orderJson.getCity());
         order.setDistrict(orderJson.getDistrict());
@@ -135,8 +115,8 @@ public class OrderService {
         }
 
         LOGGER.info("Order is successfully saved with category Id: {}", savedOrder.getId());
-        return new OrderResponseJson(order.getCreatedAt(), order.getCity(), order.getName(), order.getCustomerTrackId(),
-                                     order.getTotalAmount(), false, order.getCompanyName(), order.getDistrict(),
+        return new OrderResponseJson(order.getCreatedAt(), order.getCity(), order.getName(), order.getOrderTrackId(),
+                                     order.getTotalAmount(), order.getOrderState(), order.getCompanyName(), order.getDistrict(),
                                      order.getDistrict2(), order.getMobileNumber(), order.getEmail(), order.getNotes(),
                                      order.getProducts().size(), order.getOrderItems()
                                              .stream()
@@ -145,5 +125,11 @@ public class OrderService {
                                                      orderItem.getProduct().getPrice(), orderItem.getCount(),
                                                      orderItem.getAmount()))
                                              .collect(Collectors.toList()));
+    }
+
+    public OrderStatusResponse checkStatusOrder(final String orderTrackId) {
+        Order order = orderRepository.findOrderByOrderTrackId(orderTrackId).orElseThrow(IllegalArgumentException::new);
+        return new OrderStatusResponse(order.getCreatedAt(), order.getUpdatedAt(), order.getName(),
+                                       order.getOrderTrackId(), order.getOrderState());
     }
 }

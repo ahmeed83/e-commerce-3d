@@ -8,35 +8,21 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderResponseJson {
+public class OrderStatusResponse {
 
     @NotNull
-    private LocalDate localDate;
+    private LocalDate createdAt;
     @NotNull
-    private String city;
+    private LocalDate updateAt;
     @NotNull
     private String name;
     @NotNull
     private String orderTrackId;
     @NotNull
-    private double totalAmount;
-    @NotNull
     private Order.OrderState orderState;
-    private String companyName;
-    @NotNull
-    private String district;
-    private String district2;
-    @NotNull
-    private String mobileNumber;
-    private String email;
-    private String notes;
-    private int itemAmount;
-    @NotNull
-    private List<OrderProductsResponse> orderProductsResponse;
 }

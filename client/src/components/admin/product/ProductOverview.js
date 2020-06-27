@@ -9,7 +9,6 @@ import { ProductContext } from '../../../services/context/ProductContext';
 import Pagination3D from '../../../view/product/Pagination3D';
 import SearchProductsInput from './SearchProductsInput';
 
-import 'antd/dist/antd.css';
 import { Button } from 'antd';
 import { CloudUploadOutlined } from '@ant-design/icons';
 import { ProductDetailsModal } from './ProductDetailsModal';

@@ -2,6 +2,7 @@ package com.baghdadfocusit.webshop3d.service;
 
 import com.baghdadfocusit.webshop3d.entities.Order;
 import com.baghdadfocusit.webshop3d.entities.Product;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -17,6 +18,9 @@ import java.util.stream.Collectors;
 @Service
 public class EmailService {
 
+    @Value("${app.email}")
+    private String email;
+
     private final JavaMailSender javaMailSender;
 
     public EmailService(final JavaMailSender javaMailSender) {
@@ -28,11 +32,11 @@ public class EmailService {
         MimeMessage msg = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(msg, true);
         if (order.getEmail() == null) {
-            helper.setTo("ahmed83@me.com");
+            helper.setTo(email);
         } else {
-            helper.setTo(InternetAddress.parse("ahmed83@me.com," + order.getEmail()));
+            helper.setTo(InternetAddress.parse(email + "," + order.getEmail()));
         }
-        helper.setSubject("3D Order id: " + order.getCustomerTrackId());
+        helper.setSubject("3D Order id: " + order.getOrderTrackId());
         List<Product> productList = products.stream()
                 .map(prod -> Product.builder().name(prod.getName()).price(prod.getPrice()).build())
                 .collect(Collectors.toList());
