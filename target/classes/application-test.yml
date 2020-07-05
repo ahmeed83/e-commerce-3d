@@ -18,7 +18,7 @@ spring:
     properties.hibernate.dialect: org.hibernate.dialect.H2Dialect
 
   datasource:
-    jdbcUrl: jdbc:hsqldb:mem:webshop3d
+    jdbcUrl: jdbc:hsqldb:mem:ecommerce3d
     driverClassName: org.h2.Driver
     username: sa
     password:
