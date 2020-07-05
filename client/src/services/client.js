@@ -13,7 +13,7 @@ import {
   ADD_ORDER_URL,
   MANAGEMENT_ORDERS_URL,
   CHECK_STATUS_ORDER_URL,
-} from './common/constants';
+} from './constants';
 import Axios from 'axios';
 
 const checkStatus = response => {

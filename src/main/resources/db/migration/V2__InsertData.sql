@@ -26,16 +26,22 @@ insert into APPLICATION_USER (id, created_at, updated_at, user_name, password, r
 values ('415bf92c-019f-4f18-998a-4cd55da7d738', '7/7/2019', null, 'kstannus3',
         '{bcrypt}$2y$10$fJw5KHD0tBl/Wn4rOPqjOuZIRW8QRSC/U9im/SrYcvgpW8LHBJ6Jm', 'CUSTOMER', true);
 
-insert into CATEGORY (id, created_at, updated_at, name)
-values ('6fd40977-a429-4959-8497-36b93d19769c', '2019-05-22', '2019-11-17', 'Laptop');
-insert into CATEGORY (id, created_at, updated_at, name)
-values ('6d176685-2c6a-489d-9988-684a22903244', '2019-05-19', '2019-07-19', 'PC');
-insert into CATEGORY (id, created_at, updated_at, name)
-values ('ac7c189a-a9d7-4f37-8f55-fee44f108355', '2019-06-18', '2020-01-10', 'Monitor');
-insert into CATEGORY (id, created_at, updated_at, name)
-values ('814642d2-7dcc-4279-91b7-70e368127a78', '2020-02-09', '2019-06-29', 'CPU');
-insert into CATEGORY (id, created_at, updated_at, name)
-values ('c6478c53-1835-4a25-badc-6b45e490876c', '2019-11-23', '2019-10-31', 'Mobile');
+insert into CATEGORY (id, created_at, updated_at, name, pic_location)
+values ('6fd40977-a429-4959-8497-36b93d19769c', '2019-05-22', '2019-11-17', 'الطاولات', 'https://3d-products-images.s3.me-south-1.amazonaws.com/categories/table.jpg');
+insert into CATEGORY (id, created_at, updated_at, name, pic_location)
+values ('6d176685-2c6a-489d-9988-684a22903244', '2019-05-19', '2019-07-19', 'حقائب', 'https://3d-products-images.s3.me-south-1.amazonaws.com/categories/bag.jpg');
+insert into CATEGORY (id, created_at, updated_at, name, pic_location)
+values ('ac7c189a-a9d7-4f37-8f55-fee44f108355', '2019-06-18', '2020-01-10', 'حاسبات', 'https://3d-products-images.s3.me-south-1.amazonaws.com/categories/computer.jpg');
+insert into CATEGORY (id, created_at, updated_at, name, pic_location)
+values ('814642d2-7dcc-4279-91b7-70e368127a78', '2020-02-09', '2019-06-29', 'سماعات', 'https://3d-products-images.s3.me-south-1.amazonaws.com/categories/headphone.jpg');
+insert into CATEGORY (id, created_at, updated_at, name, pic_location)
+values ('c6478c53-1835-4a25-badc-6b45e490876c', '2019-11-23', '2019-10-31', 'بروسيسرات', 'https://3d-products-images.s3.me-south-1.amazonaws.com/categories/ryzen.jpg');
+insert into CATEGORY (id, created_at, updated_at, name, pic_location)
+values ('ac7c189a-a9d7-4f37-8f55-fee44f108311', '2019-06-18', '2020-01-10', 'الماوسات', 'https://3d-products-images.s3.me-south-1.amazonaws.com/categories/mouse.jpg');
+insert into CATEGORY (id, created_at, updated_at, name, pic_location)
+values ('814642d2-7dcc-4279-91b7-70e368127a22', '2020-02-09', '2019-06-29', 'الشاشات', 'https://3d-products-images.s3.me-south-1.amazonaws.com/categories/monitor.jpg');
+insert into CATEGORY (id, created_at, updated_at, name, pic_location)
+values ('c6478c53-1835-4a25-badc-6b45e4908799', '2019-11-23', '2019-10-31', 'الادبرات', 'https://3d-products-images.s3.me-south-1.amazonaws.com/categories/cable.jpg');
 
 insert into SUB_CATEGORY (id, created_at, updated_at, category_id, name)
 values ('6fd40977-a429-4959-8497-36b93d144444', '2019-05-22', '2019-11-17', '6fd40977-a429-4959-8497-36b93d19769c',

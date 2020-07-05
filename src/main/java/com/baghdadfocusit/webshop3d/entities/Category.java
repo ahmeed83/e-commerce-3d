@@ -19,4 +19,7 @@ public class Category extends BaseModel {
     @NotNull
     @Column(name="name", unique=true)
     private String name;
+
+    @NotNull
+    private String picLocation;
 }

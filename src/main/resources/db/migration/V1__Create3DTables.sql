@@ -16,10 +16,11 @@ CREATE TABLE IF NOT EXISTS APPLICATION_USER
 
 CREATE TABLE IF NOT EXISTS CATEGORY
 (
-    id         UUID PRIMARY KEY    NOT NULL,
-    created_at DATE                NOT NULL,
-    updated_at DATE,
-    name       VARCHAR(100) UNIQUE NOT NULL
+    id           UUID PRIMARY KEY    NOT NULL,
+    created_at   DATE                NOT NULL,
+    updated_at   DATE,
+    name         VARCHAR(100) UNIQUE NOT NULL,
+    pic_location VARCHAR(500)        NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS SUB_CATEGORY
